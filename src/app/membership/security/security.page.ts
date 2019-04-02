@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-security',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SecurityPage implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
   }
 
+  logOut() {
+    this.authService.signOut();
+  }
 }

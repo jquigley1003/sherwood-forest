@@ -8,13 +8,51 @@
       </ion-header>
       <ion-content color="light">
         <ion-list>
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item ngcolor="light" [routerDirection]="'root'"
-                      [routerLink]="[p.url]">
-              <ion-icon slot="start" [name]="p.icon"></ion-icon>
-              <ion-label>
-                {{p.title}}
-              </ion-label>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item ngcolor="light" routerDirection="'root'"
+                      routerLink="/public/home">
+              <ion-icon slot="start" name="home"></ion-icon>
+              <ion-label>Home</ion-label>
+            </ion-item>
+            <ion-item ngcolor="light" routerDirection="'root'"
+                      routerLink="public/member-access">
+              <ion-icon slot="start" name="people"></ion-icon>
+              <ion-label>Member Access</ion-label>
+            </ion-item>
+            <ion-item ngcolor="light" routerDirection="'root'"
+                      routerLink="/public/contact">
+              <ion-icon slot="start" name="mail"></ion-icon>
+              <ion-label>Contact</ion-label>
+            </ion-item>
+            <ion-item *ngIf="authService.user$ | async as user" ngcolor="light"
+                      routerDirection="'root'" routerLink="/member">
+              <ion-icon slot="start" name="person"></ion-icon>
+              <ion-label>Member</ion-label>
+            </ion-item>
+            <ion-item *ngIf="authService.user$ | async as user" ngcolor="light"
+                      routerDirection="'root'" routerLink="/social">
+              <ion-icon slot="start" name="today"></ion-icon>
+              <ion-label>Social</ion-label>
+            </ion-item>
+            <ion-item *ngIf="authService.user$ | async as user" ngcolor="light"
+                      routerDirection="'root'" routerLink="/sfca-business">
+              <ion-icon slot="start" name="briefcase"></ion-icon>
+              <ion-label>SFCA Business</ion-label>
+            </ion-item>
+            <ion-item *ngIf="authService.user$ | async as user" ngcolor="light"
+                      routerDirection="'root'" routerLink="/filming">
+              <ion-icon slot="start" name="film"></ion-icon>
+              <ion-label>Filming</ion-label>
+            </ion-item>
+            <ion-item *ngIf="authService.user$ | async as user" ngcolor="light"
+                      routerDirection="'root'" routerLink="/security">
+              <ion-icon slot="start" name="lock"></ion-icon>
+              <ion-label>Security</ion-label>
+            </ion-item>
+            <ion-item *ngIf="authService.user$ | async as user" ngcolor="light"
+                      routerDirection="'root'" routerLink="/directory">
+              <ion-icon slot="start" name="book"></ion-icon>
+              <ion-label>Directory</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>

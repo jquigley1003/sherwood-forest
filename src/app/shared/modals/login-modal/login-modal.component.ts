@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-modal',
@@ -15,7 +16,8 @@ export class LoginModalComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private formBuilder: FormBuilder,
-              private modalCtrl: ModalController) {
+              private modalCtrl: ModalController,
+              private router: Router) {
     this.logInForm = this.formBuilder.group({
       email: ['', (Validators.required, Validators.pattern(".+\@.+\..+"))],
       password: ['', Validators.required]
@@ -34,6 +36,7 @@ export class LoginModalComponent implements OnInit {
   OnGoogleLogin() {
     this.authService.googleLogin();
     this.modalCtrl.dismiss();
+    this.router.navigate(['/member']);
   }
 
   closeModal() {
