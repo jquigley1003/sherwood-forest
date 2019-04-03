@@ -4,22 +4,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { LoginModalComponent } from './login-modal.component';
-import { RegisterModalModule } from '../register-modal/register-modal.module';
+import { ContactFormComponent } from './contact-form.component';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,
-    RegisterModalModule
+    ReactiveFormsModule
   ],
   declarations: [
-    LoginModalComponent
+    ContactFormComponent
   ],
-  entryComponents: [
-    LoginModalComponent
+  exports: [
+    ContactFormComponent
   ]
 })
-export class LoginModalModule {}
+export class ContactFormModule {}

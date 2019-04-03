@@ -4,7 +4,7 @@
       <ion-col>
         <h2 text-center>Member Access</h2>
 
-        <form [formGroup]="logInForm" (ngSubmit)="OnLogInForm()">
+        <form [formGroup]="logInForm" (ngSubmit)="onLogInForm()">
           <ion-item>
             <ion-label position="floating">Email</ion-label>
             <ion-input type="email" formControlName="email" required></ion-input>
@@ -21,15 +21,17 @@
             </ion-col>
           </ion-row>
         </form>
-        <ion-button color="primary" (click)="OnGoogleLogin()">
+        <!-- Remove Google Login Button after email/password works -->
+        <ion-button color="primary" (click)="onGoogleLogin()">
           <ion-icon slot="start" name="logo-google"></ion-icon>
           Login with Google
         </ion-button>
+        <!-- Button above to be removed -->
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col text-center>
-        <p class="small-italic">Not a member? <a>Register here.</a><br>
+        <p class="small-italic">Not a member? <a (click)="presentRegisterModal()">Register here.</a><br>
           Sherwood Forest residents only</p>
       </ion-col>
     </ion-row>

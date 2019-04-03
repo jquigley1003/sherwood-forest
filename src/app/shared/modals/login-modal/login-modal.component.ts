@@ -5,6 +5,7 @@ import { ModalController } from '@ionic/angular';
 
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { RegisterModalComponent } from '../register-modal/register-modal.component';
 
 @Component({
   selector: 'app-login-modal',
@@ -26,17 +27,27 @@ export class LoginModalComponent implements OnInit {
 
   ngOnInit() {}
 
-  OnLogInForm() {
+  async onLogInForm() {
     const { email, password } = this.logInForm.value;
-    this.authService.signInUser(email, password);
-    this.logInForm.reset();
-    this.modalCtrl.dismiss();
+    await this.authService.signInUser(email, password);
+    await this.logInForm.reset();
+    await this.modalCtrl.dismiss();
+    this.router.navigate(['/member']);
   }
 
-  OnGoogleLogin() {
-    this.authService.googleLogin();
-    this.modalCtrl.dismiss();
+  async onGoogleLogin() {
+    await this.authService.googleLogin();
+    await this.modalCtrl.dismiss();
     this.router.navigate(['/member']);
+  }
+
+  async presentRegisterModal() {
+    await this.closeModal();
+    const modal = await this.modalCtrl.create({
+      component: RegisterModalComponent,
+      componentProps: {}
+    });
+    return await modal.present();
   }
 
   closeModal() {

@@ -1,0 +1,29 @@
+<ion-grid padding-top>
+  <ion-row>
+    <ion-col size="2"></ion-col>
+    <ion-col size="8">
+      <ion-header text-center padding>
+        Send a Message to our Board
+      </ion-header>
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmitForm()">
+        <ion-item>
+          <ion-label position="floating">First & Last Name</ion-label>
+          <ion-input type="text" formControlName="name"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input type="email" formControlName="email" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Message</ion-label>
+          <ion-textarea formControlName="message"></ion-textarea>
+        </ion-item>
+        <ion-button type="submit" [disabled]="!contactForm.valid" >
+          Submit
+        </ion-button>
+      </form>
+    </ion-col>
+    <ion-col size="2"></ion-col>
+  </ion-row>
+</ion-grid>
+
