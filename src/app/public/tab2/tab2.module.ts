@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 
 import { Tab2Page } from './tab2.page';
 import { LoginModalModule } from '../../shared/modals/login-modal/login-modal.module';
+import { LogoutModalModule } from '../../shared/modals/logout-modal/logout-modal.module';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { LoginModalModule } from '../../shared/modals/login-modal/login-modal.mo
     CommonModule,
     FormsModule,
     RouterModule.forChild([{ path: '', component: Tab2Page }]),
-    LoginModalModule
+    LoginModalModule,
+    LogoutModalModule
   ],
   declarations: [
     Tab2Page

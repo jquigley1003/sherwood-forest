@@ -30,7 +30,8 @@ const routes: Routes = [
   { path: 'directory',
     loadChildren: './membership/directory/directory.module#DirectoryPageModule',
     canActivate: [AuthGuard]
-  }
+  },
+  { path: 'admin', loadChildren: './admin/admin.module#AdminPageModule' }
 ];
 @NgModule({
   imports: [

@@ -70,7 +70,7 @@ export class AuthService {
           this.toastService.presentToast('Welcome back to Sherwood Forest Civic Association!', true, 'top', 'Close', 3000);
           credential.user.getIdTokenResult()
             .then((idTokenResult) => {
-              if(!idTokenResult.claims.subscriber) {
+              if(!idTokenResult.claims.pendingMember) {
                 return this.updateUserData(credential.user);
               } else {
                 this.initCheckForAdmin();
@@ -164,7 +164,7 @@ export class AuthService {
         this.toastService.presentToast('Welcome to Sherwood Forest Civic Association!', true, 'top', 'Close', 3000);
         credential.user.getIdTokenResult()
           .then((idTokenResult) => {
-            if(!idTokenResult.claims.subscriber) {
+            if(!idTokenResult.claims.pendingMember) {
               return this.updateUserData(credential.user);
             } else {
               this.initCheckForAdmin();

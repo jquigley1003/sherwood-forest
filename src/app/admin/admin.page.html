@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Admin
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <p>This is where you can view users and contact messages</p>
+  <ion-list>
+    <ion-item *ngFor="let user of allUsers | async" lines="full" value="user.uid">
+      <ion-label text-wrap>
+        <ion-text>
+          <h1>{{ user.displayName }}</h1>
+        </ion-text>
+        <ion-text>
+          <h1>{{ user.uid }}</h1>
+        </ion-text>
+        <ion-text>
+          <h3>{{ user.email }}</h3>
+        </ion-text>
+        <ion-button color="secondary" (click)="addAdmin( user )">
+          Add Admin Role
+        </ion-button>
+        <ion-button color="danger" (click)="deleteUser( user.uid )">
+          Delete User
+        </ion-button>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

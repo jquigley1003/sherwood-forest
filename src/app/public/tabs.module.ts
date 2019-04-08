@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { TabsPageRoutingModule } from './tabs.router.module';
 import { PublicPage } from './tabs.page';
 import { LoginModalModule } from '../shared/modals/login-modal/login-modal.module';
+import { LogoutModalModule } from '../shared/modals/logout-modal/logout-modal.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { LoginModalModule } from '../shared/modals/login-modal/login-modal.modul
     CommonModule,
     FormsModule,
     TabsPageRoutingModule,
-    LoginModalModule
+    LoginModalModule,
+    LogoutModalModule
   ],
   declarations: [
     PublicPage

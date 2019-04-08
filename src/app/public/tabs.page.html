@@ -6,9 +6,14 @@
       <ion-label>Home</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button (click)="presentLoginModal()">
+    <ion-tab-button *ngIf="!(loggedIn$ | async)" (click)="presentLoginModal()">
       <ion-icon name="people"></ion-icon>
       <ion-label>Member Access</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button *ngIf="loggedIn$ | async" (click)="presentLogoutModal()">
+      <ion-icon name="log-out"></ion-icon>
+      <ion-label>Member Logout</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="contact">
