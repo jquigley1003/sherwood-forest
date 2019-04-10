@@ -11,7 +11,6 @@
           <ion-input type="text" formControlName="firstName" required></ion-input>
         </ion-item>
         <ion-item>
-        <ion-item>
           <ion-label position="floating">Last Name</ion-label>
           <ion-input type="text" formControlName="lastName" required></ion-input>
         </ion-item>
@@ -47,7 +46,7 @@
           <ion-input type="email" formControlName="email" required></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">Birthday</ion-label>
+          <ion-label>Birthday</ion-label>
           <ion-input type="date" formControlName="birthDate"></ion-input>
         </ion-item>
         <ion-item>
@@ -55,7 +54,7 @@
           <ion-input type="text" formControlName="occupation"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">Resident Since</ion-label>
+          <ion-label>Resident Since</ion-label>
           <ion-input type="date" formControlName="residentSince"></ion-input>
         </ion-item>
         <ion-button type="submit" [disabled]="!userForm.valid" >

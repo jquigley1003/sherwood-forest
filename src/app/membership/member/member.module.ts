@@ -6,6 +6,7 @@ import { Routes, RouterModule} from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { MemberPage } from './member.page';
+import { UserModalModule } from '../../shared/modals/user-modal/user-modal.module';
 
 const routes: Routes = [
   {
@@ -19,7 +20,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    UserModalModule
   ],
   declarations: [MemberPage]
 })

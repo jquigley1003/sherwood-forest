@@ -13,18 +13,32 @@ import { ToastService } from '../../services/toast.service';
 export class UserFormComponent implements OnInit {
 
   userForm: FormGroup;
+  currentUser;
+
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
               private toastService: ToastService,
               private router: Router) {
     this.userForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', (Validators.required, Validators.pattern(".+\@.+\..+"))],
-      message: ['']
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      streetNumber: ['', Validators.required],
+      streetName: ['', Validators.required],
+      subAddress: [''],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      zipCode: ['', Validators.required],
+      phone: ['', Validators.required],
+      email: [this.currentUser.email, (Validators.required, Validators.pattern(".+\@.+\..+"))],
+      birthDate: [''],
+      occupation: [''],
+      residentSince: ['']
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.currentUser = this.userService.fetchUser();
+  }
 
 }
