@@ -20,6 +20,8 @@ export class UserFormComponent implements OnInit {
               private userService: UserService,
               private toastService: ToastService,
               private router: Router) {
+    this.currentUser = this.userService.fetchUser();
+    console.log(this.currentUser.email);
     this.userForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -30,7 +32,7 @@ export class UserFormComponent implements OnInit {
       state: ['', Validators.required],
       zipCode: ['', Validators.required],
       phone: ['', Validators.required],
-      email: [this.currentUser.email, (Validators.required, Validators.pattern(".+\@.+\..+"))],
+      email: [this.currentUser.email || 'test.com', (Validators.required, Validators.pattern(".+\@.+\..+"))],
       birthDate: [''],
       occupation: [''],
       residentSince: ['']
@@ -38,7 +40,8 @@ export class UserFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentUser = this.userService.fetchUser();
+
   }
+
 
 }

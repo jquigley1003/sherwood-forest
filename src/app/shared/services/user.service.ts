@@ -24,7 +24,7 @@ export class UserService {
   }
 
   fetchUser() {
-    return this.dbService.doc$(this.authService.uid());
+    return this.dbService.doc$('users/'+this.authService.uid());
   }
 
   makeUserAdmin(user) {
