@@ -4,27 +4,25 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { DbService } from './db.service';
 import { ToastService } from './toast.service';
 import { AuthService } from './auth.service';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   msg;
-  currentUser$: Observable<any> = this.authService.user$;
 
   constructor(private authService: AuthService,
               private dbService: DbService,
               private afFunctions: AngularFireFunctions,
-              private toastService: ToastService) { }
+              private toastService: ToastService) {}
 
 
   fetchUsers() {
     return this.dbService.collection$('users');
   }
 
-  fetchUser() {
-    return this.dbService.doc$('users/'+this.authService.uid());
+  fetchUser(uid) {
+    return this.dbService.doc$('users/' + uid);
   }
 
   makeUserAdmin(user) {

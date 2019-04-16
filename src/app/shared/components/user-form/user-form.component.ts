@@ -2,8 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { User } from '../../../models/user.model';
 import { UserService } from '../../services/user.service';
 import { ToastService } from '../../services/toast.service';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-user-form',
@@ -13,15 +17,17 @@ import { ToastService } from '../../services/toast.service';
 export class UserFormComponent implements OnInit {
 
   userForm: FormGroup;
-  currentUser;
-
+  currentUser$: Observable<any>;
+  uid;
 
   constructor(private formBuilder: FormBuilder,
+              private authService: AuthService,
               private userService: UserService,
               private toastService: ToastService,
               private router: Router) {
-    this.currentUser = this.userService.fetchUser();
-    console.log(this.currentUser.email);
+  }
+
+  ngOnInit() {
     this.userForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -32,16 +38,26 @@ export class UserFormComponent implements OnInit {
       state: ['', Validators.required],
       zipCode: ['', Validators.required],
       phone: ['', Validators.required],
-      email: [this.currentUser.email || 'test.com', (Validators.required, Validators.pattern(".+\@.+\..+"))],
+      email: ['test.com', (Validators.required, Validators.pattern(".+\@.+\..+"))],
       birthDate: [''],
       occupation: [''],
       residentSince: ['']
     });
+
+    this.authService.uid()
+      .then(result => {
+        this.uid = result;
+      })
+      .then(() => {
+        this.getUserData();
+      });
   }
 
-  ngOnInit() {
-
+  getUserData() {
+    this.currentUser$ = this.userService.fetchUser(this.uid);
+      this.currentUser$.subscribe(data => {
+        this.userForm.patchValue(data);
+        console.log(data);
+      });
   }
-
-
 }
