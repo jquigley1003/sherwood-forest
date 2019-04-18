@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ModalController } from '@ionic/angular';
 
@@ -11,11 +11,18 @@ import { UserModalComponent } from '../../shared/modals/user-modal/user-modal.co
   styleUrls: ['./member.page.scss'],
 })
 export class MemberPage implements OnInit {
+  user;
+  currentUser;
+  subscription;
 
   constructor(private authService: AuthService,
               private modalCtrl: ModalController) { }
 
   ngOnInit() {
+    this.subscription = this.authService.user$.subscribe(data => {
+      this.user = data;
+      this.currentUser = this.user.displayName.firstName + ' ' + this.user.displayName.lastName;
+    });
   }
 
   async presentUserModal() {
@@ -28,5 +35,9 @@ export class MemberPage implements OnInit {
 
   logOut() {
     this.authService.signOut();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

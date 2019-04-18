@@ -21,10 +21,6 @@ export class UserService {
     return this.dbService.collection$('users');
   }
 
-  fetchUser(uid) {
-    return this.dbService.doc$('users/' + uid);
-  }
-
   makeUserAdmin(user) {
     this.afFunctions.httpsCallable('addAdmin')(user)
       .toPromise()
@@ -43,10 +39,19 @@ export class UserService {
       });
   }
 
+  updateUser(path, data) {
+    this.dbService.updateAt(path, data);
+  }
+
   deleteUser(userPath) {
     this.dbService.delete(userPath)
+      .then(() => {
+        this.toastService.presentToast('The member has been deleted!',
+          true, 'middle', 'Ok', 3000 );
+      })
       .catch(err => {
-        this.toastService.presentToast('You do not have the credentials to delete members!', true, top, 'OK', 3000);
+        this.toastService.presentToast('You do not have the credentials to delete members!',
+          true, 'middle', 'OK', 3000);
         console.log(err);
       });
   }

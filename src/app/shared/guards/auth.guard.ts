@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 
 import { AlertController } from '@ionic/angular';
 
@@ -12,7 +12,8 @@ export class AuthGuard implements CanActivate {
 
   constructor(
     private authService: AuthService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private router: Router
   ) {}
 
   async canActivate(
@@ -30,6 +31,7 @@ export class AuthGuard implements CanActivate {
         buttons: ['OK']
       });
       await alert.present();
+      this.router.navigate(['/']);
     }
     return isLoggedIn;
   }
