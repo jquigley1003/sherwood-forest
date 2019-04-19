@@ -7,12 +7,15 @@ import { IonicModule } from '@ionic/angular';
 
 import { Tab1Page } from './tab1.page';
 
+import { FooterModule } from '../../shared/components/footer/footer.module';
+
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    RouterModule.forChild([{ path: '', component: Tab1Page }])
+    RouterModule.forChild([{ path: '', component: Tab1Page }]),
+    FooterModule
   ],
   declarations: [Tab1Page]
 })

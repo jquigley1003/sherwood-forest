@@ -1,6 +1,15 @@
 <ion-content>
-  <h1>Member Profile</h1>
-  <app-user-form></app-user-form>
-   <ion-button fill="clear" (click)="closeModal()">Cancel</ion-button>
+    <ion-toolbar>
+        <h1>Member Profile</h1>
+        <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="closeModal()">Cancel</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+    <app-user-form></app-user-form>
+    <ion-toolbar>
+    <ion-buttons slot="end">
+        <ion-button fill="clear" (click)="closeModal()">Cancel</ion-button>
+    </ion-buttons>
+    </ion-toolbar>
 </ion-content>
 

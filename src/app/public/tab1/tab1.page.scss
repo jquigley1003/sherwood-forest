@@ -3,6 +3,11 @@
   overflow: hidden;
 }
 
+.welcome-card a {
+  text-decoration: none;
+  color: var(--ion-dark-tint);
+}
+
 ion-avatar {
   position: relative;
   left: 50%;

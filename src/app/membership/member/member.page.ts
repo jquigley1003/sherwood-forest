@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ModalController } from '@ionic/angular';
 
@@ -16,6 +17,7 @@ export class MemberPage implements OnInit {
   subscription;
 
   constructor(private authService: AuthService,
+              private router: Router,
               private modalCtrl: ModalController) { }
 
   ngOnInit() {
@@ -31,6 +33,10 @@ export class MemberPage implements OnInit {
       componentProps: {}
     });
     return await modal.present();
+  }
+
+  goHome() {
+    this.router.navigate(['/']);
   }
 
   logOut() {

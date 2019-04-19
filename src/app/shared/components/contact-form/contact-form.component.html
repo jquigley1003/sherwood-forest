@@ -7,15 +7,15 @@
       </ion-header>
       <form [formGroup]="contactForm" (ngSubmit)="onSubmitForm()">
         <ion-item>
-          <ion-label position="floating">First & Last Name</ion-label>
+          <ion-label position="floating">Your First & Last Name</ion-label>
           <ion-input type="text" formControlName="name"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">Email</ion-label>
+          <ion-label position="floating">Your Email</ion-label>
           <ion-input type="email" formControlName="email" required></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">Message</ion-label>
+          <ion-label position="floating">Message to Board</ion-label>
           <ion-textarea formControlName="message"></ion-textarea>
         </ion-item>
         <ion-button type="submit" [disabled]="!contactForm.valid" >

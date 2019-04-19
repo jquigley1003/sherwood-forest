@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
@@ -8,9 +10,14 @@ import { AuthService } from '../../shared/services/auth.service';
 })
 export class SfcaBusinessPage implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+              private router: Router) { }
 
   ngOnInit() {
+  }
+
+  goHome() {
+    this.router.navigate(['/']);
   }
 
   logOut() {

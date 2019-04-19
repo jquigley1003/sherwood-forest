@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
 import { SocialPage } from './social.page';
+import { CalendarModule } from '../../shared/components/calendar/calendar.module';
 
 const routes: Routes = [
   {
@@ -17,9 +18,9 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    CalendarModule
   ],
   declarations: [SocialPage]
 })
