@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { SfcaBusinessPage } from './sfca-business.page';
+import { FooterModule } from '../../shared/components/footer/footer.module';
 
 const routes: Routes = [
   {
@@ -19,7 +20,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    FooterModule
   ],
   declarations: [SfcaBusinessPage]
 })

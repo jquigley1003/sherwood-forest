@@ -10,10 +10,13 @@ import { AuthService } from '../../shared/services/auth.service';
 })
 export class SocialPage implements OnInit {
 
+  currentDate: Date;
+
   constructor(private authService: AuthService,
               private router: Router) { }
 
   ngOnInit() {
+    this.currentDate = new Date();
   }
 
   goHome() {

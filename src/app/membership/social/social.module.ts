@@ -6,7 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { SocialPage } from './social.page';
-import { CalendarModule } from '../../shared/components/calendar/calendar.module';
+import { MyCalendarModule } from '../../shared/components/calendar/calendar.module';
+import { FooterModule } from '../../shared/components/footer/footer.module';
 
 const routes: Routes = [
   {
@@ -20,7 +21,8 @@ const routes: Routes = [
     CommonModule,
     IonicModule,
     RouterModule.forChild(routes),
-    CalendarModule
+    MyCalendarModule,
+    FooterModule
   ],
   declarations: [SocialPage]
 })

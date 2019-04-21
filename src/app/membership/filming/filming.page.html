@@ -6,7 +6,36 @@
     <ion-button slot="end" color="tertiary" (click)="logOut()">Logout</ion-button>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-img src="../../assets/sfca-filming.jpg"></ion-img>
+        <h1>Filming Information</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate
+          eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit
+          tincidunt id. Sed rhoncus, tortor sed eleifend tristique, tortor mauris molestie elit,
+          et lacinia ipsum quam nec dui.</p>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-xl="3" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+        <img class="filming-img" src="../../assets/director.jpg">
+      </ion-col>
+      <ion-col size-xl="3" size-lg="6" size-md="6" size-sm="12" size-xs="12" text-center class="ion-align-self-center">
+        <h2>Scheduled Filming</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-xl="3" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+        <img class="filming-img" src="../../assets/camera.jpg">
+      </ion-col>
+      <ion-col size-xl="3" size-lg="6" size-md="6" size-sm="12" size-xs="12" text-center class="ion-align-self-center">
+        <h2>Past Filming Activity</h2>
+        <h2>Filming Reference Documents</h2>
+        <h2>Who to Contact</h2>
+      </ion-col>
+    </ion-row>
+    <app-footer></app-footer>
+  </ion-grid>
 </ion-content>

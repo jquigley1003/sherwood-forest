@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { NgCalendarModule } from 'ionic2-calendar';
 
-import { CalendarComponent } from './calendar.component';
+import { MyCalendarComponent } from './calendar.component';
 
 @NgModule({
   imports: [
@@ -17,10 +17,10 @@ import { CalendarComponent } from './calendar.component';
     NgCalendarModule
   ],
   declarations: [
-    CalendarComponent
+    MyCalendarComponent
   ],
   exports: [
-    CalendarComponent
+    MyCalendarComponent
   ]
 })
-export class CalendarModule { }
+export class MyCalendarModule { }

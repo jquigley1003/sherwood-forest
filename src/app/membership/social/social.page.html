@@ -6,7 +6,52 @@
     <ion-button slot="end" color="tertiary" (click)="logOut()">Logout</ion-button>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-<app-calendar></app-calendar>
+  <ion-grid>
+    <ion-row>
+      <ion-col text-center>
+        <ion-img class="home-image" src="/assets/ForestTannion2019.jpg"></ion-img>
+        <h1 class="home-title">Welcome to Sherwood Forest Civic Association</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate
+          eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit
+          tincidunt id. Sed rhoncus, tortor sed eleifend tristique, tortor mauris molestie elit,
+          et lacinia ipsum quam nec dui.</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <app-calendar></app-calendar>
+      </ion-col>
+      <ion-col>
+        <ion-list>
+          <ion-item>
+            <ion-icon slot="start" name="calendar"></ion-icon>
+            All Events
+          </ion-item>
+          <ion-item>
+            <ion-icon slot="start" name="people"></ion-icon>
+            Clubs and Groups
+          </ion-item>
+          <ion-item>
+            <ion-icon slot="start" name="today"></ion-icon>
+            Blog
+          </ion-item>
+        </ion-list>
+        <ion-card>
+          <img src="../../assets/LionIsland2.jpg">
+          <ion-card-header>
+            <ion-card-title>
+              {{ currentDate | date }}
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            (Events Will Appear Here When User Clicks Calendar)
+          </ion-card-content>
+          <ion-button>More Event Detail</ion-button>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <app-footer></app-footer>
+  </ion-grid>
 </ion-content>
+
