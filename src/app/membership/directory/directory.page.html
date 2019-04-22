@@ -6,7 +6,26 @@
     <ion-button slot="end" color="tertiary" (click)="logOut()">Logout</ion-button>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-img src="../../assets/atlanta-midtown.jpg"></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-xl="4" size-lg="6" size-md="6" size-sm="12" size-xs="12" class="ion-align-self-center">
+        <img  src="../../assets/number9.png">
+        <h2 class="h-font">Directory</h2>
+        <p class="p-font">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate
+          eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit
+          tincidunt id. Sed rhoncus, tortor sed eleifend tristique, tortor mauris molestie elit,
+          et lacinia ipsum quam nec dui.</p>
+      </ion-col>
+      <ion-col size-xl="4" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+        <img class="directory-img" src="../../assets/mailbox.png">
+      </ion-col>
+    </ion-row>
+    <app-footer></app-footer>
+  </ion-grid>
 </ion-content>
