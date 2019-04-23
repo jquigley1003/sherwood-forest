@@ -16,6 +16,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireFunctionsModule, FunctionsRegionToken } from '@angular/fire/functions';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],

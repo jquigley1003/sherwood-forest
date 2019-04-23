@@ -17,6 +17,50 @@
   <ion-card-content>
     Welcome to the new Sherwood Forest Civic Association web app!
   </ion-card-content>
-  <ion-button (click)="presentUserModal()">Update Your Member Profile</ion-button>
+
 </ion-card>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-xl="3" size-lg="6" size-md="6" size-sm="12" size-xs="12" class="ion-align-self-center">
+        <p>2019 Dues Are Paid. Thank You!</p>
+        <p>Our neighborhood needs you!<br>Submit your 2019 dues and help us grow.</p>
+      </ion-col>
+      <ion-col size-xl="3" size-lg="6" size-md="6" size-sm="12" size-xs="12" text-center class="ion-align-self-center">
+        <ion-list lines="none">
+          <ion-item>
+            <ion-icon slot="start" name="folder"></ion-icon>
+            <ion-button (click)="presentUserModal()">Resident Documents</ion-button>
+          </ion-item>
+          <ion-item>
+            <ion-icon slot="start" name="cash"></ion-icon>
+            <ion-button (click)="presentUserModal()">Pay Dues</ion-button>
+          </ion-item>
+          <ion-item>
+            <ion-icon slot="start" name="person"></ion-icon>
+            <ion-button (click)="presentUserModal()">Update Your Member Profile</ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <h2>Upcoming Events</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row class="events">
+      <ion-col>
+        <p>Event 1</p>
+      </ion-col>
+      <ion-col>
+        <p>Event 2</p>
+      </ion-col>
+      <ion-col>
+        <p>Event 3</p>
+      </ion-col>
+      <ion-col>
+        <p>Event 4</p>
+      </ion-col>
+    </ion-row>
+    <app-footer></app-footer>
+  </ion-grid>
 </ion-content>

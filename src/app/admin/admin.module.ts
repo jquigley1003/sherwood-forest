@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { AdminPage } from './admin.page';
+import { OrderByPipe } from '../shared/pipes/order-by.pipe';
+
 
 const routes: Routes = [
   {
@@ -21,6 +23,9 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [AdminPage]
+  declarations: [
+    AdminPage,
+    OrderByPipe
+  ]
 })
 export class AdminPageModule {}
