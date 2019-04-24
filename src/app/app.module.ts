@@ -15,6 +15,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireFunctionsModule, FunctionsRegionToken } from '@angular/fire/functions';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
+import { LoginModalModule } from './shared/modals/login-modal/login-modal.module';
+import { LogoutModalModule } from './shared/modals/logout-modal/logout-modal.module';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { AngularFireMessagingModule } from '@angular/fire/messaging';
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireFunctionsModule,
-    AngularFireMessagingModule
+    AngularFireMessagingModule,
+    LoginModalModule,
+    LogoutModalModule
   ],
   providers: [
     StatusBar,

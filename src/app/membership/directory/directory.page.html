@@ -2,7 +2,6 @@
   <ion-toolbar>
     <ion-menu-button slot="start" color="primary"></ion-menu-button>
     <ion-img slot="start" src="/assets/sfca-logo.jpg" (click)="goHome()"></ion-img>
-    <ion-title>Directory</ion-title>
     <ion-button slot="end" color="tertiary" (click)="logOut()">Logout</ion-button>
   </ion-toolbar>
 </ion-header>
@@ -15,8 +14,14 @@
     </ion-row>
     <ion-row class="ion-justify-content-center">
       <ion-col size-xl="4" size-lg="6" size-md="6" size-sm="12" size-xs="12" class="ion-align-self-center">
-        <img  src="../../assets/number9.png">
-        <h2 class="h-font">Directory</h2>
+        <ion-row>
+          <ion-col size="6">
+            <img  src="../../assets/number9.png">
+          </ion-col>
+          <ion-col size="6" text-center>
+            <h2 class="h-font">Directory<br>of<br>SFCA Residents</h2>
+          </ion-col>
+        </ion-row>
         <p class="p-font">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate
           eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit
           tincidunt id. Sed rhoncus, tortor sed eleifend tristique, tortor mauris molestie elit,
@@ -26,6 +31,21 @@
         <img class="directory-img" src="../../assets/mailbox.png">
         <div class="directory-search">
           <ion-searchbar></ion-searchbar>
+        </div>
+        <div class="directory-result">
+          <ion-item *ngFor="let user of users" lines="full" value="user.uid">
+            <ion-avatar>
+              <img src="{{ user.photoURL }}">
+            </ion-avatar>
+            <ion-label text-wrap>
+              <ion-text>
+                <h1>{{ user.displayName.firstName + ' ' + user.displayName.lastName }}</h1>
+              </ion-text>
+              <ion-text>
+                <h1>{{ user.address.streetNumber + ' ' + user.address.streetName }}</h1>
+              </ion-text>
+            </ion-label>
+          </ion-item>
         </div>
       </ion-col>
     </ion-row>

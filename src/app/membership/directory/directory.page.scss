@@ -9,9 +9,17 @@ ion-content {
 }
 
 .directory-search {
-  width: 100%;
+  width: 90%;
   position: absolute;
-  top: 20px;
+  top: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.directory-result {
+  width: 85%;
+  position: absolute;
+  top: 25%;
   left: 50%;
   transform: translateX(-50%);
 }

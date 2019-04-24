@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { User } from '../models/user.model';
 
@@ -13,17 +13,17 @@ import { ToastService } from '../shared/services/toast.service';
 })
 export class AdminPage implements OnInit {
   allUsers;
-  members;
-  usersSubscribe;
+  users;
+  usersSubscription;
 
   constructor(private userService: UserService,
               private toastService: ToastService) { }
 
   ngOnInit() {
     this.allUsers = this.userService.fetchUsers();
-    this.usersSubscribe = this.allUsers.subscribe(data => {
-      this.members = data;
-      this.members.sort((a,b) => (a.address.streetNumber + a.address.streetName).localeCompare((b.address.streetNumber + b.address.streetName)));
+    this.usersSubscription = this.allUsers.subscribe(data => {
+      this.users = data;
+      this.users.sort((a,b) => (a.address.streetNumber + a.address.streetName).localeCompare((b.address.streetNumber + b.address.streetName)));
     });
   }
 
@@ -55,4 +55,7 @@ export class AdminPage implements OnInit {
     this.userService.deleteUser(`users/${uid}`);
   }
 
+  ngOnDestroy() {
+    this.usersSubscription.unsubscribe();
+  }
 }

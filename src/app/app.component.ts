@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AuthService } from './shared/services/auth.service';
 import { Observable } from 'rxjs';
+import { LoginModalComponent } from './shared/modals/login-modal/login-modal.component';
+import { LogoutModalComponent } from './shared/modals/logout-modal/logout-modal.component';
 
 @Component({
   selector: 'app-root',
@@ -66,7 +68,8 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private authService: AuthService
+    private authService: AuthService,
+    private modalCtrl: ModalController
   ) {
     this.initializeApp();
   }
@@ -76,5 +79,21 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+
+  async presentLoginModal() {
+    const modal = await this.modalCtrl.create({
+      component: LoginModalComponent,
+      componentProps: {}
+    });
+    return await modal.present();
+  }
+
+  async presentLogoutModal() {
+    const modal = await this.modalCtrl.create({
+      component: LogoutModalComponent,
+      componentProps: {}
+    });
+    return await modal.present();
   }
 }
