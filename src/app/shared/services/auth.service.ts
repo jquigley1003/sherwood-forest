@@ -51,13 +51,28 @@ export class AuthService {
       .createUserWithEmailAndPassword(email, password)
       .then(credential => {
         this.alertService.presentAlert(
-          'Email Has Been Sent For Verification',
-          'Please Check Your Email',
-          'For your security, please check your email and click the link for verification.',
-          ['OK']
-        )
-        this.sendEmailVerification();
+          'Member has been added to SFCA Web App',
+          'This is for the initial setup',
+          'Remember to update the full information for this member',
+          // 'Email Has Been Sent For Verification',
+          // 'Please Check Your Email',
+          // 'For your security, please check your email and click the link for verification.',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('Confirm Ok');
+              this.signOut();
+            }
+          }]
+        );
+        // this.sendEmailVerification();
+        // ** remember to change cloud function when restoring
+        // sendEmailVerification function and alert! **
         return this.updateUserData(credential.user);
+      })
+      .then(() => {
+        this.signOut();
       })
       .catch(error => this.handleError(error));
   }
@@ -185,7 +200,14 @@ export class AuthService {
     const data: User = {
       uid: user.uid,
       email: user.email || null,
-      displayName: user.displayName || user.email,
+      displayName: {
+        firstName: 'New',
+        lastName: 'Member'
+      },
+      address: {
+        streetNumber: 'Sherwood',
+        streetName: 'Forest'
+      },
       photoURL: user.photoURL || 'https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/anon.png?alt=media&token=37218266-cecd-4525-bc51-909f388f773f',
       roles: {
         admin: false,

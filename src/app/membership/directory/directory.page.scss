@@ -1,3 +1,7 @@
+ion-button {
+  --color-activated: #ffffff;
+}
+
 ion-content {
   --background: url(/assets/directory-wall.jpg);
   --background-repeat: no-repeat;
@@ -11,7 +15,7 @@ ion-content {
 .directory-search {
   width: 90%;
   position: absolute;
-  top: 8%;
+  top: 1%;
   left: 50%;
   transform: translateX(-50%);
 }

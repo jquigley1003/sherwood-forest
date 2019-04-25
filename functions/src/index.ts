@@ -17,6 +17,8 @@ export const createUser = functions.auth.user().onCreate((user) => {
     pendingMember: true,
     approvedMember: false,
     admin: false
+  }).then(() => {
+    return setEmailVerifiedTrue(user.uid);
   });
 });
 
@@ -49,3 +51,11 @@ export const sendContactMessage = functions.firestore
       return null
     }
   });
+
+function setEmailVerifiedTrue(uid: string) {
+  return admin.auth().updateUser(uid, {
+    emailVerified: true
+  }).then(userRecord => {
+    console.log('Successfully updated user: ', userRecord.toJSON());
+  })
+}

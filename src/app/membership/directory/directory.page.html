@@ -20,6 +20,12 @@
           </ion-col>
           <ion-col size="6" text-center>
             <h2 class="h-font">Directory<br>of<br>SFCA Residents</h2>
+            <ion-button [color]="statusLast" (click)="queryLastName()">
+              Last Name
+            </ion-button>
+            <ion-button [color]="statusStreet" (click)="queryStreetName()">
+              Street Name
+            </ion-button>
           </ion-col>
         </ion-row>
         <p class="p-font">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate
@@ -30,7 +36,12 @@
       <ion-col class="directory" size-xl="4" size-lg="6" size-md="6" size-sm="12" size-xs="12">
         <img class="directory-img" src="../../assets/mailbox.png">
         <div class="directory-search">
-          <ion-searchbar></ion-searchbar>
+          <ion-searchbar showCancelButton (ionInput)="filterByLastName($event)"
+                         *ngIf="filterBy == 'lastName'" placeholder="Search by Last Name">
+          </ion-searchbar>
+          <ion-searchbar showCancelButton (ionInput)="filterByStreetName($event)"
+                         *ngIf="filterBy == 'streetName'"placeholder="Search by Street Name">
+          </ion-searchbar>
         </div>
         <div class="directory-result">
           <ion-item *ngFor="let user of users" lines="full" value="user.uid">
