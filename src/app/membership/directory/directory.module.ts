@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { DirectoryPage } from './directory.page';
 import { FooterModule } from '../../shared/components/footer/footer.module';
+import { DirectoryModalModule } from '../../shared/modals/directory-modal/directory-modal.module';
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    FooterModule
+    FooterModule,
+    DirectoryModalModule
   ],
   declarations: [DirectoryPage]
 })

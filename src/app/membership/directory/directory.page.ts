@@ -1,8 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { ModalController } from '@ionic/angular';
+
 import { AuthService } from '../../shared/services/auth.service';
 import { UserService } from '../../shared/services/user.service';
+
+import { DirectoryModalComponent } from '../../shared/modals/directory-modal/directory-modal.component';
 
 @Component({
   selector: 'app-directory',
@@ -20,7 +24,8 @@ export class DirectoryPage implements OnInit {
 
   constructor(private authService: AuthService,
               private userService: UserService,
-              private router: Router) { }
+              private router: Router,
+              private modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.allUsers = this.userService.fetchUsers();
@@ -84,6 +89,20 @@ export class DirectoryPage implements OnInit {
         return false;
       }
     });
+  }
+
+  async presentDirectoryModal(user) {
+    const modal = await this.modalCtrl.create({
+      component: DirectoryModalComponent,
+      componentProps: {
+        photoURL: user.photoURL,
+        firstName: user.displayName.firstName,
+        lastName: user.displayName.lastName,
+        phone: user.phone,
+        residentSince: user.residentSince
+      }
+    });
+    return await modal.present();
   }
 
   goHome() {

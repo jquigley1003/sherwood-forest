@@ -48,7 +48,7 @@
 
         </div>
         <div class="directory-result">
-          <ion-item *ngFor="let user of users" lines="full" value="user.uid">
+          <ion-item *ngFor="let user of users" lines="full" value="user.uid" (click)="presentDirectoryModal(user)">
             <ion-avatar>
               <img src="{{ user.photoURL }}">
             </ion-avatar>
