@@ -14,6 +14,7 @@ ion-content {
 
 .directory-search {
   width: 90%;
+  max-width: 530px;
   position: absolute;
   top: 1%;
   left: 50%;
@@ -22,6 +23,9 @@ ion-content {
 
 .directory-result {
   width: 85%;
+  max-width: 530px;
+  height: 25em;
+  overflow: scroll;
   position: absolute;
   top: 25%;
   left: 50%;
@@ -31,6 +35,10 @@ ion-content {
 .directory-img {
   display: block;
   margin: 0 auto;
+}
+
+.toolbar-buttons {
+  --background: tranparent;
 }
 
 .h-font {

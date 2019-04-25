@@ -208,7 +208,8 @@ export class AuthService {
         streetNumber: 'Sherwood',
         streetName: 'Forest'
       },
-      photoURL: user.photoURL || 'https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/anon.png?alt=media&token=37218266-cecd-4525-bc51-909f388f773f',
+      photoURL: user.photoURL || 'https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/FrogBotanicalGarden.jpg?alt=media&token=0a0d35fd-7404-45c4-8032-8ec0f2eb92a9',
+      duesPaid: false,
       roles: {
         admin: false,
         pendingMember: true,

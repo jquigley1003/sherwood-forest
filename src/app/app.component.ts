@@ -4,7 +4,8 @@ import { ModalController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import { AuthService } from './shared/services/auth.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+
 import { Observable } from 'rxjs';
 import { LoginModalComponent } from './shared/modals/login-modal/login-modal.component';
 import { LogoutModalComponent } from './shared/modals/logout-modal/logout-modal.component';
@@ -14,7 +15,7 @@ import { LogoutModalComponent } from './shared/modals/logout-modal/logout-modal.
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
-  loggedIn$: Observable<any> = this.authService.user$;
+  loggedIn$: Observable<any> = this.afAuth.user;
 
   public appPages = [
     {
@@ -68,7 +69,7 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private authService: AuthService,
+    private afAuth: AngularFireAuth,
     private modalCtrl: ModalController
   ) {
     this.initializeApp();

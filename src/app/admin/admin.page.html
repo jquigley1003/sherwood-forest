@@ -14,6 +14,9 @@
   <ion-list>
     <ion-searchbar></ion-searchbar>
     <ion-item *ngFor="let user of users" lines="full" value="user.uid">
+      <ion-thumbnail slot="start">
+        <ion-img src="{{ user.photoURL }}"></ion-img>
+      </ion-thumbnail>
       <ion-label text-wrap>
         <ion-text>
           <h1>{{ user.displayName.firstName + ' ' + user.displayName.lastName }}</h1>
