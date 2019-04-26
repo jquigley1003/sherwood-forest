@@ -11,6 +11,9 @@ const routes: Routes = [
     loadChildren: './membership/social/social.module#SocialPageModule',
     canActivate: [AuthGuard]
   },
+  { path: 'social/islands',
+    loadChildren: './membership/social/islands/islands.module#IslandsPageModule'
+  },
   { path: 'member',
     loadChildren: './membership/member/member.module#MemberPageModule',
     canActivate: [AuthGuard]
@@ -31,7 +34,9 @@ const routes: Routes = [
     loadChildren: './membership/directory/directory.module#DirectoryPageModule',
     canActivate: [AuthGuard]
   },
-  { path: 'admin', loadChildren: './admin/admin.module#AdminPageModule' }
+  { path: 'admin',
+    loadChildren: './admin/admin.module#AdminPageModule'
+  }
 ];
 @NgModule({
   imports: [
