@@ -37,4 +37,4 @@ UserInterfaceState.xcuserstate
 src/environments/env.ts
 
 #firebase
-.firebase
+.firebase/
