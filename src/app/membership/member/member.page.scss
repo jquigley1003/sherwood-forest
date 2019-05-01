@@ -1,3 +1,13 @@
+.card-title {
+  position: absolute;
+  top: 30%;
+  width: 100%;
+  font-size: 6vw;
+  text-shadow: 3px 3px 8px #000000;
+  font-weight: bold;
+  color: #ffffff;
+}
+
 .events {
   background: var(--ion-color-primary-tint);
 }

@@ -5,11 +5,16 @@ import { ModalController } from '@ionic/angular';
 
 import { AuthService } from '../../shared/services/auth.service';
 import { UserModalComponent } from '../../shared/modals/user-modal/user-modal.component';
+import { slideTitleLeftTrigger, slideTitleRightTrigger } from '../../shared/components/animations/animations';
 
 @Component({
   selector: 'app-member',
   templateUrl: './member.page.html',
   styleUrls: ['./member.page.scss'],
+  animations: [
+    slideTitleRightTrigger,
+    slideTitleLeftTrigger
+  ]
 })
 export class MemberPage implements OnInit {
   user;

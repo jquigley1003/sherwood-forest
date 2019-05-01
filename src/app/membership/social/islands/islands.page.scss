@@ -4,10 +4,15 @@
 
 .islands-title {
   position: absolute;
-  top: 5%;
+  top: 0%;
   width: 100%;
   font-size: 6vw;
   text-shadow: 3px 3px 8px #000000;
   font-weight: bold;
   color: #ffffff;
+}
+
+ion-card-content {
+  height: 15em;
+  overflow: scroll;
 }

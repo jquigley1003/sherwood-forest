@@ -19,9 +19,19 @@ ion-avatar {
   text-align: center;
 }
 
-.home-title {
+.home-title1 {
   position: absolute;
   top: 30%;
+  width: 100%;
+  font-size: 6vw;
+  text-shadow: 3px 3px 8px #000000;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.home-title2 {
+  position: absolute;
+  top: 45%;
   width: 100%;
   font-size: 6vw;
   text-shadow: 3px 3px 8px #000000;

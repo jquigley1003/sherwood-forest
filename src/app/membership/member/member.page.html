@@ -2,27 +2,28 @@
   <ion-toolbar>
     <ion-menu-button slot="start" color="primary"></ion-menu-button>
     <ion-img slot="start" src="/assets/sfca-logo.jpg" (click)="goHome()"></ion-img>
-    <ion-title>Welcome {{currentUser}}</ion-title>
     <ion-button slot="end" color="tertiary" (click)="logOut()">Logout</ion-button>
   </ion-toolbar>
 </ion-header>
 <ion-content>
 <ion-card>
   <img src="../../assets/LionIsland2.jpg">
-  <ion-card-header>
-    <ion-card-title>
-      You are at the Member Page
-    </ion-card-title>
-  </ion-card-header>
-  <ion-card-content>
-    Welcome to the new Sherwood Forest Civic Association web app!
+  <ion-card-title class="card-title" text-center>
+    Welcome to the Member Page<br>
+    {{ currentUser }}
+  </ion-card-title>
+  <ion-card-content text-center>
+    <ion-button (click)="presentUserModal()">
+      <ion-icon slot="start" name="person"></ion-icon>
+      Update Your Member Profile
+    </ion-button>
+    <p>Thanks for using the new Sherwood Forest Civic Association web app!</p>
   </ion-card-content>
-
 </ion-card>
   <ion-grid>
     <ion-row class="ion-justify-content-center">
-      <ion-col size-xl="3" size-lg="6" size-md="6" size-sm="12" size-xs="12" class="ion-align-self-center">
-        <p *ngIf="user.duesPaid">2019 Dues Are Paid. Thank You!</p>
+      <ion-col size-xl="3" size-lg="6" size-md="6" size-sm="12" size-xs="12" class="ion-align-self-center" text-center>
+        <p *ngIf="user.duesPaid" @slideTitleRight>2019 Dues Are Paid. Thank You!</p>
         <p *ngIf="!user.duesPaid">Our neighborhood needs you!<br>Submit your 2019 dues and help
           us grow.</p>
       </ion-col>
