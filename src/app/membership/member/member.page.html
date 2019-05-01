@@ -17,15 +17,15 @@
       <ion-icon slot="start" name="person"></ion-icon>
       Update Your Member Profile
     </ion-button>
-    <p>Thanks for using the new Sherwood Forest Civic Association web app!</p>
+    <p *ngIf="user.duesPaid" @slideTitleRight>2019 Dues Are Paid. Thank You!</p>
+    <p *ngIf="!user.duesPaid" @slideTitleRight>Our neighborhood needs you!<br>Submit your 2019 dues and help
+      us grow.</p>
   </ion-card-content>
 </ion-card>
   <ion-grid>
     <ion-row class="ion-justify-content-center">
       <ion-col size-xl="3" size-lg="6" size-md="6" size-sm="12" size-xs="12" class="ion-align-self-center" text-center>
-        <p *ngIf="user.duesPaid" @slideTitleRight>2019 Dues Are Paid. Thank You!</p>
-        <p *ngIf="!user.duesPaid">Our neighborhood needs you!<br>Submit your 2019 dues and help
-          us grow.</p>
+        <p>Thanks for using the new Sherwood Forest Civic Association web app!</p>
       </ion-col>
       <ion-col size-xl="3" size-lg="6" size-md="6" size-sm="12" size-xs="12" text-center class="ion-align-self-center">
         <ion-list lines="none">

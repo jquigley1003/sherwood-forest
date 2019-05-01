@@ -20,6 +20,7 @@ export class MemberPage implements OnInit {
   user;
   currentUser;
   subscription;
+  currentYear: Date;
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -30,6 +31,8 @@ export class MemberPage implements OnInit {
       this.user = data;
       this.currentUser = this.user.displayName.firstName + ' ' + this.user.displayName.lastName;
     });
+
+    this.currentYear = new Date();
   }
 
   async presentUserModal() {
