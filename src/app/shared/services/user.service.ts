@@ -39,6 +39,60 @@ export class UserService {
       });
   }
 
+  makeUserApproved(user) {
+    this.afFunctions.httpsCallable('markApproved')(user)
+      .toPromise()
+      .then(resp => {
+        if(resp.error) {
+          this.msg = resp.error;
+        } else {
+          this.msg = resp.result;
+        }
+        this.toastService.presentToast(this.msg, true, top, 'OK', 3000);
+        console.log({resp});
+      })
+      .catch(err => {
+        this.toastService.presentToast(err.error, true, top, 'OK', 3000);
+        console.log({err});
+      });
+  }
+
+  makeUserPending(user) {
+    this.afFunctions.httpsCallable('markPending')(user)
+      .toPromise()
+      .then(resp => {
+        if(resp.error) {
+          this.msg = resp.error;
+        } else {
+          this.msg = resp.result;
+        }
+        this.toastService.presentToast(this.msg, true, top, 'OK', 3000);
+        console.log({resp});
+      })
+      .catch(err => {
+        this.toastService.presentToast(err.error, true, top, 'OK', 3000);
+        console.log({err});
+      });
+  }
+
+  removeAdminRole(user) {
+    this.afFunctions.httpsCallable('removeAdmin')(user)
+      .toPromise()
+      .then(resp => {
+        if(resp.error) {
+          this.msg = resp.error;
+        } else {
+          this.msg = resp.result;
+        }
+        this.toastService.presentToast(this.msg, true, top, 'OK', 3000);
+        console.log({resp});
+      })
+      .catch(err => {
+        this.toastService.presentToast(err.error, true, top, 'OK', 3000);
+        console.log({err});
+      });
+  }
+
   updateUser(path, data) {
     this.dbService.updateAt(path, data);
   }

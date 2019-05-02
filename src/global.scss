@@ -14,3 +14,10 @@ p {
   font-size: 1.5em;
 }
 
+ion-alert {
+  --height: 25vh !important;
+  --width: 80vw !important;
+  --min-width: 80vw;
+  --max-width: 80vw;
+}
+

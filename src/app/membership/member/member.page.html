@@ -17,8 +17,8 @@
       <ion-icon slot="start" name="person"></ion-icon>
       Update Your Member Profile
     </ion-button>
-    <p *ngIf="user.duesPaid" @slideTitleRight>2019 Dues Are Paid. Thank You!</p>
-    <p *ngIf="!user.duesPaid" @slideTitleRight>Our neighborhood needs you!<br>Submit your 2019 dues and help
+    <p *ngIf="duesPaid" @slideTitleRight>2019 Dues Are Paid. Thank You!</p>
+    <p *ngIf="!duesPaid" @slideTitleRight>Our neighborhood needs you!<br>Submit your 2019 dues and help
       us grow.</p>
   </ion-card-content>
 </ion-card>

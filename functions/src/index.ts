@@ -60,29 +60,157 @@ export const sendContactMessage = functions.firestore
     }
   });
 
-export const addAdmin = functions.https.onCall((data, context) => {
-  if (data.roles.admin !== true) {
-    return {
-      error: `Request not authorized. You must be an admin to grant request for ${data.email}.`
-    };
-  }
-  const userEmail = data.email;
-  return grantAdminRole(userEmail).then(() => {
-    const users = admin.firestore().collection('users');
-    return users.doc(data.uid).update({
-      roles: {
-        pendingMember: false,
-        approvedMember: true,
-        admin: true
-      }
-    })
-      .then(() => {
-        return {
-          result: `Request fulfilled and Firebase collection updated! ${userEmail} is now an admin.`
+export const markApproved = functions.https.onCall((data, context) => {
+  // check if context.auth is not null
+  // otherwise on build, error will be "Object is possibly 'undefined'
+  // or add the ! if 100% sure context.auth is always defined
+  // example: const isAdmin = context.auth!.token.admin;
+  if (context.auth) {
+    if(context.auth.token.admin !== true) {
+      return {
+        error: `Request not authorized. You must be an admin to grant request for ${data.email}.`
+      };
+    }
+    const userEmail = data.email;
+    return makeApprovedMember(userEmail).then(() => {
+      const users = admin.firestore().collection('users');
+      return users.doc(data.uid).update({
+        roles: {
+          pendingMember: false,
+          approvedMember: true,
+          admin: false
         }
       })
-  });
+        .then(() => {
+          return {
+            result: `${userEmail} is now an approved member. Firebase collection updated!`
+          }
+        })
+    });
+  } else {
+    return null;
+  }
 });
+
+export const markPending = functions.https.onCall((data, context) => {
+  // check if context.auth is not null
+  // otherwise on build, error will be "Object is possibly 'undefined'
+  // or add the ! if 100% sure context.auth is always defined
+  // example: const isAdmin = context.auth!.token.admin;
+  if (context.auth) {
+    if(context.auth.token.admin !== true) {
+      return {
+        error: `Request not authorized. You must be an admin to grant request for ${data.email}.`
+      };
+    }
+    const userEmail = data.email;
+    return makePendingMember(userEmail).then(() => {
+      const users = admin.firestore().collection('users');
+      return users.doc(data.uid).update({
+        roles: {
+          pendingMember: true,
+          approvedMember: false,
+          admin: false
+        }
+      })
+        .then(() => {
+          return {
+            result: `${userEmail} is now a pending member. Firebase collection updated!`
+          }
+        })
+    });
+  } else {
+    return null;
+  }
+});
+
+export const addAdmin = functions.https.onCall((data, context) => {
+  // check if context.auth is not null
+  // otherwise on build, error will be "Object is possibly 'undefined'
+  // or add the ! if 100% sure context.auth is always defined
+  // example: const isAdmin = context.auth!.token.admin;
+  if (context.auth) {
+    if(context.auth.token.admin !== true) {
+      return {
+        error: `Request not authorized. You must be an admin to grant request for ${data.email}.`
+      };
+    }
+    const userEmail = data.email;
+    return grantAdminRole(userEmail).then(() => {
+      const users = admin.firestore().collection('users');
+      return users.doc(data.uid).update({
+        roles: {
+          pendingMember: false,
+          approvedMember: true,
+          admin: true
+        }
+      })
+        .then(() => {
+          return {
+            result: `Request fulfilled and Firebase collection updated! ${userEmail} is now an admin.`
+          }
+        })
+    });
+  } else {
+    return null;
+  }
+});
+
+export const removeAdmin = functions.https.onCall((data, context) => {
+  // check if context.auth is not null
+  // otherwise on build, error will be "Object is possibly 'undefined'
+  // or add the ! if 100% sure context.auth is always defined
+  // example: const isAdmin = context.auth!.token.admin;
+  if (context.auth) {
+    if(context.auth.token.admin !== true) {
+      return {
+        error: `Request not authorized. You must be an admin to remove this role for ${data.email}.`
+      };
+    }
+    const userEmail = data.email;
+    return removeAdminRole(userEmail).then(() => {
+      const users = admin.firestore().collection('users');
+      return users.doc(data.uid).update({
+        roles: {
+          pendingMember: false,
+          approvedMember: true,
+          admin: false
+        }
+      })
+        .then(() => {
+          return {
+            result: `${userEmail} is no longer an admin. Firebase collection updated!`
+          }
+        })
+    });
+  } else {
+    return null;
+  }
+});
+
+async function makeApprovedMember(email: string): Promise<void> {
+  const user = await admin.auth().getUserByEmail(email);
+  if (user.customClaims && (user.customClaims as any).approvedMember === true) {
+    return;
+  }
+  return admin.auth().setCustomUserClaims(user.uid, {
+    pendingMember: false,
+    approvedMember: true,
+    admin: false
+  });
+}
+
+async function makePendingMember(email: string): Promise<void> {
+  const user = await admin.auth().getUserByEmail(email);
+  if (user.customClaims && (user.customClaims as any).pendingMember === true) {
+    return;
+  }
+  return admin.auth().setCustomUserClaims(user.uid, {
+    pendingMember: true,
+    approvedMember: false,
+    admin: false
+  });
+}
 
 async function grantAdminRole(email: string): Promise<void> {
   const user = await admin.auth().getUserByEmail(email);
@@ -93,6 +221,18 @@ async function grantAdminRole(email: string): Promise<void> {
     pendingMember: false,
     approvedMember: true,
     admin: true
+  });
+}
+
+async function removeAdminRole(email: string): Promise<void> {
+  const user = await admin.auth().getUserByEmail(email);
+  if (user.customClaims && (user.customClaims as any).admin !== true) {
+    return;
+  }
+  return admin.auth().setCustomUserClaims(user.uid, {
+    pendingMember: false,
+    approvedMember: true,
+    admin: false
   });
 }
 

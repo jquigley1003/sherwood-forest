@@ -62,7 +62,7 @@ export class AuthService {
             role: 'cancel',
             handler: () => {
               console.log('Confirm Ok');
-              this.signOut();
+              // this.signOut();
             }
           }]
         );
@@ -83,15 +83,29 @@ export class AuthService {
       .then(credential => {
         if(credential.user.emailVerified) {
           this.toastService.presentToast('Welcome back to Sherwood Forest Civic Association!', true, 'top', 'Close', 3000);
-          credential.user.getIdTokenResult()
-            .then((idTokenResult) => {
-              if(!idTokenResult.claims.pendingMember) {
-                return this.updateUserData(credential.user);
-              } else {
-                this.initCheckForAdmin();
-                console.log('no need to update user in cloud firestore');
-              }
-            });
+          // *** Restore this after admins are done loading users *****
+          // credential.user.getIdTokenResult()
+          //   .then((idTokenResult) => {
+          //     if(idTokenResult.claims.pendingMember) {
+          //       this.alertService.presentAlert(
+          //         'Oops! Please Contact the SFCA Board',
+          //         'You Are Currently a Pending Member',
+          //         'You must be an Approved Member to gain full access to this web app',
+          //         [{
+          //           text: 'OK',
+          //           role: 'cancel',
+          //           handler: () => {
+          //             console.log('Confirm Ok');
+          //             this.signOut();
+          //           }
+          //         }]
+          //       );
+          //       // return this.updateUserData(credential.user);
+          //     } else {
+          //       this.initCheckForAdmin();
+          //       console.log('no need to update user in cloud firestore');
+          //     }
+          //   });
         } else {
           this.alertService.presentAlert(
             'Verify Your Email',
@@ -205,8 +219,8 @@ export class AuthService {
         lastName: 'Member'
       },
       address: {
-        streetNumber: 'Sherwood',
-        streetName: 'Forest'
+        streetNumber: '123',
+        streetName: 'Sherwood Forest'
       },
       photoURL: user.photoURL || 'https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/FrogBotanicalGarden.jpg?alt=media&token=0a0d35fd-7404-45c4-8032-8ec0f2eb92a9',
       duesPaid: false,

@@ -21,6 +21,7 @@ export class MemberPage implements OnInit {
   currentUser;
   subscription;
   currentYear: Date;
+  duesPaid: boolean;
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -30,6 +31,7 @@ export class MemberPage implements OnInit {
     this.subscription = this.authService.user$.subscribe(data => {
       this.user = data;
       this.currentUser = this.user.displayName.firstName + ' ' + this.user.displayName.lastName;
+      this.duesPaid = this.user.duesPaid;
     });
 
     this.currentYear = new Date();
