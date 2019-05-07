@@ -19,7 +19,7 @@ export class DirectoryPage implements OnInit {
   loadedUsers: any[];
   usersSubscription;
   filterBy: string = "lastName";
-  statusLast: string = "primary";
+  statusLast: string = "secondary";
   statusStreet: string = "primary";
 
   constructor(private authService: AuthService,
@@ -53,13 +53,11 @@ export class DirectoryPage implements OnInit {
 
   filterByLastName(event) {
     this.initializeList();
-
     const searchTerm = event.srcElement.value;
 
     if(!searchTerm) {
       return;
     }
-
     this.users = this.users.filter(member => {
       if (member.displayName.lastName && searchTerm) {
         if (member.displayName.lastName.toLowerCase()
@@ -73,13 +71,11 @@ export class DirectoryPage implements OnInit {
 
   filterByStreetName(event) {
     this.initializeList();
-
     const searchTerm = event.srcElement.value;
 
     if(!searchTerm) {
       return;
     }
-
     this.users = this.users.filter(member => {
       if (member.address.streetName && searchTerm) {
         if (member.address.streetName.toLowerCase()

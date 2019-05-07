@@ -14,7 +14,12 @@ import { AlertService } from '../shared/services/alert.service';
 })
 export class AdminPage implements OnInit {
   allUsers;
-  users;
+  users: any[];
+  loadedUsers: any[];
+  filterBy: string = "lastName";
+  statusFirst: string = "primary";
+  statusLast: string = "secondary";
+  statusStreet: string = "primary";
   usersSubscription;
   showSpinner: boolean = false;
 
@@ -26,7 +31,89 @@ export class AdminPage implements OnInit {
     this.allUsers = this.userService.fetchUsers();
     this.usersSubscription = this.allUsers.subscribe(data => {
       this.users = data;
-      this.users.sort((a,b) => (a.address.streetNumber + a.address.streetName).localeCompare((b.address.streetNumber + b.address.streetName)));
+      this.users.sort((a,b) => (a.address.streetNumber + a.address.streetName)
+        .localeCompare((b.address.streetNumber + b.address.streetName)));
+      this.loadedUsers = this.users;
+    });
+
+  }
+
+  initializeList():void {
+    this.users = this.loadedUsers;
+  }
+
+  queryFirstName() {
+    this.filterBy = 'firstName';
+    this.statusFirst = "secondary";
+    this.statusLast = "primary";
+    this.statusStreet = "primary";
+  }
+
+  queryLastName() {
+    this.filterBy = 'lastName';
+    this.statusFirst = "primary";
+    this.statusLast = "secondary";
+    this.statusStreet = "primary";
+  }
+
+  queryStreetName() {
+    this.filterBy = 'streetName';
+    this.statusFirst = "primary";
+    this.statusStreet = "secondary";
+    this.statusLast = "primary";
+  }
+
+  filterByFirstName(event) {
+    this.initializeList();
+    const searchTerm = event.srcElement.value;
+
+    if(!searchTerm) {
+      return;
+    }
+    this.users = this.users.filter(member => {
+      if (member.displayName.firstName && searchTerm) {
+        if (member.displayName.firstName.toLowerCase()
+          .indexOf(searchTerm.toLowerCase()) > -1) {
+          return true;
+        }
+        return false;
+      }
+    });
+  }
+
+  filterByLastName(event) {
+    this.initializeList();
+    const searchTerm = event.srcElement.value;
+
+    if(!searchTerm) {
+      return;
+    }
+    this.users = this.users.filter(member => {
+      if (member.displayName.lastName && searchTerm) {
+        if (member.displayName.lastName.toLowerCase()
+          .indexOf(searchTerm.toLowerCase()) > -1) {
+          return true;
+        }
+        return false;
+      }
+    });
+  }
+
+  filterByStreetName(event) {
+    this.initializeList();
+    const searchTerm = event.srcElement.value;
+
+    if(!searchTerm) {
+      return;
+    }
+    this.users = this.users.filter(member => {
+      if (member.address.streetName && searchTerm) {
+        if (member.address.streetName.toLowerCase()
+          .indexOf(searchTerm.toLowerCase()) > -1) {
+          return true;
+        }
+        return false;
+      }
     });
   }
 

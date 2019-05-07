@@ -27,7 +27,7 @@ export class AuthGuard implements CanActivate {
       const alert = await this.alertController.create({
         header: 'Blocked',
         subHeader: 'Members only',
-        message: 'You need to be a Sherwood Forest resident to access this page.',
+        message: 'You need to be a Sherwood Forest Civic Association member to access this page.',
         buttons: ['OK']
       });
       await alert.present();

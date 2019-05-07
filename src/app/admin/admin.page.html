@@ -10,9 +10,28 @@
 </ion-header>
 
 <ion-content padding>
-  <p>This is where you can view users and contact messages</p>
+  <p>All SFCA Users</p>
+  <ion-searchbar showCancelButton (ionInput)="filterByFirstName($event)"
+                 *ngIf="filterBy == 'firstName'" placeholder="Search by First Name">
+  </ion-searchbar>
+  <ion-searchbar showCancelButton (ionInput)="filterByLastName($event)"
+                 *ngIf="filterBy == 'lastName'" placeholder="Search by Last Name">
+  </ion-searchbar>
+  <ion-searchbar showCancelButton (ionInput)="filterByStreetName($event)"
+                 *ngIf="filterBy == 'streetName'"placeholder="Search by Street Name">
+  </ion-searchbar>
+  <ion-toolbar text-center class="toolbar-buttons">
+    <ion-button [color]="statusFirst" (click)="queryFirstName()">
+      First Name
+    </ion-button>
+    <ion-button [color]="statusLast" (click)="queryLastName()">
+      Last Name
+    </ion-button>
+    <ion-button [color]="statusStreet" (click)="queryStreetName()">
+      Street Name
+    </ion-button>
+  </ion-toolbar>
   <ion-list>
-    <ion-searchbar></ion-searchbar>
     <ion-spinner *ngIf="showSpinner" name="bubbles"></ion-spinner>
     <ion-item *ngFor="let user of users" lines="full" value="user.uid">
       <ion-thumbnail slot="start">
