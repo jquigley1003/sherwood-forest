@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ModalController } from '@ionic/angular';
 
 import { RegisterModalComponent } from '../../shared/modals/register-modal/register-modal.component';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-add-member',
@@ -11,7 +13,9 @@ import { RegisterModalComponent } from '../../shared/modals/register-modal/regis
 })
 export class AddMemberPage implements OnInit {
 
-  constructor(private modalCtrl: ModalController) { }
+  constructor(private authService: AuthService,
+              private modalCtrl: ModalController,
+              private router: Router) { }
 
   ngOnInit() {
   }
@@ -22,5 +26,13 @@ export class AddMemberPage implements OnInit {
       componentProps: {}
     });
     return await modal.present();
+  }
+
+  goHome() {
+    this.router.navigate(['/']);
+  }
+
+  logOut() {
+    this.authService.signOut();
   }
 }
