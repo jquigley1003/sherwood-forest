@@ -1,10 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
+import { ModalController } from '@ionic/angular';
 import { User } from '../models/user.model';
 
 import { UserService } from '../shared/services/user.service';
 import { ToastService } from '../shared/services/toast.service';
 import { AlertService } from '../shared/services/alert.service';
+import { UserModalComponent } from '../shared/modals/user-modal/user-modal.component';
 
 
 @Component({
@@ -25,14 +27,15 @@ export class AdminPage implements OnInit {
 
   constructor(private userService: UserService,
               private toastService: ToastService,
-              private alertService: AlertService) { }
+              private alertService: AlertService,
+              private modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.allUsers = this.userService.fetchUsers();
     this.usersSubscription = this.allUsers.subscribe(data => {
       this.users = data;
-      this.users.sort((a,b) => (a.address.streetNumber + a.address.streetName)
-        .localeCompare((b.address.streetNumber + b.address.streetName)));
+      this.users.sort((a,b) => (a.displayName.lastName + a.displayName.firstName)
+        .localeCompare((b.displayName.lastName + b.displayName.firstName)));
       this.loadedUsers = this.users;
     });
 
@@ -115,6 +118,30 @@ export class AdminPage implements OnInit {
         return false;
       }
     });
+  }
+
+  async presentUserModal(user) {
+    const modal = await this.modalCtrl.create({
+      component: UserModalComponent,
+      componentProps: {
+        uid: user.uid,
+        photoURL: user.photoURL,
+        firstName: user.displayName.firstName,
+        lastName: user.displayName.lastName,
+        streetNumber: user.address.streetNumber,
+        streetName: user.address.streetName,
+        subAddress: user.address.subAddress,
+        city: user.address.city,
+        state: user.address.state,
+        zipCode: user.address.zipCode,
+        phone: user.phone,
+        email: user.email,
+        birthDate: user.birthDate,
+        occupation: user.occupation,
+        residentSince: user.residentSince
+      }
+    });
+    return await modal.present();
   }
 
   makeAdmin(user) {

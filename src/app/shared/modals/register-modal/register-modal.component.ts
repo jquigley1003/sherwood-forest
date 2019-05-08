@@ -31,7 +31,8 @@ export class RegisterModalComponent implements OnInit {
     await this.authService.emailCreateUser(email, password);
     await this.registerForm.reset();
     await this.modalCtrl.dismiss();
-    this.router.navigate(['/']);
+    // restore the code below after admins are done adding all users to database
+    // this.router.navigate(['/']);
   }
 
   closeModal() {

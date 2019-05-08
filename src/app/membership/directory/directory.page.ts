@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 
 import { ModalController } from '@ionic/angular';
 
+import { Subscription } from 'rxjs';
+
 import { AuthService } from '../../shared/services/auth.service';
 import { UserService } from '../../shared/services/user.service';
-
 import { DirectoryModalComponent } from '../../shared/modals/directory-modal/directory-modal.component';
 
 @Component({
@@ -17,7 +18,7 @@ export class DirectoryPage implements OnInit {
   allUsers;
   users: any[];
   loadedUsers: any[];
-  usersSubscription;
+  usersSubscription: Subscription;
   filterBy: string = "lastName";
   statusLast: string = "secondary";
   statusStreet: string = "primary";
@@ -31,6 +32,8 @@ export class DirectoryPage implements OnInit {
     this.allUsers = this.userService.fetchUsers();
     this.usersSubscription = this.allUsers.subscribe(data => {
       this.users = data;
+      this.users.sort((a,b) => (a.displayName.lastName + a.displayName.firstName)
+        .localeCompare((b.displayName.lastName + b.displayName.firstName)));
       this.loadedUsers = this.users;
     });
   }

@@ -17,7 +17,7 @@ import { AlertService } from './alert.service';
 })
 export class AuthService {
   user$: Observable<any>;
-  checkForAdmin = new Subject <boolean>();
+  checkForAdmin = new Subject<boolean>();
   emailVerifySubscription: Subscription;
 
   constructor(
@@ -71,9 +71,10 @@ export class AuthService {
         // sendEmailVerification function and alert! **
         return this.updateUserData(credential.user);
       })
-      .then(() => {
-        this.signOut();
-      })
+        // restore the 3 lines of code below when admins are finished adding new users
+      // .then(() => {
+      //   this.signOut();
+      // })
       .catch(error => this.handleError(error));
   }
 
@@ -82,7 +83,9 @@ export class AuthService {
       .signInWithEmailAndPassword(email, password)
       .then(credential => {
         if(credential.user.emailVerified) {
+          this.initCheckForAdmin();
           this.toastService.presentToast('Welcome back to Sherwood Forest Civic Association!', true, 'top', 'Close', 3000);
+
           // *** Restore this after admins are done loading users *****
           // credential.user.getIdTokenResult()
           //   .then((idTokenResult) => {
@@ -183,6 +186,9 @@ export class AuthService {
     await this.afAuth.auth.signOut();
     this.checkForAdmin.next(false);
     this.toastService.presentToast('You are signed out!', true, 'top', 'Close', 3000);
+    this.user$ = await this.afAuth.authState.pipe(
+      switchMap(user => (user ? this.dbService.doc$(`users/${user.uid}`) : of(null)))
+    );
     return this.router.navigate(['/']);
   }
 

@@ -38,6 +38,14 @@ const routes: Routes = [
   { path: 'admin',
     loadChildren: './admin/admin.module#AdminPageModule',
     canActivate: [AdminGuard]
+  },
+  { path: 'admin/add-member',
+    loadChildren: './admin/add-member/add-member.module#AddMemberPageModule',
+    canActivate: [AdminGuard]
+  },
+  { path: 'admin/add-non-member',
+    loadChildren: './admin/add-non-member/add-non-member.module#AddNonMemberPageModule',
+    canActivate: [AdminGuard]
   }
 ];
 @NgModule({

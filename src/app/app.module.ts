@@ -18,6 +18,7 @@ import { AngularFireFunctionsModule, FunctionsRegionToken } from '@angular/fire/
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { LoginModalModule } from './shared/modals/login-modal/login-modal.module';
 import { LogoutModalModule } from './shared/modals/logout-modal/logout-modal.module';
+import { RegisterModalModule } from './shared/modals/register-modal/register-modal.module';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { LogoutModalModule } from './shared/modals/logout-modal/logout-modal.mod
     AngularFireFunctionsModule,
     AngularFireMessagingModule,
     LoginModalModule,
-    LogoutModalModule
+    LogoutModalModule,
+    RegisterModalModule
   ],
   providers: [
     StatusBar,

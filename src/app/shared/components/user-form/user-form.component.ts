@@ -65,7 +65,7 @@ export class UserFormComponent implements OnInit {
     this.authService.uid()
       .then(result => {
         this.uid = result;
-      })
+      });
   }
 
   // getUserData() {
@@ -115,7 +115,7 @@ export class UserFormComponent implements OnInit {
       true, 'top', 'Ok', 3000 );
     await this.userForm.reset();
     await this.modalCtrl.dismiss();
-    this.router.navigate(['/member']);
+    // this.router.navigate(['/member']);
   }
 
   ngOnDestroy() {

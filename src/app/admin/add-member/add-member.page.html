@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-menu-button slot="start" color="primary"></ion-menu-button>
+    <ion-img slot="start" src="/assets/sfca-logo.jpg" (click)="goHome()"></ion-img>
+    <ion-button slot="end" color="tertiary" (click)="logOut()">Logout</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col text-center>
+      <h1>Admin - Add New Members</h1>
+      <p><a (click)="presentRegisterModal()">Add another SFCA Member</a></p>
+    </ion-col>
+  </ion-row>
+</ion-content>

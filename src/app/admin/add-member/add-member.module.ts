@@ -5,15 +5,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AdminPage } from './admin.page';
-import { OrderByPipe } from '../shared/pipes/order-by.pipe';
-import { UserModalModule } from '../shared/modals/user-modal/user-modal.module';
+import { AddMemberPage } from './add-member.page';
+import { RegisterModalModule } from '../../shared/modals/register-modal/register-modal.module';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: AdminPage
+    component: AddMemberPage
   }
 ];
 
@@ -23,11 +22,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    UserModalModule
+    RegisterModalModule
   ],
-  declarations: [
-    AdminPage,
-    OrderByPipe
-  ]
+  declarations: [AddMemberPage]
 })
-export class AdminPageModule {}
+export class AddMemberPageModule {}

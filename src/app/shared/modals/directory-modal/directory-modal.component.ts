@@ -10,11 +10,11 @@ import { ModalController, NavParams } from '@ionic/angular';
 })
 export class DirectoryModalComponent implements OnInit {
   directoryForm: FormGroup;
-  photoURL: string = this.navParams.get('photoURL')
+  photoURL: string = this.navParams.get('photoURL');
   firstName: string = this.navParams.get('firstName');
   lastName: string = this.navParams.get('lastName');
   phone: string = this.navParams.get('phone');
-  residentSince: string = this.navParams.get('residentSince')
+  residentSince: string = this.navParams.get('residentSince');
 
   constructor(private formBuilder: FormBuilder,
               private modalCtrl: ModalController,

@@ -13,7 +13,7 @@
     {{ currentUser }}
   </ion-card-title>
   <ion-card-content text-center>
-    <ion-button (click)="presentUserModal()">
+    <ion-button (click)="presentUserModal(user)">
       <ion-icon slot="start" name="person"></ion-icon>
       Update Your Member Profile
     </ion-button>
@@ -31,15 +31,15 @@
         <ion-list lines="none">
           <ion-item>
             <ion-icon slot="start" name="folder"></ion-icon>
-            <ion-button (click)="presentUserModal()">Resident Documents</ion-button>
+            <ion-button (click)="presentUserModal(user)">Resident Documents</ion-button>
           </ion-item>
           <ion-item>
             <ion-icon slot="start" name="cash"></ion-icon>
-            <ion-button (click)="presentUserModal()">Pay Dues</ion-button>
+            <ion-button (click)="presentUserModal(user)">Pay Dues</ion-button>
           </ion-item>
           <ion-item>
             <ion-icon slot="start" name="person"></ion-icon>
-            <ion-button (click)="presentUserModal()">Update Your Member Profile</ion-button>
+            <ion-button (click)="presentUserModal(user)">Update Your Member Profile</ion-button>
           </ion-item>
         </ion-list>
       </ion-col>

@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 import { ModalController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import { AngularFireAuth } from '@angular/fire/auth';
+import { Observable, Subscription } from 'rxjs';
 
-import { Observable } from 'rxjs';
+import { AuthService } from './shared/services/auth.service';
 import { LoginModalComponent } from './shared/modals/login-modal/login-modal.component';
 import { LogoutModalComponent } from './shared/modals/logout-modal/logout-modal.component';
+import { RegisterModalComponent } from './shared/modals/register-modal/register-modal.component';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +18,9 @@ import { LogoutModalComponent } from './shared/modals/logout-modal/logout-modal.
 })
 export class AppComponent {
   loggedIn$: Observable<any> = this.afAuth.user;
+  isAdmin: boolean;
+  authSubscription: Subscription;
+
 
   public appPages = [
     {
@@ -70,6 +75,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private afAuth: AngularFireAuth,
+    private authService: AuthService,
     private modalCtrl: ModalController
   ) {
     this.initializeApp();
@@ -80,6 +86,13 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+
+  ngOnInit() {
+    this.authSubscription = this.authService.checkForAdmin
+      .subscribe(adminStatus => {
+        this.isAdmin = adminStatus;
+      });
   }
 
   async presentLoginModal() {
@@ -96,5 +109,17 @@ export class AppComponent {
       componentProps: {}
     });
     return await modal.present();
+  }
+
+  async presentRegisterModal() {
+    const modal = await this.modalCtrl.create({
+      component: RegisterModalComponent,
+      componentProps: {}
+    });
+    return await modal.present();
+  }
+
+  ngOnDestroy() {
+    this.authSubscription.unsubscribe();
   }
 }
