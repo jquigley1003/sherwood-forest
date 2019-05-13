@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { growImgTrigger, slideTitleLeftTrigger, slideTitleRightTrigger } from '../../shared/components/animations/animations';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-tab1',
@@ -14,7 +16,8 @@ import { growImgTrigger, slideTitleLeftTrigger, slideTitleRightTrigger } from '.
 })
 export class Tab1Page {
 
-  constructor(private router: Router){}
+  constructor(private router: Router,
+              private authService: AuthService){}
 
   goHome() {
     this.router.navigate(['/']);

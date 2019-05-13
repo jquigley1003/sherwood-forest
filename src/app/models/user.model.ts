@@ -12,6 +12,12 @@ export interface Address {
   zipCode?: string;
 }
 
+export interface SpousePartner {
+  firstName?: string;
+  lastName?: string;
+  uid?: string;
+}
+
 export interface Roles {
   nonMember?: boolean;
   pendingMember?: boolean;
@@ -32,5 +38,5 @@ export interface User {
   duesPaid?: boolean;
   roles?: Roles;
   residentSince?: Date;
-  spousePartner?: string;
+  spousePartner?: SpousePartner;
 }

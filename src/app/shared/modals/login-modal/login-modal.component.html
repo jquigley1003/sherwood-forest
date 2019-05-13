@@ -13,11 +13,15 @@
             <ion-label position="floating">Password</ion-label>
             <ion-input type="password" formControlName="password" required></ion-input>
           </ion-item>
-
           <ion-row>
             <ion-col text-end>
               <ion-button fill="clear" (click)="closeModal()">Cancel</ion-button>
               <ion-button type="submit" [disabled]="!logInForm.valid">Submit</ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col text-center>
+              <ion-button expand="block" (click)="presentRegisterModal()">Register New User!</ion-button>
             </ion-col>
           </ion-row>
         </form>

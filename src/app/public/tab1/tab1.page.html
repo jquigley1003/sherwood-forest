@@ -29,7 +29,7 @@
       <ion-img src="/assets/ForestTannion2019More.jpg"></ion-img>
       <ion-card-header text-center>
         <ion-card-title>Key Contacts</ion-card-title>
-        <ion-card-subtitle>2019 - 2021 Board Members</ion-card-subtitle>
+        <ion-card-subtitle>2019 - 2021 SFCA Officers</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content text-center>
         <ion-row>
@@ -38,15 +38,15 @@
               <ion-avatar><ion-img src="/assets/GreenLeaf.jpg"></ion-img></ion-avatar>
               <h2>Derk Weinheimer</h2>
               <h3>President</h3>
-              <p>Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.</p>
+              <p *ngIf="authService.user$ | async">president@sherwoodforestatl.org</p>
             </a>
           </ion-col>
           <ion-col text-center>
             <a routerLink="/public/contact">
               <ion-avatar><ion-img src="/assets/GreenLeaf.jpg"></ion-img></ion-avatar>
               <h2>Humberto Garcia-Sjogrim</h2>
-              <h3>Land Use</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <h3>Vice-President / Land Use</h3>
+              <p *ngIf="authService.user$ | async">vicepresident@sherwoodforestatl.org</p>
             </a>
           </ion-col>
           <ion-col text-center>
@@ -54,7 +54,7 @@
               <ion-avatar><ion-img src="/assets/GreenLeaf.jpg"></ion-img></ion-avatar>
               <h2>Nicola Tannion</h2>
               <h3>Communications</h3>
-              <p>Duis vulputate commodo lectus, ac blandit elit tincidunt id.</p>
+              <p *ngIf="authService.user$ | async">communications@sherwoodforestatl.org</p>
             </a>
           </ion-col>
         </ion-row>

@@ -93,7 +93,7 @@ export class UserModalComponent implements OnInit {
       residentSince: residentSince
     };
     await this.userService.updateUser('users/'+ this.uid, data);
-    await this.toastService.presentToast('Your member profile has been updated!',
+    await this.toastService.presentToast('The member profile for '+ firstName +' has been updated!',
       true, 'top', 'Ok', 3000 );
     await this.userForm.reset();
     await this.modalCtrl.dismiss();
