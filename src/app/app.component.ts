@@ -17,6 +17,7 @@ import { RegisterModalComponent } from './shared/modals/register-modal/register-
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+  loggedIn$: Observable<any>;
   isAdmin: boolean;
   authSubscription: Subscription;
 
@@ -43,6 +44,7 @@ export class AppComponent {
       .subscribe(adminStatus => {
         this.isAdmin = adminStatus;
       });
+    this.loggedIn$ = this.authService.user$;
   }
 
   async presentLoginModal() {

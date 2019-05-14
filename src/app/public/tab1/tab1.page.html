@@ -15,8 +15,7 @@
       </ion-col>
       <ion-col class="home-format" size="12">
         <p>Welcome! Sherwood Forest neighborhood is an urban forest within
-          Fulton
-          County in the City of Atlanta. Established in 1949, Sherwood Forest was once
+          Fulton County in the City of Atlanta. Established in 1949, Sherwood Forest was once
           one of the premium post WWII neighborhoods. Our neighborhood consists of 200
           homes with the majority being owner occupied.</p>
           <p>Sherwood Forest Civic
@@ -38,7 +37,7 @@
               <ion-avatar><ion-img src="/assets/GreenLeaf.jpg"></ion-img></ion-avatar>
               <h2>Derk Weinheimer</h2>
               <h3>President</h3>
-              <p *ngIf="authService.user$ | async">president@sherwoodforestatl.org</p>
+              <p *ngIf="loggedIn$ | async">president@sherwoodforestatl.org</p>
             </a>
           </ion-col>
           <ion-col text-center>
@@ -46,7 +45,7 @@
               <ion-avatar><ion-img src="/assets/GreenLeaf.jpg"></ion-img></ion-avatar>
               <h2>Humberto Garcia-Sjogrim</h2>
               <h3>Vice-President / Land Use</h3>
-              <p *ngIf="authService.user$ | async">vicepresident@sherwoodforestatl.org</p>
+              <p *ngIf="loggedIn$ | async">vicepresident@sherwoodforestatl.org</p>
             </a>
           </ion-col>
           <ion-col text-center>
@@ -54,7 +53,7 @@
               <ion-avatar><ion-img src="/assets/GreenLeaf.jpg"></ion-img></ion-avatar>
               <h2>Nicola Tannion</h2>
               <h3>Communications</h3>
-              <p *ngIf="authService.user$ | async">communications@sherwoodforestatl.org</p>
+              <p *ngIf="loggedIn$ | async">communications@sherwoodforestatl.org</p>
             </a>
           </ion-col>
         </ion-row>
@@ -72,10 +71,15 @@
           </ion-item-divider>
           <ion-item>
             <p>Sherwood Forest was originally known as
-              Collier Woods. Collier Woods spanned some 2000 acres with Sherwood Forest being the
-              last area to be developed. The original Collier house still stands within our neighborhood
-              and has recently been nominated as a building of historical importance by
-              the Atlanta Preservation Center.<br><br>
+              Collier Woods. Collier Woods spanned some 2,000 acres with Sherwood Forest being the
+              last area to be developed. The original Collier house still stands within our neighborhood,
+              and as of February 2019, it is a newly-listed resource of the
+              Georgia Register of Historic Places, and
+              <a href="https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/articles%2FCollierPerryBentleyHouseSummary.pdf?alt=media&token=23e18e2b-834b-480b-bcf2-2864cfafae0a" target="_blank">
+                now being evaluated</a> for listing on the National Register of Historic Places.<br><br>
+              <a href="https://georgiashpo.org/eleven-resources-added-georgia-register-historic-places" target="_blank">
+                Read about the Georgia National Register Review Board Meeting</a>
+              held on February 22, 2019.<br><br>
               <a href="https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/articles%2F1649LM-AJC-2004-08-07-small.pdf?alt=media&token=3334d896-979c-4d3d-8c9f-0a4e94e88cd2" target="_blank">
                 Read the AJC article from 8/7/2004.
               </a><i>Thanks to Verna and William Cleveland for submitting the paper.</i>

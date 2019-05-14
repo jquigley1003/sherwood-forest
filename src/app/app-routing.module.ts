@@ -19,6 +19,10 @@ const routes: Routes = [
     loadChildren: './membership/member/member.module#MemberPageModule',
     canActivate: [AuthGuard]
   },
+  { path: 'member/documents',
+    loadChildren: './membership/member/documents/documents.module#DocumentsPageModule',
+    canActivate: [AuthGuard]
+  },
   { path: 'sfca-business',
     loadChildren: './membership/sfca-business/sfca-business.module#SfcaBusinessPageModule',
     canActivate: [AuthGuard]

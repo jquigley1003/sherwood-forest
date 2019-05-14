@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { growImgTrigger, slideTitleLeftTrigger, slideTitleRightTrigger } from '../../shared/components/animations/animations';
 import { AuthService } from '../../shared/services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tab1',
@@ -16,8 +17,14 @@ import { AuthService } from '../../shared/services/auth.service';
 })
 export class Tab1Page {
 
+  loggedIn$: Observable<any>;
+
   constructor(private router: Router,
               private authService: AuthService){}
+
+  ngOnInit() {
+    this.loggedIn$ = this.authService.user$;
+  }
 
   goHome() {
     this.router.navigate(['/']);

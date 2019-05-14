@@ -221,21 +221,21 @@ export class AuthService {
       uid: user.uid,
       email: user.email || null,
       displayName: {
-        firstName: user.displayName.firstName || 'New',
-        lastName: user.displayName.lastName || 'Member'
+        firstName: 'New',
+        lastName: 'Member'
       },
       address: {
-        streetNumber: user.address.streetNumber || '123',
-        streetName: user.address.streetName || 'Sherwood Forest',
-        subAddress: user.address.subAddress || null,
-        city: user.address.city || 'Atlanta',
-        state: user.address.state || 'GA',
-        zipCode: user.address.zipCode || '30309',
+        streetNumber: '123',
+        streetName: 'Sherwood Forest',
+        subAddress: null,
+        city: 'Atlanta',
+        state: 'GA',
+        zipCode: '30309',
       },
-      photoURL: user.photoURL || 'https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/FrogBotanicalGarden.jpg?alt=media&token=0a0d35fd-7404-45c4-8032-8ec0f2eb92a9',
-      birthDate: user.birthDate || null,
-      occupation: user.occupation || null,
-      residentSince: user.residentSince || null,
+      photoURL: 'https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/FrogBotanicalGarden.jpg?alt=media&token=0a0d35fd-7404-45c4-8032-8ec0f2eb92a9',
+      birthDate: null,
+      occupation: null,
+      residentSince: null,
       duesPaid: false,
       roles: {
         admin: false,
