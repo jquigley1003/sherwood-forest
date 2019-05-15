@@ -16,7 +16,7 @@ import { AlertService } from './alert.service';
   providedIn: 'root'
 })
 export class AuthService {
-  user$: Observable<any>;
+  user$: Observable<User>;
   checkForAdmin = new Subject<boolean>();
   emailVerifySubscription: Subscription;
 
@@ -37,7 +37,13 @@ export class AuthService {
       //     return of(null)
       //   }
       // })
-      switchMap(user => (user ? this.dbService.doc$(`users/${user.uid}`) : of(null)))
+      switchMap(user => {
+        if (user) {
+          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+        } else {
+          return of(null);
+        }
+      })
     );
   }
 
@@ -118,7 +124,6 @@ export class AuthService {
               text: 'OK',
               role: 'cancel',
               handler: () => {
-                console.log('Confirm Ok');
                 this.signOut();
               }
             },
@@ -146,6 +151,25 @@ export class AuthService {
           this.emailVerifySubscription.unsubscribe();
         });
     });
+  }
+
+  // Reset Forggot password
+  resetPassword(passwordResetEmail) {
+    return this.afAuth.auth.sendPasswordResetEmail(passwordResetEmail)
+      .then(() => {
+        this.alertService.presentAlert(
+          'Password Reset Email Sent',
+          'Please Check Your Inbox or ',
+          'Follow the email instructions to reset your password',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              this.signOut();
+            }
+          }]
+        );
+      }).catch(error => this.handleError(error))
   }
 
   uid() {
@@ -186,9 +210,6 @@ export class AuthService {
     await this.afAuth.auth.signOut();
     this.checkForAdmin.next(false);
     this.toastService.presentToast('You are signed out!', true, 'top', 'Close', 3000);
-    this.user$ = await this.afAuth.authState.pipe(
-      switchMap(user => (user ? this.dbService.doc$(`users/${user.uid}`) : of(null)))
-    );
     return this.router.navigate(['/']);
   }
 

@@ -31,11 +31,16 @@ export class MemberPage implements OnInit {
 
   ngOnInit() {
     this.currentUserSub = this.authService.user$.subscribe(data => {
-      this.user = data;
-      this.currentUser = this.user.displayName.firstName + ' ' + this.user.displayName.lastName;
-      this.duesPaid = this.user.duesPaid;
+      if(data) {
+        this.user = data;
+        this.currentUser = this.user.displayName.firstName + ' ' + this.user.displayName.lastName;
+        this.duesPaid = this.user.duesPaid;
+      } else {
+        this.user = null;
+        this.currentUser = null;
+        this.duesPaid = false;
+      }
     });
-
     this.currentYear = new Date();
   }
 

@@ -100,6 +100,11 @@ export class UserModalComponent implements OnInit {
     // this.router.navigate(['/member']);
   }
 
+  onResetPassword(email) {
+    this.userService.resetUserPassword(email);
+    this.modalCtrl.dismiss();
+  }
+
   closeModal() {
     this.modalCtrl.dismiss();
   }

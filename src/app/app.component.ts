@@ -26,7 +26,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private afAuth: AngularFireAuth,
-    private authService: AuthService,
+    public authService: AuthService,
     private modalCtrl: ModalController
   ) {
     this.initializeApp();
@@ -44,7 +44,7 @@ export class AppComponent {
       .subscribe(adminStatus => {
         this.isAdmin = adminStatus;
       });
-    this.loggedIn$ = this.authService.user$;
+    // this.loggedIn$ = this.authService.user$.subscribe();
   }
 
   async presentLoginModal() {

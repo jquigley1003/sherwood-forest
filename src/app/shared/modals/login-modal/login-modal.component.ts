@@ -14,6 +14,7 @@ import { RegisterModalComponent } from '../register-modal/register-modal.compone
 })
 export class LoginModalComponent implements OnInit {
   logInForm: FormGroup;
+  checkUser: boolean;
 
   constructor(private authService: AuthService,
               private formBuilder: FormBuilder,
@@ -30,9 +31,17 @@ export class LoginModalComponent implements OnInit {
   async onLogInForm() {
     const { email, password } = this.logInForm.value;
     await this.authService.signInUser(email, password);
-    await this.logInForm.reset();
-    await this.modalCtrl.dismiss();
-    this.router.navigate(['/member']);
+    await this.authService.uid()
+      .then((result) => {
+        this.checkUser = !!result;
+      });
+    if(this.checkUser) {
+      this.router.navigate(['/member']);
+    } else {
+      this.router.navigate(['/']);
+    }
+    this.logInForm.reset();
+    this.modalCtrl.dismiss();
   }
 
   async onGoogleLogin() {

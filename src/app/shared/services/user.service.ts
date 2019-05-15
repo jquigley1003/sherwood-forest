@@ -97,6 +97,10 @@ export class UserService {
     this.dbService.updateAt(path, data);
   }
 
+  resetUserPassword(userEmail) {
+    this.authService.resetPassword(userEmail);
+  }
+
   deleteUser(userPath) {
     this.dbService.delete(userPath)
       .then(() => {
