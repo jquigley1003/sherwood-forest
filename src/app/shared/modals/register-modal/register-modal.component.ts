@@ -13,6 +13,8 @@ import { AuthService } from '../../services/auth.service';
 })
 export class RegisterModalComponent implements OnInit {
   registerForm: FormGroup;
+  passwordType: string = 'password';
+  passwordShow: boolean = false;
 
   constructor(private authService: AuthService,
               private formBuilder: FormBuilder,
@@ -33,6 +35,16 @@ export class RegisterModalComponent implements OnInit {
     await this.modalCtrl.dismiss();
     // restore the code below after admins are done adding all users to database
     // this.router.navigate(['/']);
+  }
+
+  togglePassword() {
+    if(this.passwordShow) {
+      this.passwordShow = false;
+      this.passwordType = 'password';
+    } else {
+      this.passwordShow = true;
+      this.passwordType = 'text';
+    }
   }
 
   closeModal() {

@@ -15,6 +15,8 @@ import { RegisterModalComponent } from '../register-modal/register-modal.compone
 export class LoginModalComponent implements OnInit {
   logInForm: FormGroup;
   checkUser: boolean;
+  passwordShow: boolean = false;
+  passwordType: string = 'password';
 
   constructor(private authService: AuthService,
               private formBuilder: FormBuilder,
@@ -57,6 +59,16 @@ export class LoginModalComponent implements OnInit {
       componentProps: {}
     });
     return await modal.present();
+  }
+
+  togglePassword() {
+    if(this.passwordShow) {
+      this.passwordShow = false;
+      this.passwordType = 'password';
+    } else {
+      this.passwordShow = true;
+      this.passwordType = 'text';
+    }
   }
 
   closeModal() {
