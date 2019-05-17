@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { UserModalComponent } from './user-modal.component';
 
 import { UserFormModule } from '../../components/user-form/user-form.module';
+import { UploaderModule } from '../../components/uploader/uploader.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { UserFormModule } from '../../components/user-form/user-form.module';
     CommonModule,
     UserFormModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    UploaderModule
   ],
   declarations: [
     UserModalComponent

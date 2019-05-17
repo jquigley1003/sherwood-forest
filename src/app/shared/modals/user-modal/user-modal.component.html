@@ -17,6 +17,7 @@
                         <ion-button (click)="onResetPassword(email)">Reset Password</ion-button>
                     </ion-toolbar>
                 </ion-header>
+                <app-uploader></app-uploader>
                 <form [formGroup]="userForm" (ngSubmit)="onUpdateUser()">
                     <div formGroupName="displayName">
                         <ion-item>
