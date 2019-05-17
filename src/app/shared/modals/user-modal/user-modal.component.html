@@ -18,7 +18,7 @@
                         <ion-button (click)="editProfilePic = !editProfilePic">Change Picture</ion-button>
                     </ion-toolbar>
                 </ion-header>
-                <app-uploader *ngIf="editProfilePic"></app-uploader>
+                <app-uploader *ngIf="editProfilePic" [memberId]="uid"></app-uploader>
                 <form [formGroup]="userForm" (ngSubmit)="onUpdateUser()">
                     <div formGroupName="displayName">
                         <ion-item>

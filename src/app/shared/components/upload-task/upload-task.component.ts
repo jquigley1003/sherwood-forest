@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 import { User } from '../../../models/user.model';
 import { DbService } from '../../services/db.service';
-import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-upload-task',
@@ -13,17 +12,16 @@ import { AuthService } from '../../services/auth.service';
 })
 export class UploadTaskComponent implements OnInit {
   @Input() file: File;
+  @Input() userId: string;
 
   task: AngularFireUploadTask;
 
-  userId: string;
   percentage: Observable<number>;
   snapshot: Observable<any>;
   downloadURL: string;
 
   constructor(private afStorage: AngularFireStorage,
-              private dbService: DbService,
-              private authService: AuthService) { }
+              private dbService: DbService) { }
 
   ngOnInit() {
     this.startUpload();
@@ -48,7 +46,6 @@ export class UploadTaskComponent implements OnInit {
       // The file's download URL
       finalize( async() => {
         this.downloadURL = await ref.getDownloadURL().toPromise();
-        this.userId = await this.authService.uid();
         const data = {
           photoURL: this.downloadURL
         };

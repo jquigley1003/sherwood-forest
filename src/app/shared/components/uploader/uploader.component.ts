@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ToastService } from '../../services/toast.service';
 import { ModalController } from '@ionic/angular';
 
@@ -8,6 +8,7 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./uploader.component.scss'],
 })
 export class UploaderComponent{
+  @Input() memberId: string;
 
   isHovering: boolean;
 
@@ -15,6 +16,7 @@ export class UploaderComponent{
 
   constructor(private toastService: ToastService,
               private modalCtlr: ModalController) {}
+
 
   toggleHover(event: boolean) {
     this.isHovering = event;
