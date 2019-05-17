@@ -14,6 +14,7 @@ import { ToastService } from '../../services/toast.service';
   styleUrls: ['./user-modal.component.scss'],
 })
 export class UserModalComponent implements OnInit {
+  editProfilePic: boolean = false;
 
   userForm: FormGroup;
   uid: string = this.navParams.get('uid');
@@ -108,5 +109,6 @@ export class UserModalComponent implements OnInit {
   closeModal() {
     this.modalCtrl.dismiss();
   }
+
 
 }

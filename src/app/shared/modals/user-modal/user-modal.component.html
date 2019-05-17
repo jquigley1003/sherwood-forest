@@ -15,9 +15,10 @@
                     <ion-toolbar>
                         <ion-avatar class="centerAvatar"><img src="{{ photoURL }}"></ion-avatar>
                         <ion-button (click)="onResetPassword(email)">Reset Password</ion-button>
+                        <ion-button (click)="editProfilePic = !editProfilePic">Change Picture</ion-button>
                     </ion-toolbar>
                 </ion-header>
-                <app-uploader></app-uploader>
+                <app-uploader *ngIf="editProfilePic"></app-uploader>
                 <form [formGroup]="userForm" (ngSubmit)="onUpdateUser()">
                     <div formGroupName="displayName">
                         <ion-item>
