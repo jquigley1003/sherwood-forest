@@ -12,20 +12,28 @@
           <ion-img src="{{ photoURL }}"></ion-img>
         </ion-header>
         <ion-item>{{ name }}</ion-item>
-        <ion-item>
+        <ion-item-divider>
           <ion-label>Phone: </ion-label>
+        </ion-item-divider>
+        <ion-item>
           {{ phone }}
         </ion-item>
-        <ion-item>
+        <ion-item-divider>
           <ion-label>Email: </ion-label>
+        </ion-item-divider>
+        <ion-item>
           {{ email }}
         </ion-item>
-        <ion-item>
+        <ion-item-divider>
           <ion-label>Address: </ion-label>
+        </ion-item-divider>
+        <ion-item class="ion-text-wrap">
           {{ address }} {{ cityStateZip }}
         </ion-item>
-        <ion-item>
+        <ion-item-divider>
           <ion-label>Resident Since: </ion-label>
+        </ion-item-divider>
+        <ion-item>
           {{ residentSince }}
         </ion-item>
       </ion-col>
