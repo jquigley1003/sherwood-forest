@@ -7,19 +7,17 @@
       Admin
     </ion-title>
   </ion-toolbar>
-</ion-header>
-
-<ion-content padding>
-  <p>All SFCA Users</p>
-  <ion-searchbar showCancelButton (ionInput)="filterByFirstName($event)"
-                 *ngIf="filterBy == 'firstName'" placeholder="Search by First Name">
-  </ion-searchbar>
-  <ion-searchbar showCancelButton (ionInput)="filterByLastName($event)"
-                 *ngIf="filterBy == 'lastName'" placeholder="Search by Last Name">
-  </ion-searchbar>
-  <ion-searchbar showCancelButton (ionInput)="filterByStreetName($event)"
-                 *ngIf="filterBy == 'streetName'"placeholder="Search by Street Name">
-  </ion-searchbar>
+  <ion-toolbar text-center>
+    <ion-searchbar showCancelButton (ionInput)="filterByFirstName($event)"
+                   *ngIf="filterBy == 'firstName'" placeholder="Search by First Name">
+    </ion-searchbar>
+    <ion-searchbar showCancelButton (ionInput)="filterByLastName($event)"
+                   *ngIf="filterBy == 'lastName'" placeholder="Search by Last Name">
+    </ion-searchbar>
+    <ion-searchbar showCancelButton (ionInput)="filterByAddress($event)"
+                   *ngIf="filterBy == 'address'"placeholder="Search by Address">
+    </ion-searchbar>
+  </ion-toolbar>
   <ion-toolbar text-center class="toolbar-buttons">
     <ion-button [color]="statusFirst" (click)="queryFirstName()">
       First Name
@@ -27,10 +25,14 @@
     <ion-button [color]="statusLast" (click)="queryLastName()">
       Last Name
     </ion-button>
-    <ion-button [color]="statusStreet" (click)="queryStreetName()">
-      Street Name
+    <ion-button [color]="statusAddress" (click)="queryAddress()">
+      Address
     </ion-button>
   </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <p text-center>All SFCA Users</p>
   <ion-list>
     <ion-spinner *ngIf="showSpinner" name="bubbles"></ion-spinner>
     <ion-item *ngFor="let user of users" lines="full" value="user.uid">

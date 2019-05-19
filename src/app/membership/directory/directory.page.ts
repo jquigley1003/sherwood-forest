@@ -20,8 +20,10 @@ export class DirectoryPage implements OnInit {
   loadedUsers: any[];
   usersSubscription: Subscription;
   filterBy: string = "lastName";
+  statusFirst: string = "primary";
   statusLast: string = "secondary";
-  statusStreet: string = "primary";
+  statusAddress: string = "primary";
+  residentSince: string;
 
   constructor(private authService: AuthService,
               private userService: UserService,
@@ -42,16 +44,43 @@ export class DirectoryPage implements OnInit {
     this.users = this.loadedUsers;
   }
 
-  queryLastName() {
-    this.filterBy = 'lastName';
-    this.statusLast = "secondary";
-    this.statusStreet = "primary";
+  queryFirstName() {
+    this.filterBy = 'firstName';
+    this.statusFirst = "secondary";
+    this.statusLast = "primary";
+    this.statusAddress = "primary";
   }
 
-  queryStreetName() {
-    this.filterBy = 'streetName';
-    this.statusStreet = "secondary";
+  queryLastName() {
+    this.filterBy = 'lastName';
+    this.statusFirst = "primary";
+    this.statusLast = "secondary";
+    this.statusAddress = "primary";
+  }
+
+  queryAddress() {
+    this.filterBy = 'address';
+    this.statusFirst = "primary";
     this.statusLast = "primary";
+    this.statusAddress = "secondary";
+  }
+
+  filterByFirstName(event) {
+    this.initializeList();
+    const searchTerm = event.srcElement.value;
+
+    if(!searchTerm) {
+      return;
+    }
+    this.users = this.users.filter(member => {
+      if (member.displayName.firstName && searchTerm) {
+        if (member.displayName.firstName.toLowerCase()
+          .indexOf(searchTerm.toLowerCase()) > -1) {
+          return true;
+        }
+        return false;
+      }
+    });
   }
 
   filterByLastName(event) {
@@ -72,7 +101,7 @@ export class DirectoryPage implements OnInit {
     });
   }
 
-  filterByStreetName(event) {
+  filterByAddress(event) {
     this.initializeList();
     const searchTerm = event.srcElement.value;
 
@@ -80,8 +109,8 @@ export class DirectoryPage implements OnInit {
       return;
     }
     this.users = this.users.filter(member => {
-      if (member.address.streetName && searchTerm) {
-        if (member.address.streetName.toLowerCase()
+      if ((member.address.streetNumber + ' ' + member.address.streetName) && searchTerm) {
+        if ((member.address.streetNumber + ' ' + member.address.streetName).toLowerCase()
           .indexOf(searchTerm.toLowerCase()) > -1) {
           return true;
         }
@@ -95,9 +124,11 @@ export class DirectoryPage implements OnInit {
       component: DirectoryModalComponent,
       componentProps: {
         photoURL: user.photoURL,
-        firstName: user.displayName.firstName,
-        lastName: user.displayName.lastName,
+        name: user.displayName.firstName + ' ' + user.displayName.lastName,
         phone: user.phone,
+        email: user.email,
+        address: user.address.streetNumber + ' ' + user.address.streetName,
+        cityStateZip: user.address.city + ' ' + user.address.state + ' ' + user.address.zipCode,
         residentSince: user.residentSince
       }
     });

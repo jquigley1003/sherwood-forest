@@ -21,7 +21,7 @@ export class AdminPage implements OnInit {
   filterBy: string = "lastName";
   statusFirst: string = "primary";
   statusLast: string = "secondary";
-  statusStreet: string = "primary";
+  statusAddress: string = "primary";
   usersSubscription;
   showSpinner: boolean = false;
 
@@ -49,21 +49,21 @@ export class AdminPage implements OnInit {
     this.filterBy = 'firstName';
     this.statusFirst = "secondary";
     this.statusLast = "primary";
-    this.statusStreet = "primary";
+    this.statusAddress = "primary";
   }
 
   queryLastName() {
     this.filterBy = 'lastName';
     this.statusFirst = "primary";
     this.statusLast = "secondary";
-    this.statusStreet = "primary";
+    this.statusAddress = "primary";
   }
 
-  queryStreetName() {
-    this.filterBy = 'streetName';
+  queryAddress() {
+    this.filterBy = 'address';
     this.statusFirst = "primary";
-    this.statusStreet = "secondary";
     this.statusLast = "primary";
+    this.statusAddress = "secondary";
   }
 
   filterByFirstName(event) {
@@ -102,7 +102,7 @@ export class AdminPage implements OnInit {
     });
   }
 
-  filterByStreetName(event) {
+  filterByAddress(event) {
     this.initializeList();
     const searchTerm = event.srcElement.value;
 
@@ -110,8 +110,8 @@ export class AdminPage implements OnInit {
       return;
     }
     this.users = this.users.filter(member => {
-      if (member.address.streetName && searchTerm) {
-        if (member.address.streetName.toLowerCase()
+      if ((member.address.streetNumber + ' ' + member.address.streetName) && searchTerm) {
+        if ((member.address.streetNumber + ' ' + member.address.streetName).toLowerCase()
           .indexOf(searchTerm.toLowerCase()) > -1) {
           return true;
         }
