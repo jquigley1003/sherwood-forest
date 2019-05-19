@@ -15,3 +15,9 @@ ion-card-content p {
 .events {
   background: var(--ion-color-primary-tint);
 }
+
+.events img {
+  object-fit: cover;
+  width: 1000px;
+  height: 300px;
+}
