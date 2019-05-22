@@ -7,7 +7,7 @@ import { AuthService } from '../../shared/services/auth.service';
   templateUrl: './tree-watch.page.html',
   styleUrls: ['./tree-watch.page.scss'],
 })
-export class TreeWatchPage implements OnInit {
+export class TreeWatchPage {
 
   constructor(private router: Router,
               private authService: AuthService) { }
