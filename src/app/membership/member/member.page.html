@@ -1,8 +1,13 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-menu-button slot="start" color="primary"></ion-menu-button>
-    <ion-img slot="start" src="/assets/sfca-logo.jpg" (click)="goHome()"></ion-img>
-    <ion-button slot="end" color="tertiary" (click)="logOut()">Logout</ion-button>
+  <ion-toolbar mode="md">
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary"></ion-menu-button>
+    </ion-buttons>
+    <img slot="start" width="139px" height="85px" src="/assets/sfca-logo.jpg" (click)="goHome()">
+    <ion-title slot="start" color="secondary">Member</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="outline" shape="round" color="tertiary" (click)="logOut()">Logout</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -35,7 +40,7 @@
           </ion-item>
           <ion-item>
             <ion-icon slot="start" name="cash"></ion-icon>
-            <ion-button (click)="presentUserModal(user)">Pay Dues</ion-button>
+            <ion-button>Pay Dues (coming soon!)</ion-button>
           </ion-item>
           <ion-item>
             <ion-icon slot="start" name="person"></ion-icon>
@@ -81,7 +86,7 @@
           <ion-card-content>
             Please join the board for our 2nd quarterly update at Ansley Golf Club.
           </ion-card-content>
-          <ion-button>More Event Detail</ion-button>
+          <ion-button>Details to Follow Soon</ion-button>
         </ion-card>
       </ion-col>
       <ion-col size-xl="3" size-lg="3" size-md="6" size-sm="12" size-xs="12">
@@ -98,7 +103,7 @@
           <ion-card-content>
             Bring your best costume to Magnolia Island!
           </ion-card-content>
-          <ion-button>More Event Detail</ion-button>
+          <ion-button>Details to Follow Soon</ion-button>
         </ion-card>
       </ion-col>
       <ion-col size-xl="3" size-lg="3" size-md="6" size-sm="12" size-xs="12">
@@ -115,7 +120,7 @@
           <ion-card-content>
             Adults only celebration at the home of one gracious resident.
           </ion-card-content>
-          <ion-button>More Event Detail</ion-button>
+          <ion-button>Details to Follow Soon</ion-button>
         </ion-card>
       </ion-col>
     </ion-row>

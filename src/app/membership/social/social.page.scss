@@ -1,0 +1,33 @@
+ion-title {
+  text-shadow: 2px 2px var(--ion-color-primary);
+  font-size: 1.5em;
+}
+
+.social-image {
+  position: relative;
+  text-align: center;
+}
+
+.social-title1 {
+  position: absolute;
+  top: 30%;
+  width: 100%;
+  font-size: 6vw;
+  text-shadow: 3px 3px 8px #000000;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.social-title2 {
+  position: absolute;
+  top: 45%;
+  width: 100%;
+  font-size: 6vw;
+  text-shadow: 3px 3px 8px #000000;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.social-format {
+  padding: 0 10%;
+}

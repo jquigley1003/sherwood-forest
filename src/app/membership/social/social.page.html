@@ -1,17 +1,23 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-menu-button slot="start" color="primary"></ion-menu-button>
-    <ion-img slot="start" src="/assets/sfca-logo.jpg" (click)="goHome()"></ion-img>
-    <ion-title>Social</ion-title>
-    <ion-button slot="end" color="tertiary" (click)="logOut()">Logout</ion-button>
+  <ion-toolbar mode="md">
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary"></ion-menu-button>
+    </ion-buttons>
+    <img slot="start" width="139px" height="85px" src="/assets/sfca-logo.jpg" (click)="goHome()">
+    <ion-title slot="start" color="secondary">Social</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="outline" shape="round" color="tertiary" (click)="logOut()">Logout</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col text-center>
-        <ion-img class="home-image" src="/assets/ForestTannion2019.jpg"></ion-img>
-        <h1 class="home-title">Welcome to Sherwood Forest Civic Association</h1>
+      <ion-col class="social-image" text-center>
+        <ion-img src="/assets/ForestTannion2019.jpg"></ion-img>
+        <h1 class="social-title1">Social Activities</h1>
+      </ion-col>
+      <ion-col class="social-format" size="12">
         <p>Sherwood Forest has an active members social scene. Please join us for garden club,
           cocktail & dinner group along with neighborhood-wide events, such as our annual Summer
           block party, Halloween, & Holiday party.</p>
