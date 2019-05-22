@@ -35,6 +35,10 @@ const routes: Routes = [
     loadChildren: './membership/security/security.module#SecurityPageModule',
     canActivate: [AuthGuard]
   },
+  { path: 'tree-watch',
+    loadChildren: './membership/tree-watch/tree-watch.module#TreeWatchPageModule',
+    canActivate: [AuthGuard]
+  },
   { path: 'directory',
     loadChildren: './membership/directory/directory.module#DirectoryPageModule',
     canActivate: [AuthGuard]

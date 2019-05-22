@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar mode="md">
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary"></ion-menu-button>
+    </ion-buttons>
+    <img slot="start" width="139px" height="85px" src="/assets/sfca-logo.jpg" (click)="goHome()">
+    <ion-title slot="start" color="secondary">Trees</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="outline" shape="round" color="tertiary" (click)="logOut()">Logout</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" text-center>
+        <ion-img src="/assets/tree-watch.jpg"></ion-img>
+        <h1 class="tree-title">Tree Watch</h1>
+      </ion-col>
+      <ion-col class="tree-format" size="12">
+        <p>The mission of Tree Watch is to protect the overstay tree canopy in Sherwood Forest
+          to benefit the entire community by continuing to have out trees minimize highway
+          noise, ensure good air quality, share the wind load, maintain environment for wildlife
+        and the natural beauty of this historic Atlanta in-town neighborhood for all who live
+          here.</p>
+      </ion-col>
+      <ion-col class="tree-format" size="12">
+        <h2>Trees Atlanta</h2>
+        <ion-row>
+          <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+            <img width="500" height="342" src="/assets/TreeSurvey2019.jpg">
+          </ion-col>
+          <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+            <p>A great way to keep track of our canopy is through this <a href="https://www.arcgis.com/home/webmap/viewer.html?webmap=f9cfd95489324e338bdb04384b2bcf30&extent=84.3882.33.7972,-84.3723,33.8046" target="_blank">
+              Sherwood Forest tree survey map.
+            </a> Trees Atlanta will come out and train neighbors in small groups to use your mobile
+              phone to add trees to this survey; a great family or child project.</p>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col class="tree-format" size="12">
+        <h2>Trees Removal Process</h2>
+        <p>Once a homeowner/builder applies for a permit and submits a site plan, an orange sign
+        goes up. After 10 days if approved, a yellow sign goes up during which an appeal can be
+          filed within 5 business days. A white sign goes up after this approval.</p>
+        <p>The current tree ordinance is as follows:</p>
+        <ul>
+          <li>Recompense charge for taking trees down is $100 per tree + $30
+            per inch of diameter of tree at breast height (or about 4.5 feet from ground).</li>
+          <li>If you plant new trees, you are given credit against the fine at the same inch
+            rate, but at 3 to 6 inches from ground.</li>
+          <li>If the tree is taken down without approval, the fine is a mere $1,000, or $500 if
+          a homeowner pleads hardship.</li>
+        </ul>
+        <p>In order to change the ordinance, it has to be approved by the city council through
+          legislation. <a href="https://www.atlantaga.gov/home/showdocument?id=21234" target="_blank">Download the complete ordinance.</a></p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -50,6 +50,11 @@
               <ion-label>Security</ion-label>
             </ion-item>
             <ion-item *ngIf="authService.user$ | async" ngcolor="light"
+                      routerDirection="'root'" routerLink="/tree-watch">
+              <ion-icon slot="start" name="leaf"></ion-icon>
+              <ion-label>Tree Watch</ion-label>
+            </ion-item>
+            <ion-item *ngIf="authService.user$ | async" ngcolor="light"
                       routerDirection="'root'" routerLink="/directory">
               <ion-icon slot="start" name="book"></ion-icon>
               <ion-label>Directory</ion-label>
