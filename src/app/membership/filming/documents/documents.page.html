@@ -23,31 +23,27 @@
       <ion-col size="12" class="home-image" text-center>
         <h1 class="islands-title">SFCA Filming Reference Documents</h1>
       </ion-col>
-      <ion-col size="12">
+      <ion-col size-xl="6" offset-xl="3" >
         <ion-card padding>
-          <a href="https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/documents%2FFilmingCodeOfConduct.pdf?alt=media&token=8a22b996-803c-4cb5-b84a-e6bc05fd34cb"
-             target="_blank">
-          <ion-card-title>
+          <ion-card-title (click)="downloadFCC()">
             SFCA Good Neighbor Filming Code of Conduct
           </ion-card-title>
-          </a>
           <ion-card-content>To support Atlanta’s rapidly growing film activity, the SFCA has
             assembled a short list of expectations for Sherwood Forest residents as they
             considering filming opportunities in our neighborhood.
           </ion-card-content>
+          <ion-button (click)="downloadFCC()" expand="block" fill="solid">Download</ion-button>
         </ion-card>
         <ion-card padding>
-          <a href="https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/documents%2FProducerGuidelines.pdf?alt=media&token=03769db6-bba9-4298-93a2-9bb2fcd70d86"
-             target="_blank">
-            <ion-card-title>
+            <ion-card-title (click)="downloadPG()">
               SFCA Producer Guidelines
             </ion-card-title>
-          </a>
           <ion-card-content>To ensure a consistent and positive experience for all our neighbors,
             productions working in Sherwood Forest are expected to adhere to SFCA’s Producer
             Guidelines. Please provide to any Producer, Location Scout or production
             representative who may be interested in featuring your residence.
           </ion-card-content>
+          <ion-button (click)="downloadPG()" expand="block" fill="solid">Download</ion-button>
         </ion-card>
         <ion-card padding>
           <!--<a href="https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/documents%2FSFCA%20bylaws.docx?alt=media&token=26594dfc-cdca-4133-994a-47f5b2147b47"-->
