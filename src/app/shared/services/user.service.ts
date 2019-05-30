@@ -22,6 +22,7 @@ export class UserService {
   }
 
   makeUserAdmin(user) {
+    this.toastService.presentToast('Please wait while we make this member an admin.', true, 'top', 'OK', 3000);
     this.afFunctions.httpsCallable('addAdmin')(user)
       .toPromise()
       .then(resp => {
@@ -30,16 +31,17 @@ export class UserService {
         } else {
           this.msg = resp.result;
         }
-        this.toastService.presentToast(this.msg, true, top, 'OK', 3000);
+        this.toastService.presentToast(this.msg, true, 'top', 'OK', 3000);
         console.log({resp});
       })
       .catch(err => {
-        this.toastService.presentToast(err.error, true, top, 'OK', 3000);
+        this.toastService.presentToast(err.error, true, 'top', 'OK', 3000);
         console.log({err});
       });
   }
 
   makeUserApproved(user) {
+    this.toastService.presentToast('Please wait while we approve this member.', true, 'top', 'OK', 3000);
     this.afFunctions.httpsCallable('markApproved')(user)
       .toPromise()
       .then(resp => {
@@ -48,16 +50,17 @@ export class UserService {
         } else {
           this.msg = resp.result;
         }
-        this.toastService.presentToast(this.msg, true, top, 'OK', 3000);
+        this.toastService.presentToast(this.msg, true, 'top', 'OK', 3000);
         console.log({resp});
       })
       .catch(err => {
-        this.toastService.presentToast(err.error, true, top, 'OK', 3000);
+        this.toastService.presentToast(err.error, true, 'top', 'OK', 3000);
         console.log({err});
       });
   }
 
   makeUserPending(user) {
+    this.toastService.presentToast('Please wait while we change user to pending.', true, 'top', 'OK', 3000);
     this.afFunctions.httpsCallable('markPending')(user)
       .toPromise()
       .then(resp => {
@@ -66,16 +69,17 @@ export class UserService {
         } else {
           this.msg = resp.result;
         }
-        this.toastService.presentToast(this.msg, true, top, 'OK', 3000);
+        this.toastService.presentToast(this.msg, true, 'top', 'OK', 3000);
         console.log({resp});
       })
       .catch(err => {
-        this.toastService.presentToast(err.error, true, top, 'OK', 3000);
+        this.toastService.presentToast(err.error, true, 'top', 'OK', 3000);
         console.log({err});
       });
   }
 
   removeAdminRole(user) {
+    this.toastService.presentToast('Please wait while we remove user as admin.', true, 'top', 'OK', 3000);
     this.afFunctions.httpsCallable('removeAdmin')(user)
       .toPromise()
       .then(resp => {
@@ -84,11 +88,11 @@ export class UserService {
         } else {
           this.msg = resp.result;
         }
-        this.toastService.presentToast(this.msg, true, top, 'OK', 3000);
+        this.toastService.presentToast(this.msg, true, 'top', 'OK', 3000);
         console.log({resp});
       })
       .catch(err => {
-        this.toastService.presentToast(err.error, true, top, 'OK', 3000);
+        this.toastService.presentToast(err.error, true, 'top', 'OK', 3000);
         console.log({err});
       });
   }
@@ -102,13 +106,14 @@ export class UserService {
   }
 
   deleteUser(userPath) {
+    this.toastService.presentToast('Please wait while we delete this user.', true, 'middle', 'OK', 3000);
     this.dbService.delete(userPath)
       .then(() => {
-        this.toastService.presentToast('The member has been deleted!',
+        this.toastService.presentToast('The user has been deleted!',
           true, 'middle', 'Ok', 3000 );
       })
       .catch(err => {
-        this.toastService.presentToast('You do not have the credentials to delete members!',
+        this.toastService.presentToast('You do not have the credentials to delete users!',
           true, 'middle', 'OK', 3000);
         console.log(err);
       });

@@ -18,6 +18,7 @@ export class AdminPage implements OnInit {
   allUsers;
   users: any[];
   loadedUsers: any[];
+  userChange;
   filterBy: string = "lastName";
   statusFirst: string = "primary";
   statusLast: string = "secondary";

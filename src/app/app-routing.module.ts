@@ -31,6 +31,10 @@ const routes: Routes = [
     loadChildren: './membership/filming/filming.module#FilmingPageModule',
     canActivate: [AuthGuard]
   },
+  { path: 'filming/documents',
+    loadChildren: './membership/filming/documents/documents.module#DocumentsPageModule',
+    canActivate: [AuthGuard]
+  },
   { path: 'security',
     loadChildren: './membership/security/security.module#SecurityPageModule',
     canActivate: [AuthGuard]
