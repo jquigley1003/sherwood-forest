@@ -36,6 +36,15 @@ export class MyCalendarComponent implements OnInit {
 
   ngOnInit() {
     this.resetEvent();
+    this.eventSource = [
+      {
+        title: 'Summer Block Party',
+        desc: 'Family Friendly Event - Rain or Shine',
+        startTime: new Date("2019-06-01T16:00:00-04:00"),
+        endTime: new Date("2019-06-01T20:00:00-04:00"),
+        allDay: false
+      }
+    ]
   }
 
   resetEvent() {
