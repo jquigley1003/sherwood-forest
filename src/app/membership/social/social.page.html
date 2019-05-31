@@ -32,11 +32,11 @@
         <ion-list>
           <ion-item>
             <ion-icon slot="start" name="calendar"></ion-icon>
-            All Events
+            All Events (coming soon!)
           </ion-item>
           <ion-item>
             <ion-icon slot="start" name="people"></ion-icon>
-            Clubs and Groups
+            Clubs and Groups (coming soon!)
           </ion-item>
           <ion-item routerLink="/social/islands">
             <ion-icon slot="start" name="flower"></ion-icon>
@@ -51,13 +51,18 @@
           <img src="../../assets/LionIsland2.jpg">
           <ion-card-header>
             <ion-card-title>
-              {{ currentDate | date }}
+              Sherwood Forest Summer Block Party
             </ion-card-title>
+            <ion-card-subtitle>
+              June 1, 2019, 4:00 PM - 8:00 PM
+            </ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            (Next event will be shown here)
+            <p>SFCA will provide beer, wine, water/soda/juice, fried chicken, live music,
+              and ice cream truck for kiddos!</p>
+            <p>Please bring a side-dish or dessert to share with neighbors and lawn chairs.</p>
           </ion-card-content>
-          <ion-button>More Event Detail</ion-button>
+          <ion-button (click)="downloadSBP()">More Event Detail</ion-button>
         </ion-card>
       </ion-col>
     </ion-row>
