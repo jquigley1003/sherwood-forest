@@ -208,7 +208,7 @@ export class AuthService {
 
   async signOut() {
     await this.afAuth.auth.signOut();
-    this.checkForAdmin.next(false);
+    await this.checkForAdmin.next(false);
     this.toastService.presentToast('You are signed out!', true, 'top', 'Close', 3000);
     return this.router.navigate(['/']);
   }

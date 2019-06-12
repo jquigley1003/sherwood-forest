@@ -12,6 +12,7 @@ admin.initializeApp(functions.config().firebase);
 //  response.send("Hello from Firebase!");
 // });
 
+
 export const createUser = functions.auth.user().onCreate((user) => {
   return admin.auth().setCustomUserClaims(user.uid, {
     pendingMember: true,

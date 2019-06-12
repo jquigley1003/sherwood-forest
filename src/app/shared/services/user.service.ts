@@ -78,8 +78,8 @@ export class UserService {
       });
   }
 
-  removeAdminRole(user) {
-    this.toastService.presentToast('Please wait while we remove user as admin.', true, 'top', 'OK', 3000);
+  async removeAdminRole(user) {
+    await this.toastService.presentToast('Please wait while we remove user as admin.', true, 'top', 'OK', 3000);
     this.afFunctions.httpsCallable('removeAdmin')(user)
       .toPromise()
       .then(resp => {
@@ -105,8 +105,8 @@ export class UserService {
     this.authService.resetPassword(userEmail);
   }
 
-  deleteUser(userPath) {
-    this.toastService.presentToast('Please wait while we delete this user.', true, 'middle', 'OK', 3000);
+  async deleteUser(userPath) {
+    await this.toastService.presentToast('Please wait while we delete this user.', true, 'middle', 'OK', 3000);
     this.dbService.delete(userPath)
       .then(() => {
         this.toastService.presentToast('The user has been deleted!',
