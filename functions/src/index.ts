@@ -12,6 +12,64 @@ admin.initializeApp(functions.config().firebase);
 //  response.send("Hello from Firebase!");
 // });
 
+export const adminCreateUser = functions.https.onCall((data, context) => {
+  // check if context.auth is not null
+  // otherwise on build, error will be "Object is possibly 'undefined'
+  // or add the ! if 100% sure context.auth is always defined
+  // example: const isAdmin = context.auth!.token.admin;
+  if (context.auth) {
+    if(context.auth.token.admin !== true) {
+      return {
+        error: `Request not authorized. You must be an admin to create a new user`
+      };
+    }
+    const newUserEmail = data.email;
+    const newUserPassword = data.password;
+
+    return admin.auth().createUser({
+      email: newUserEmail,
+      password: newUserPassword,
+      emailVerified: true
+    })
+      .then((userRecord) => {
+        const users = admin.firestore().collection('users');
+
+        return users.doc(userRecord.uid).set({
+          uid: userRecord.uid,
+          email: newUserEmail,
+          displayName: {
+            firstName: 'New',
+            lastName: 'Member'
+          },
+          address: {
+            streetNumber: '123',
+            streetName: 'Sherwood Forest',
+            subAddress: null,
+            city: 'Atlanta',
+            state: 'GA',
+            zipCode: '30309',
+          },
+          photoURL: 'https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/FrogBotanicalGarden.jpg?alt=media&token=0a0d35fd-7404-45c4-8032-8ec0f2eb92a9',
+          birthDate: null,
+          occupation: null,
+          residentSince: null,
+          duesPaid: false,
+          roles: {
+            pendingMember: true,
+            approvedMember: false,
+            admin: false
+          }
+        })
+      })
+        .then(() => {
+              return {
+                result: `${newUserEmail} is now a pending member. Firebase collection updated!`
+              }
+            })
+  } else {
+    return null;
+  }
+});
 
 export const createUser = functions.auth.user().onCreate((user) => {
   return admin.auth().setCustomUserClaims(user.uid, {

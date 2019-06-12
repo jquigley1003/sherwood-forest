@@ -17,6 +17,25 @@ export class UserService {
               private toastService: ToastService) {}
 
 
+  adminAddUser(data) {
+    this.toastService.presentToast('Please wait while we add a new user.', true, 'top', 'OK', 3000);
+    this.afFunctions.httpsCallable('adminCreateUser')(data)
+      .toPromise()
+      .then(resp => {
+        if(resp.error) {
+          this.msg = resp.error;
+        } else {
+          this.msg = resp.result;
+        }
+        this.toastService.presentToast(this.msg, true, 'top', 'OK', 3000);
+        console.log({resp});
+      })
+      .catch(err => {
+        this.toastService.presentToast(err.error, true, 'top', 'OK', 3000);
+        console.log({err});
+      });
+  }
+
   fetchUsers() {
     return this.dbService.collection$('users');
   }
