@@ -58,6 +58,10 @@ const routes: Routes = [
   { path: 'admin/add-non-member',
     loadChildren: './admin/add-non-member/add-non-member.module#AddNonMemberPageModule',
     canActivate: [AdminGuard]
+  },
+  { path: 'admin/events',
+    loadChildren: './admin/events/events.module#EventsPageModule',
+    canActivate: [AdminGuard]
   }
 ];
 @NgModule({
