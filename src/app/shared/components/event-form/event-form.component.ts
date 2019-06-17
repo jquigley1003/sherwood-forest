@@ -20,13 +20,17 @@ export class EventFormComponent implements OnInit {
               private router: Router) {
     this.eventForm = this.formBuilder.group({
       title: ['', Validators.required],
-      subTitle: ['', (Validators.required, Validators.pattern(".+\@.+\..+"))],
+      subTitle: ['', Validators.required],
       startTime: ['', Validators.required],
       endTime: ['', Validators.required],
-      details: ['']
+      details: ['', Validators.required],
     });
   }
 
   ngOnInit() {}
+
+  onSubmitForm() {
+
+  }
 
 }

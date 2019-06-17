@@ -40,11 +40,11 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    this.authService.initCheckForAdmin();
     this.authSubscription = this.authService.checkForAdmin
       .subscribe(adminStatus => {
         this.isAdmin = adminStatus;
       });
-    // this.loggedIn$ = this.authService.user$.subscribe();
   }
 
   async presentLoginModal() {
