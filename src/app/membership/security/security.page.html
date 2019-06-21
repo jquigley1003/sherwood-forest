@@ -21,7 +21,52 @@
           active license plate readers at each entrance. We also have paid off-duty police
           officers on random shifts to maximize coverage patrolling our neighborhood.</p>
         <p>Emergency: Dial 911.</p>
-        <p>Non-Emergency - Atlanta Police Liason: Sgt. Hodge<br>Email: sherwoodforestofficer@gmail.com</p>
+        <p>Non-Emergency - Atlanta Police Liason: Lt. Jim Hodge<br>Email:
+          sherwoodforestofficer@gmail.com<br>
+          <ion-button (click)="toggle()">More about Lt. Hodge</ion-button>
+        </p>
+        <ion-row *ngIf="showHodge" class="showInfoFormat">
+          <ion-col size="6" offset="3" text-center>
+            <h1>Introducing Lt. Jim Hodge</h1>
+            <ion-img src="../../assets/Lt-Hodge.jpg"></ion-img>
+          </ion-col>
+          <ion-col>
+            <p>
+              My name is Lt. Jim Hodge and I am your neighborhood’s main security patrol officer.
+              I would like to introduce myself to you all, provide my direct contact information
+              and give you an update regarding my hours and recent police activity. It was a
+              great pleasure to meet many of you at the summer picnic and look forward to meeting
+              many more of you at other events as well as during my patrols. Please feel free to
+              wave me down to say hi when you see me in the neighborhood.
+            </p>
+            <p>
+              My direct contact, specifically for the patrol in your neighborhood is:<br>
+              Email: sherwoodforestofficer@gmail.com<br>
+              Phone: 404-558-3808
+            </p>
+            <p>
+              Please feel free to contact me directly, at any time with matters of concern. I
+              will do my very best to promptly reply with a solid answer or at least an artful
+              dodge. I’ll provide information and will reach out to the Video integration unit
+              regarding “hits” from the license plate cameras located at each of the entrances to
+              Sherwood Forest.
+            </p>
+            <p>With permission of the SFCA board, I plan to send out the following on a regular basis:
+            </p>
+            <ion-list lines="none">
+              <ion-item>1. My schedule for the upcoming week.</ion-item>
+              <ion-item>2. Any crime updates that are relevant to Sherwood Forest, edited to protect privacy.</ion-item>
+              <ion-item>3. Answer any questions you have for myself or APD in general</ion-item>
+              <ion-item>4. Any relevant announcements and updates.</ion-item>
+            </ion-list>
+            <p>
+              My hope is that by providing information directly to you, via email, your
+              newsletter and Facebook page I will be able to keep you better informed as to what
+              is happening in and around your neighborhood while keeping the privacy of victims
+              and witnesses protected.
+            </p>
+          </ion-col>
+        </ion-row>
         <p>Non-Emergency - SFCA Security Liason: Tom Ptacek</p>
       </ion-col>
     </ion-row>

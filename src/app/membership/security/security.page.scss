@@ -1,3 +1,11 @@
+ion-item {
+  --background: transparent;
+}
+
+ion-list {
+  background: transparent;
+}
+
 ion-title {
   text-shadow: 2px 2px var(--ion-color-primary);
   font-size: 1.5em;
@@ -6,4 +14,10 @@ ion-title {
 .security-img {
   display: block;
   margin: 0 auto;
+}
+
+.showInfoFormat {
+  background-color: var(--ion-color-primary);
+  border-radius: 5px;
+  padding: 10px;
 }

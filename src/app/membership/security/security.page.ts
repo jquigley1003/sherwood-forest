@@ -10,10 +10,16 @@ import { AuthService } from '../../shared/services/auth.service';
 })
 export class SecurityPage implements OnInit {
 
+  public showHodge:boolean = false;
+
   constructor(private authService: AuthService,
               private router: Router) { }
 
   ngOnInit() {
+  }
+
+  toggle() {
+    this.showHodge = !this.showHodge;
   }
 
   goHome() {
