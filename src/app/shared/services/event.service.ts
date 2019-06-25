@@ -9,5 +9,12 @@ export class EventService {
 
   constructor(private dbService: DbService) { }
 
+  createEvent (path, data) {
+    this.dbService.updateAt(path, data);
+  }
+
+  fetchEvents() {
+    return this.dbService.collection$('events');
+  }
 
 }

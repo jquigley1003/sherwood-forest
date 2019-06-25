@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { ToastService } from '../../services/toast.service';
 import { EventService } from '../../services/event.service';
+import { Event } from '../../../models/event.model';
 
 @Component({
   selector: 'app-event-form',
@@ -17,7 +18,9 @@ export class EventFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private eventService: EventService,
               private toastService: ToastService,
-              private router: Router) {
+              private router: Router) {}
+
+  ngOnInit() {
     this.eventForm = this.formBuilder.group({
       title: ['', Validators.required],
       subTitle: ['', Validators.required],
@@ -27,10 +30,20 @@ export class EventFormComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  async onCreateEvent() {
+    const { title, subTitle, startTime, endTime, details } = this.eventForm.value;
 
-  onSubmitForm() {
-
+    const data: Event = {
+      title: title,
+      subTitle: subTitle,
+      startTime: startTime,
+      endTime: endTime,
+      details: details
+    };
+    await this.eventService.createEvent('events/', data);
+    await this.toastService.presentToast('The SFCA event has been created',
+      true, 'top', 'Ok', 3000 );
+    await this.eventForm.reset();
   }
 
 }

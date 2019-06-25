@@ -24,5 +24,22 @@
         <app-event-form></app-event-form>
       </ion-col>
     </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-card *ngFor="let event of events">
+          <ion-card-title>
+            {{ event.title }}
+          </ion-card-title>
+          <ion-card-subtitle>
+            {{ event.subTitle }}<br>
+            {{ event.startTime | date:'mediumDate' }}
+            {{ event.startTime | date:'shortTime' }} - {{ event.endTime | date:'shortTime' }}
+          </ion-card-subtitle>
+          <ion-card-content>
+            {{ event.details }}
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-content>
