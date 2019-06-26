@@ -4,7 +4,12 @@
     <ion-col size="8">
       <ion-header text-center padding>
         Add a New Event
+        <ion-toolbar>
+          <ion-avatar class="centerAvatar"><img src="{{ photoURL }}"></ion-avatar>
+          <ion-button (click)="editEventPic = !editEventPic">Change Picture</ion-button>
+        </ion-toolbar>
       </ion-header>
+      <app-uploader *ngIf="editEventPic" [memberId]="uid"></app-uploader>
       <form [formGroup]="eventForm" (ngSubmit)="onCreateEvent()">
         <ion-item>
           <ion-label position="floating">Event Title</ion-label>
