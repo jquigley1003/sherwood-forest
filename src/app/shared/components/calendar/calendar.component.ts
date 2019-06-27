@@ -4,6 +4,10 @@ import { formatDate } from '@angular/common';
 import { AlertController } from '@ionic/angular';
 import { CalendarComponent } from 'ionic2-calendar/calendar';
 
+import { Observable, Subscription } from 'rxjs';
+
+import { EventService } from '../../services/event.service';
+
 
 @Component({
   selector: 'app-calendar',
@@ -23,7 +27,10 @@ export class MyCalendarComponent implements OnInit {
 
   minDate = new Date().toISOString();
 
+  allEvents: Observable<any>;
+  changeEvents = [];
   eventSource = [];
+  eventSubscription: Subscription;
   viewTitle;
 
   calendar = {
@@ -32,19 +39,24 @@ export class MyCalendarComponent implements OnInit {
   };
 
   constructor(private alertCtrl: AlertController,
+              private eventService: EventService,
               @Inject(LOCALE_ID) private locale: string) { }
 
   ngOnInit() {
-    this.resetEvent();
-    this.eventSource = [
-      {
-        title: 'Summer Block Party',
-        desc: 'Family Friendly Event - Rain or Shine',
-        startTime: new Date("2019-06-01T16:00:00-04:00"),
-        endTime: new Date("2019-06-01T20:00:00-04:00"),
-        allDay: false
-      }
-    ]
+    // this.resetEvent();
+    this.getAllEvents();
+  }
+
+  async getAllEvents() {
+    this.allEvents = await this.eventService.fetchEvents();
+    this.eventSubscription = await this.allEvents.subscribe(data => {
+      data.forEach(event => {
+        event.startTime = new Date(event.startTime);
+        event.endTime = new Date(event.endTime);
+        this.eventSource.push(event);
+      });
+    });
+    console.log('All Events = ', this.eventSource);
   }
 
   resetEvent() {
@@ -128,5 +140,9 @@ export class MyCalendarComponent implements OnInit {
     this.eventSource.push(eventCopy);
     this.myCal.loadEvents();
     this.resetEvent();
+  }
+
+  ngOnDestroy() {
+    this.eventSubscription.unsubscribe();
   }
 }
