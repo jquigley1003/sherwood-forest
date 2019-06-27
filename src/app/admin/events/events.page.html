@@ -31,11 +31,17 @@
         <ion-list>
           <ion-item *ngFor="let event of events">
             <ion-thumbnail><img src="{{ event.photoURL }}"></ion-thumbnail>
-            <ion-title>{{ event.title }}</ion-title>
-            <ion-label>{{ event.subTitle }}</ion-label>
-            <ion-label>
-              {{ event.startTime | date:'mediumDate' }}<br>
-              {{ event.startTime | date:'shortTime' }} - {{ event.endTime | date:'shortTime' }}
+            <ion-label text-wrap padding>
+              <ion-text>
+                <h3>{{ event.title }}</h3>
+              </ion-text>
+              <p>{{ event.subTitle }}</p>
+            </ion-label>
+            <ion-label text-wrap>
+              <ion-text>
+                <p>{{ event.startTime | date:'mediumDate' }}<br>
+                  {{ event.startTime | date:'shortTime' }} - {{ event.endTime | date:'shortTime' }}</p>
+              </ion-text>
             </ion-label>
           </ion-item>
         </ion-list>
