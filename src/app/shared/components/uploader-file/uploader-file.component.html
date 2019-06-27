@@ -1,0 +1,25 @@
+<ion-row>
+  <ion-col size="12" text-center>
+    <div class="dropzone" appDropzone
+         (hovered)="toggleHover($event)"
+         (dropped)="onDrop($event)"
+         [class.hovering]="isHovering">
+      <h3>New Uploader File - Drag and Drop a File</h3>
+      <p>jpeg or png image should be less than 1 MB</p>
+      <ion-item>
+        <ion-label>
+          or choose a file…
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <input class="file-input" type="file" (change)="onDrop($event.target.files)">
+      </ion-item>
+    </div>
+    <h3>1. Upload File<ion-icon name="arrow-round-up"></ion-icon><br>2. Click Confirm Button
+      Below<ion-icon name="arrow-round-down"></ion-icon></h3>
+    <div *ngFor="let file of files">
+      <app-upload-file-task [file]="file" [storageFolder]="fileFolder"></app-upload-file-task>
+    </div>
+  </ion-col>
+</ion-row>
+

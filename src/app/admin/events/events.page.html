@@ -14,9 +14,11 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col size="6" offset="6">
-        <ion-button *ngIf="!showEventForm" (click)="toggleEventForm()">Add Event</ion-button>
-        <ion-button *ngIf="showEventForm"(click)="toggleEventForm()">Close Event Form</ion-button>
+      <ion-col>
+        <div class="ion-text-center">
+          <ion-button *ngIf="!showEventForm" (click)="toggleEventForm()">Add Event</ion-button>
+          <ion-button *ngIf="showEventForm"(click)="toggleEventForm()">Close Event Form</ion-button>
+        </div>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -26,19 +28,17 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-card *ngFor="let event of events">
-          <ion-card-title>
-            {{ event.title }}
-          </ion-card-title>
-          <ion-card-subtitle>
-            {{ event.subTitle }}<br>
-            {{ event.startTime | date:'mediumDate' }}
-            {{ event.startTime | date:'shortTime' }} - {{ event.endTime | date:'shortTime' }}
-          </ion-card-subtitle>
-          <ion-card-content>
-            {{ event.details }}
-          </ion-card-content>
-        </ion-card>
+        <ion-list>
+          <ion-item *ngFor="let event of events">
+            <ion-thumbnail><img src="{{ event.photoURL }}"></ion-thumbnail>
+            <ion-title>{{ event.title }}</ion-title>
+            <ion-label>{{ event.subTitle }}</ion-label>
+            <ion-label>
+              {{ event.startTime | date:'mediumDate' }}<br>
+              {{ event.startTime | date:'shortTime' }} - {{ event.endTime | date:'shortTime' }}
+            </ion-label>
+          </ion-item>
+        </ion-list>
       </ion-col>
     </ion-row>
   </ion-grid>

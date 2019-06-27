@@ -3,13 +3,15 @@
     <ion-col size="2"></ion-col>
     <ion-col size="8">
       <ion-header text-center padding>
-        Add a New Event
         <ion-toolbar>
-          <ion-avatar class="centerAvatar"><img src="{{ photoURL }}"></ion-avatar>
-          <ion-button (click)="editEventPic = !editEventPic">Change Picture</ion-button>
+          <ion-title>Add a New Event</ion-title>
+          <ion-thumbnail ><img src="{{ photoURL }}"></ion-thumbnail>
         </ion-toolbar>
+        <ion-button (click)="toggleUploader()">Change Picture</ion-button>
       </ion-header>
-      <app-uploader *ngIf="editEventPic" [memberId]="uid"></app-uploader>
+      <app-uploader-file *ngIf="editEventPic" [fileFolder]="folderName"></app-uploader-file>
+      <ion-button *ngIf="editEventPic"
+                  (click)="confirmNewPhoto()">Confirm Your Event Picture</ion-button>
       <form [formGroup]="eventForm" (ngSubmit)="onCreateEvent()">
         <ion-item>
           <ion-label position="floating">Event Title</ion-label>

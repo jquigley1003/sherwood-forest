@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { EventFormComponent } from './event-form.component';
-import { UploaderModule } from '../uploader/uploader.module';
+import { UploaderFileModule } from '../uploader-file/uploader-file.module';
 
 @NgModule({
   imports: [
@@ -13,7 +13,7 @@ import { UploaderModule } from '../uploader/uploader.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    UploaderModule
+    UploaderFileModule
   ],
   declarations: [
     EventFormComponent
