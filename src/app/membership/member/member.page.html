@@ -11,22 +11,22 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-<ion-card>
-  <img src="../../assets/LionIsland2.jpg">
-  <ion-card-title class="card-title" text-center>
-    Welcome to the Member Page<br>
-    {{ currentUser }}
-  </ion-card-title>
-  <ion-card-content text-center>
-    <ion-button (click)="presentUserModal(user)">
-      <ion-icon slot="start" name="person"></ion-icon>
-      Update Your Member Profile
-    </ion-button>
-    <p *ngIf="duesPaid" @slideTitleRight>2019 Dues Are Paid. Thank You!</p>
-    <p *ngIf="!duesPaid" @slideTitleRight>Our neighborhood needs you!<br>Submit your 2019 dues and help
-      us grow.</p>
-  </ion-card-content>
-</ion-card>
+  <ion-card>
+    <img src="../../assets/LionIsland2.jpg">
+    <ion-card-title class="card-title" text-center>
+      Welcome to the Member Page<br>
+      {{ currentUser }}
+    </ion-card-title>
+    <ion-card-content text-center>
+      <ion-button (click)="presentUserModal(user)">
+        <ion-icon slot="start" name="person"></ion-icon>
+        Update Your Member Profile
+      </ion-button>
+      <p *ngIf="duesPaid" @slideTitleRight>2019 Dues Are Paid. Thank You!</p>
+      <p *ngIf="!duesPaid" @slideTitleRight>Our neighborhood needs you!<br>Submit your 2019 dues and help
+        us grow.</p>
+    </ion-card-content>
+  </ion-card>
   <ion-grid>
     <ion-row class="ion-justify-content-center">
       <ion-col size-xl="3" size-lg="6" size-md="6" size-sm="12" size-xs="12" class="ion-align-self-center" text-center>
@@ -47,6 +47,19 @@
             <ion-button (click)="presentUserModal(user)">Update Your Member Profile</ion-button>
           </ion-item>
         </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row text-center class="ion-justify-content-center">
+      <ion-col size="12" text-center>
+        <h2>Board Members 2019 - 2021</h2>
+      </ion-col>
+      <ion-col text-center padding *ngFor="let member of board">
+        <div text-center>
+          <ion-thumbnail><ion-img src="{{ member.photoURL }}"></ion-img></ion-thumbnail>
+          <h2>{{ member.displayName.firstName}} {{ member.displayName.lastName}}</h2>
+          <h3>{{ member.boardTitle }}</h3>
+          <p>{{ member.boardEmail }}</p>
+        </div>
       </ion-col>
     </ion-row>
     <ion-row>

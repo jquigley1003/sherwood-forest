@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 
 import { ModalController } from '@ionic/angular';
 
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { AuthService } from '../../shared/services/auth.service';
+import { UserService } from '../../shared/services/user.service';
 import { UserModalComponent } from '../../shared/modals/user-modal/user-modal.component';
 import { slideTitleLeftTrigger, slideTitleRightTrigger } from '../../shared/components/animations/animations';
 
@@ -18,14 +19,18 @@ import { slideTitleLeftTrigger, slideTitleRightTrigger } from '../../shared/comp
     slideTitleLeftTrigger
   ]
 })
-export class MemberPage implements OnInit {
+export class MemberPage implements OnInit, OnDestroy {
   user;
   currentUser;
   currentUserSub: Subscription;
   currentYear: Date;
   duesPaid: boolean;
+  allBoard$: Observable<any>;
+  boardSub: Subscription;
+  board = [];
 
   constructor(private authService: AuthService,
+              private userService: UserService,
               private router: Router,
               private modalCtrl: ModalController) { }
 
@@ -42,6 +47,10 @@ export class MemberPage implements OnInit {
       }
     });
     this.currentYear = new Date();
+    this.allBoard$ = this.userService.fetchBoardMembers();
+    this.boardSub = this.allBoard$.subscribe(member => {
+      this.board = member;
+    });
   }
 
   async presentUserModal(user) {
@@ -78,5 +87,6 @@ export class MemberPage implements OnInit {
 
   ngOnDestroy() {
     this.currentUserSub.unsubscribe();
+    this.boardSub.unsubscribe();
   }
 }

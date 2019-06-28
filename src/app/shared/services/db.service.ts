@@ -38,6 +38,7 @@ export class DbService {
       );
   }
 
+
   /**
    * @param {string} path 'collection' or 'collection/docID'
    * @param {object} data new data

@@ -17,7 +17,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
 })
-export class UserFormComponent implements OnInit {
+export class UserFormComponent implements OnInit, OnDestroy {
 
   userForm: FormGroup;
   currentUser;

@@ -22,6 +22,17 @@ ion-card-content p {
   font-size: 1.3em;
 }
 
+ion-avatar {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+a {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .welcome-card ion-img {
   max-height: 35vh;
   overflow: hidden;
@@ -30,12 +41,6 @@ ion-card-content p {
 .welcome-card a {
   text-decoration: none;
   color: var(--ion-dark-tint);
-}
-
-ion-avatar {
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 .home-image {

@@ -7,7 +7,7 @@ import { ModalController } from '@ionic/angular';
   templateUrl: './uploader.component.html',
   styleUrls: ['./uploader.component.scss'],
 })
-export class UploaderComponent{
+export class UploaderComponent {
   @Input() memberId: string;
 
   isHovering: boolean;

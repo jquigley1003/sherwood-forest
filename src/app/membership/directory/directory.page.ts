@@ -14,7 +14,7 @@ import { DirectoryModalComponent } from '../../shared/modals/directory-modal/dir
   templateUrl: './directory.page.html',
   styleUrls: ['./directory.page.scss'],
 })
-export class DirectoryPage implements OnInit {
+export class DirectoryPage implements OnInit, OnDestroy {
   allUsers;
   users: any[];
   loadedUsers: any[];

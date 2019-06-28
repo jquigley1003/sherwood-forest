@@ -14,7 +14,7 @@ import { UserModalComponent } from '../shared/modals/user-modal/user-modal.compo
   templateUrl: './admin.page.html',
   styleUrls: ['./admin.page.scss'],
 })
-export class AdminPage implements OnInit {
+export class AdminPage implements OnInit, OnDestroy {
   allUsers;
   users: any[];
   loadedUsers: any[];

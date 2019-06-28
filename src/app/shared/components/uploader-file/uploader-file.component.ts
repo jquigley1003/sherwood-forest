@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
 import { ToastService } from '../../services/toast.service';
 import { ModalController } from '@ionic/angular';
 import { UploadFileTaskComponent } from '../upload-file-task/upload-file-task.component';

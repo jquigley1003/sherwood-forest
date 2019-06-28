@@ -9,7 +9,7 @@ import { EventService } from '../../shared/services/event.service';
   templateUrl: './events.page.html',
   styleUrls: ['./events.page.scss'],
 })
-export class EventsPage implements OnInit {
+export class EventsPage implements OnInit, OnDestroy {
   showEventForm: boolean = false;
   allEvents;
   events: any[];

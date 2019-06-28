@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './logout-modal.component.html',
   styleUrls: ['./logout-modal.component.scss'],
 })
-export class LogoutModalComponent implements OnInit {
+export class LogoutModalComponent implements OnInit, OnDestroy {
 
   currentUserSub: Subscription;
   user;

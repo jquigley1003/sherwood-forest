@@ -22,7 +22,9 @@
           Association is an active community organization maintaining the essential
           business of the neighborhood and providing fun events to encourage and
           promote social engagement.</p>
-        <p>Member only website. Please login for full access and information.</p>
+        <p text-center>SFCA Members,
+          <a (click)="presentLoginModal()">please login</a>
+          for full access and information.</p>
       </ion-col>
     </ion-row>
     <ion-card class="welcome-card">
@@ -31,30 +33,14 @@
         <ion-card-title>Key Contacts</ion-card-title>
       </ion-card-header>
       <ion-card-content text-center>
-        <ion-row>
-          <ion-col text-center>
-            <a routerLink="/public/contact">
-              <ion-avatar><ion-img src="/assets/GreenLeaf.jpg"></ion-img></ion-avatar>
-              <h2>Derk Weinheimer</h2>
-              <h3>President</h3>
-              <p *ngIf="loggedIn$ | async">president@sherwoodforestatl.org</p>
-            </a>
-          </ion-col>
-          <ion-col text-center>
-            <a routerLink="/public/contact">
-              <ion-avatar><ion-img src="/assets/GreenLeaf.jpg"></ion-img></ion-avatar>
-              <h2>Humberto Garcia-Sjogrim</h2>
-              <h3>Vice-President / Land Use / Filming</h3>
-              <p *ngIf="loggedIn$ | async">vicepresident@sherwoodforestatl.org</p>
-            </a>
-          </ion-col>
-          <ion-col text-center>
-            <a routerLink="/public/contact">
-              <ion-avatar><ion-img src="/assets/GreenLeaf.jpg"></ion-img></ion-avatar>
-              <h2>Nicola Tannion</h2>
-              <h3>Communications</h3>
-              <p *ngIf="loggedIn$ | async">communications@sherwoodforestatl.org</p>
-            </a>
+        <ion-row text-center class="ion-justify-content-center">
+          <ion-col text-center padding *ngFor="let key of keyContacts">
+            <div routerLink="/public/contact" >
+              <ion-avatar><ion-img src="{{ key.photoURL }}"></ion-img></ion-avatar>
+              <h2>{{ key.displayName.firstName}} {{ key.displayName.lastName}}</h2>
+              <h3>{{ key.boardTitle }}</h3>
+              <p *ngIf="loggedIn$ | async">{{ key.boardEmail }}</p>
+            </div>
           </ion-col>
         </ion-row>
       </ion-card-content>
@@ -80,8 +66,8 @@
                 Read about the Georgia National Register Review Board Meeting</a>
               held on February 22, 2019.<br><br>
               <a href="https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/articles%2F1649LM-AJC-2004-08-07-small.pdf?alt=media&token=3334d896-979c-4d3d-8c9f-0a4e94e88cd2" target="_blank">
-                Read the AJC article from 8/7/2004.
-              </a><i>Thanks to Verna and William Cleveland for submitting the paper.</i>
+                Read the AJC article from 8/7/2004.</a>
+              <i> Thanks to Verna and William Cleveland for submitting the paper.</i>
              </p>
           </ion-item>
           <ion-item-divider color="primary">

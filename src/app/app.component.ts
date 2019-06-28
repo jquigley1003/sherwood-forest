@@ -16,7 +16,7 @@ import { RegisterModalComponent } from './shared/modals/register-modal/register-
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
   loggedIn$: Observable<any>;
   isAdmin: boolean;
   authSubscription: Subscription;

@@ -40,6 +40,14 @@ export class UserService {
     return this.dbService.collection$('users');
   }
 
+  fetchBoardMembers() {
+    return this.dbService.collection$('users', ref => ref.where('boardTerm', '==', '2019 - 2021'));
+  }
+
+  fetchKeyContacts() {
+    return this.dbService.collection$('users', ref => ref.where('boardKeyContact', '==', true));
+  }
+
   makeUserAdmin(user) {
     this.toastService.presentToast('Please wait while we make this member an admin.', true, 'top', 'OK', 3000);
     this.afFunctions.httpsCallable('addAdmin')(user)

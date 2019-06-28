@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, LOCALE_ID, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, LOCALE_ID, ViewChild } from '@angular/core';
 import { formatDate } from '@angular/common';
 
 import { AlertController } from '@ionic/angular';
@@ -14,7 +14,7 @@ import { EventService } from '../../services/event.service';
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
 })
-export class MyCalendarComponent implements OnInit {
+export class MyCalendarComponent implements OnInit, OnDestroy {
   @ViewChild(CalendarComponent) myCal:CalendarComponent;
 
   event = {
