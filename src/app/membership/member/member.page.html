@@ -42,17 +42,17 @@
             <ion-icon slot="start" name="cash"></ion-icon>
             <ion-button>Pay Dues (coming soon!)</ion-button>
           </ion-item>
-          <ion-item>
-            <ion-icon slot="start" name="person"></ion-icon>
-            <ion-button (click)="presentUserModal(user)">Update Your Member Profile</ion-button>
-          </ion-item>
         </ion-list>
       </ion-col>
     </ion-row>
     <ion-row text-center class="ion-justify-content-center">
-      <ion-col size="12" text-center>
+      <ion-col text-center>
         <h2>Board Members 2019 - 2021</h2>
+        <ion-button (click)="showBoardMembers()" *ngIf="!showBoard">Show Board Members</ion-button>
+        <ion-button (click)="showBoardMembers()" *ngIf="showBoard">Hide Board Members</ion-button>
       </ion-col>
+    </ion-row>
+    <ion-row *ngIf="showBoard">
       <ion-col text-center padding *ngFor="let member of board">
         <div text-center>
           <ion-thumbnail><ion-img src="{{ member.photoURL }}"></ion-img></ion-thumbnail>

@@ -28,6 +28,7 @@ export class MemberPage implements OnInit, OnDestroy {
   allBoard$: Observable<any>;
   boardSub: Subscription;
   board = [];
+  showBoard: boolean = false;
 
   constructor(private authService: AuthService,
               private userService: UserService,
@@ -75,6 +76,10 @@ export class MemberPage implements OnInit, OnDestroy {
       }
     });
     return await modal.present();
+  }
+
+  showBoardMembers() {
+    this.showBoard = !this.showBoard;
   }
 
   goHome() {
