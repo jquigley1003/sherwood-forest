@@ -30,6 +30,8 @@ export class MemberPage implements OnInit, OnDestroy {
   board = [];
   showBoard: boolean = false;
 
+  eventDocURL: string = 'https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/documents%2FSummerBlockParty.pdf?alt=media&token=dc33e69b-7b00-49c9-b04e-8550e09330a0';
+
   constructor(private authService: AuthService,
               private userService: UserService,
               private router: Router,
@@ -80,6 +82,10 @@ export class MemberPage implements OnInit, OnDestroy {
 
   showBoardMembers() {
     this.showBoard = !this.showBoard;
+  }
+
+  getDocument(eventDoc) {
+    window.open(eventDoc);
   }
 
   goHome() {

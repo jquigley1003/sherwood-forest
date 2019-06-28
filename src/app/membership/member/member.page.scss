@@ -26,6 +26,15 @@ ion-thumbnail {
   color: #ffffff;
 }
 
+.board-bkgrnd {
+  background: var(--ion-color-light-tint);
+}
+
+.board-border {
+  border: solid .2em var(--ion-color-medium-shade);
+  border-radius: 3em;
+}
+
 .events {
   background: var(--ion-color-primary-tint);
 }

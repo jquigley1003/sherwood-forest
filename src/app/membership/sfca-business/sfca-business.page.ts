@@ -24,4 +24,12 @@ export class SfcaBusinessPage implements OnInit {
     this.authService.signOut();
   }
 
+  getMinutes() {
+    window.open('https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/documents%2FSpring%20Minutes%20042389%20revised%202.pdf?alt=media&token=122a467f-ee11-4bc4-81ed-b590926ec528');
+  }
+
+  getBusinessDocs() {
+    window.open('https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/documents%2FSFCA%20bylaws.docx?alt=media&token=26594dfc-cdca-4133-994a-47f5b2147b47');
+  }
+
 }

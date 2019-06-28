@@ -29,30 +29,35 @@
   </ion-card>
   <ion-grid>
     <ion-row class="ion-justify-content-center">
-      <ion-col size-xl="3" size-lg="6" size-md="6" size-sm="12" size-xs="12" class="ion-align-self-center" text-center>
-        <p>Thanks for using the new Sherwood Forest Civic Association web app!</p>
+      <ion-col size-xl="5" size-lg="6" size-md="12" size-sm="12" size-xs="12" class="ion-align-self-center" padding>
+        <p>Thanks for using the new Sherwood Forest Civic Association web app! Quickly access documents, payment options
+        (coming soon), and board members by clicking the green buttons. Also, take a quick glance of upcoming events below.</p>
       </ion-col>
-      <ion-col size-xl="3" size-lg="6" size-md="6" size-sm="12" size-xs="12" text-center class="ion-align-self-center">
-        <ion-list lines="none">
-          <ion-item>
-            <ion-icon slot="start" name="folder"></ion-icon>
-            <ion-button routerLink="/member/documents">Resident Documents</ion-button>
-          </ion-item>
-          <ion-item>
-            <ion-icon slot="start" name="cash"></ion-icon>
-            <ion-button>Pay Dues (coming soon!)</ion-button>
-          </ion-item>
-        </ion-list>
+      <ion-col size-xl="5" size-lg="6" size-md="12" size-sm="12" size-xs="12" text-center class="ion-align-self-center">
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="6">
+            <ion-button routerLink="/member/documents">
+              <ion-icon slot="start" name="folder"></ion-icon>
+              Resident Documents
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button>
+              <ion-icon slot="start" name="cash"></ion-icon>
+              Pay Dues (coming soon!)
+            </ion-button>
+          </ion-col>
+        </ion-row>
       </ion-col>
     </ion-row>
-    <ion-row text-center class="ion-justify-content-center">
+    <ion-row text-center margin-top padding-bottom class="ion-justify-content-center">
       <ion-col text-center>
         <h2>Board Members 2019 - 2021</h2>
         <ion-button (click)="showBoardMembers()" *ngIf="!showBoard">Show Board Members</ion-button>
         <ion-button (click)="showBoardMembers()" *ngIf="showBoard">Hide Board Members</ion-button>
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="showBoard">
+    <ion-row *ngIf="showBoard" class="board-bkgrnd board-border">
       <ion-col text-center padding *ngFor="let member of board">
         <div text-center>
           <ion-thumbnail><ion-img src="{{ member.photoURL }}"></ion-img></ion-thumbnail>
@@ -82,7 +87,7 @@
           <ion-card-content>
             Meet on Barnesdale Way and bring a side-dish or dessert to share.
           </ion-card-content>
-          <ion-button>More Event Detail</ion-button>
+          <ion-button (click)="getDocument(eventDocURL)">More Event Detail</ion-button>
         </ion-card>
       </ion-col>
       <ion-col size-xl="3" size-lg="3" size-md="6" size-sm="12" size-xs="12">

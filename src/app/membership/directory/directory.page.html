@@ -37,7 +37,7 @@
       <ion-col class="directory" size-xl="4" size-lg="6" size-md="6" size-sm="12" size-xs="12">
         <img class="directory-img" src="../../assets/mailbox.png">
         <div class="directory-search">
-            <ion-searchbar showCancelButton (ionInput)="filterByLastName($event)"
+            <ion-searchbar showCancelButton (ionInput)="filterByFirstName($event)"
                        *ngIf="filterBy == 'firstName'" placeholder="Search by First Name">
             </ion-searchbar>
           <ion-searchbar showCancelButton (ionInput)="filterByLastName($event)"

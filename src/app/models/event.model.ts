@@ -5,4 +5,5 @@ export interface Event {
   endTime: string;
   details: string;
   photoURL?: string;
+  documentURL?: string;
 }
