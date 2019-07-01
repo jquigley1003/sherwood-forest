@@ -1,12 +1,13 @@
 import { Component, Inject, OnInit, OnDestroy, LOCALE_ID, ViewChild } from '@angular/core';
 import { formatDate } from '@angular/common';
 
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { CalendarComponent } from 'ionic2-calendar/calendar';
 
 import { Observable, Subscription } from 'rxjs';
 
 import { EventService } from '../../services/event.service';
+import { EventModalComponent } from '../../modals/event-modal/event-modal.component';
 
 
 @Component({
@@ -39,6 +40,7 @@ export class MyCalendarComponent implements OnInit, OnDestroy {
   };
 
   constructor(private alertCtrl: AlertController,
+              private modalCtrl: ModalController,
               private eventService: EventService,
               @Inject(LOCALE_ID) private locale: string) { }
 
@@ -55,8 +57,8 @@ export class MyCalendarComponent implements OnInit, OnDestroy {
         event.endTime = new Date(event.endTime);
         this.eventSource.push(event);
       });
+      this.myCal.loadEvents();
     });
-    console.log('All Events = ', this.eventSource);
   }
 
   resetEvent() {
@@ -97,18 +99,32 @@ export class MyCalendarComponent implements OnInit, OnDestroy {
 
 // Calendar event was clicked
   async onEventSelected(event) {
-    console.log('Event selected' + event.startTime + '-' + event.endTime + ',' + event.title)
     // Use Angular date pipe for conversion
-    let start = formatDate(event.startTime, 'medium', this.locale);
-    let end = formatDate(event.endTime, 'medium', this.locale);
+    // let start = formatDate(event.startTime, 'medium', this.locale);
+    // let end = formatDate(event.endTime, 'medium', this.locale);
 
-    const alert = await this.alertCtrl.create({
-      header: event.title,
-      subHeader: event.desc,
-      message: 'From: ' + start + '<br><br>To: ' + end,
-      buttons: ['OK']
+    // const alert = await this.alertCtrl.create({
+    //   header: event.title,
+    //   subHeader: event.details,
+    //   message: 'From: ' + start + '<br><br>To: ' + end,
+    //   buttons: ['OK']
+    // });
+    // alert.present();
+
+    const modal = await this.modalCtrl.create({
+      component: EventModalComponent,
+      componentProps: {
+        eid: event.id,
+        photoURL: event.photoURL,
+        documentURL: event.documentURL,
+        title: event.title,
+        subTitle: event.subTitle,
+        startTime: event.startTime,
+        endTime: event.endTime,
+        details: event.details
+      }
     });
-    alert.present();
+    return await modal.present();
   }
 
 // Time slot was clicked

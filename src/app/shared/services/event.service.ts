@@ -14,7 +14,7 @@ export class EventService {
   }
 
   fetchEvents() {
-    return this.dbService.collection$('events');
+    return this.dbService.collection$('events', ref => ref.orderBy('startTime'));
   }
 
 }

@@ -1,0 +1,47 @@
+<ion-content>
+  <ion-toolbar text-center>
+    <h1>{{ title }}</h1>
+    <ion-buttons slot="end">
+      <ion-button shape="round" size="small" fill="solid"
+                  color="warning" (click)="closeModal()">
+        Cancel
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-grid padding-top>
+    <ion-row>
+      <ion-col size="12">
+        <form [formGroup]="eventForm">
+          <ion-header text-center>
+            <ion-img src="{{ photoURL }}"></ion-img>
+          </ion-header>
+          <ion-item><h1>{{ title }}</h1></ion-item>
+          <ion-item>
+            <p>{{ startTime | date:'mediumDate' }}<br>
+              {{ startTime | date:'shortTime' }} - {{ endTime | date:'shortTime' }}</p>
+          </ion-item>
+          <ion-item>
+            {{ subTitle }}
+          </ion-item>
+          <ion-item-divider>
+            <ion-label>Details:</ion-label>
+          </ion-item-divider>
+          <ion-item class="ion-text-wrap">
+            {{ details }}
+          </ion-item>
+          <ion-button *ngIf="documentURL" (click)="getEventDoc(documentURL)">
+            Event Document
+          </ion-button>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button shape="round" size="small" fill="solid"
+                  color="warning" (click)="closeModal()">
+        Cancel
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-content>

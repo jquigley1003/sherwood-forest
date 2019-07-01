@@ -30,10 +30,10 @@
       </ion-col>
       <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
         <ion-list>
-          <ion-item>
-            <ion-icon slot="start" name="calendar"></ion-icon>
-            All Events (coming soon!)
-          </ion-item>
+          <!--<ion-item>-->
+            <!--<ion-icon slot="start" name="calendar"></ion-icon>-->
+            <!--All Events (coming soon!)-->
+          <!--</ion-item>-->
           <ion-item>
             <ion-icon slot="start" name="people"></ion-icon>
             Clubs and Groups (coming soon!)
@@ -48,21 +48,21 @@
           </ion-item>
         </ion-list>
         <ion-card>
-          <img src="../../assets/LionIsland2.jpg">
+          <img class="eventPic" src="{{ upcomingEvent.photoURL }}">
           <ion-card-header>
             <ion-card-title>
-              Sherwood Forest Summer Block Party
+              {{ upcomingEvent.title }}
             </ion-card-title>
             <ion-card-subtitle>
-              June 1, 2019, 4:00 PM - 8:00 PM
+              {{ upcomingEvent.startTime | date:'mediumDate' }}<br>
+              {{ upcomingEvent.startTime | date:'shortTime' }} -
+              {{ upcomingEvent.endTime | date:'shortTime' }}
             </ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            <p>SFCA will provide beer, wine, water/soda/juice, fried chicken, live music,
-              and ice cream truck for kiddos!</p>
-            <p>Please bring a side-dish or dessert to share with neighbors and lawn chairs.</p>
+            <p>{{ upcomingEvent.subTitle }}</p>
           </ion-card-content>
-          <ion-button (click)="downloadSBP()">More Event Detail</ion-button>
+          <ion-button (click)="presentEventModal(upcomingEvent)">More Event Detail</ion-button>
         </ion-card>
       </ion-col>
     </ion-row>

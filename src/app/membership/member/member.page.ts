@@ -7,7 +7,11 @@ import { Observable, Subscription } from 'rxjs';
 
 import { AuthService } from '../../shared/services/auth.service';
 import { UserService } from '../../shared/services/user.service';
+import { EventService } from '../../shared/services/event.service';
+
 import { UserModalComponent } from '../../shared/modals/user-modal/user-modal.component';
+import { EventModalComponent } from '../../shared/modals/event-modal/event-modal.component';
+
 import { slideTitleLeftTrigger, slideTitleRightTrigger } from '../../shared/components/animations/animations';
 
 @Component({
@@ -24,16 +28,22 @@ export class MemberPage implements OnInit, OnDestroy {
   currentUser;
   currentUserSub: Subscription;
   currentYear: Date;
+  currentDate: Date = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
   duesPaid: boolean;
   allBoard$: Observable<any>;
   boardSub: Subscription;
   board = [];
   showBoard: boolean = false;
+  allEvents$: Observable<any>;
+  eventsSub: Subscription;
+  events = [];
+  upcomingEvents = [];
 
   eventDocURL: string = 'https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/documents%2FSummerBlockParty.pdf?alt=media&token=dc33e69b-7b00-49c9-b04e-8550e09330a0';
 
   constructor(private authService: AuthService,
               private userService: UserService,
+              private eventService: EventService,
               private router: Router,
               private modalCtrl: ModalController) { }
 
@@ -53,6 +63,23 @@ export class MemberPage implements OnInit, OnDestroy {
     this.allBoard$ = this.userService.fetchBoardMembers();
     this.boardSub = this.allBoard$.subscribe(member => {
       this.board = member;
+    });
+    this.findNextEvents();
+  }
+
+  async findNextEvents() {
+    this.allEvents$ = await this.eventService.fetchEvents();
+    this.eventsSub = await this.allEvents$.subscribe(data => {
+      for (var i = 0; i < data.length; i++) {
+        const eDate = new Date(new Date(data[i].startTime).getFullYear(),new Date(data[i].startTime).getMonth() , new Date(data[i].startTime).getDate());
+        if(eDate >= this.currentDate) {
+          this.upcomingEvents.push(data[i]);
+          if(this.upcomingEvents.length >= 4) {
+            break;
+          }
+        }
+      }
+      this.events = data;
     });
   }
 
@@ -80,6 +107,23 @@ export class MemberPage implements OnInit, OnDestroy {
     return await modal.present();
   }
 
+  async presentEventModal(event) {
+    const modal = await this.modalCtrl.create({
+      component: EventModalComponent,
+      componentProps: {
+        eid: event.id,
+        photoURL: event.photoURL,
+        documentURL: event.documentURL,
+        title: event.title,
+        subTitle: event.subTitle,
+        startTime: event.startTime,
+        endTime: event.endTime,
+        details: event.details
+      }
+    });
+    return await modal.present();
+  }
+
   showBoardMembers() {
     this.showBoard = !this.showBoard;
   }
@@ -99,5 +143,6 @@ export class MemberPage implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.currentUserSub.unsubscribe();
     this.boardSub.unsubscribe();
+    this.eventsSub.unsubscribe();
   }
 }

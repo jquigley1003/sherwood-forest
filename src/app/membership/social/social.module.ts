@@ -9,6 +9,7 @@ import { SocialPage } from './social.page';
 import { AngularCalendarModule } from '../../shared/components/angular-calendar/angular-calendar.module';
 import { MyCalendarModule } from '../../shared/components/calendar/calendar.module';
 import { FooterModule } from '../../shared/components/footer/footer.module';
+import { EventModalModule } from '../../shared/modals/event-modal/event-modal-module';
 
 const routes: Routes = [
   {
@@ -24,7 +25,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     AngularCalendarModule,
     MyCalendarModule,
-    FooterModule
+    FooterModule,
+    EventModalModule
   ],
   declarations: [SocialPage]
 })
