@@ -106,7 +106,7 @@ export const sendContactMessage = functions.firestore
 
     if(newValue) {
       const mailOptions = {
-        to: 'jeff.quigley@wavinghi.com',
+        to: 'sfca@sherwoodforestatl.org',
         subject: 'SFCA Contact Message From '+ newValue.name,
         html: newValue.html
       };

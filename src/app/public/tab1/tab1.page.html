@@ -22,7 +22,7 @@
           Association is an active community organization maintaining the essential
           business of the neighborhood and providing fun events to encourage and
           promote social engagement.</p>
-        <p text-center>SFCA Members,
+        <p text-center *ngIf="!(loggedIn$ | async)">SFCA Members,
           <a (click)="presentLoginModal()">please login</a>
           for full access and information.</p>
       </ion-col>

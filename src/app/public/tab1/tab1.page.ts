@@ -21,7 +21,7 @@ import { ModalController } from '@ionic/angular';
 })
 export class Tab1Page implements OnInit, OnDestroy {
 
-  loggedIn$: Observable<any>;
+  loggedIn$: Observable<boolean>;
   allKeyContacts$: Observable<any>;
   keyContactsSub: Subscription;
   keyContacts: [];
@@ -33,8 +33,12 @@ export class Tab1Page implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loggedIn$ = this.authService.user$;
-    this.allKeyContacts$ = this.userService.fetchKeyContacts();
-    this.keyContactsSub = this.allKeyContacts$.subscribe(key => {
+    this.getKeyContacts();
+  }
+
+  async getKeyContacts() {
+    this.allKeyContacts$ = await this.userService.fetchKeyContacts();
+    this.keyContactsSub = await this.allKeyContacts$.subscribe(key => {
       this.keyContacts = key;
     });
   }
