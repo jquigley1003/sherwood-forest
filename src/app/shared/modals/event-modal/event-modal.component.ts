@@ -21,6 +21,7 @@ export class EventModalComponent implements OnInit {
   startTime: string = this.navParams.get('startTime');
   endTime: string = this.navParams.get('endTime');
   details: string = this.navParams.get('details');
+  eventState: string = this.navParams.get('eventState');
 
   constructor(private formBuilder: FormBuilder,
               private modalCtrl: ModalController,
@@ -36,7 +37,8 @@ export class EventModalComponent implements OnInit {
       subTitle: [this.subTitle],
       startTime: [this.startTime],
       endTime: [this.endTime],
-      details: [this.details]
+      details: [this.details],
+      eventState: [this.eventState]
     });
   }
 

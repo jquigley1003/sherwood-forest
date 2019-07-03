@@ -2,10 +2,17 @@
   <ion-toolbar text-center>
     <h1>{{ title }}</h1>
     <ion-buttons slot="end">
-      <ion-button shape="round" size="small" fill="solid"
+      <ion-button *ngIf="eventState == 'edit'; else closeButton"shape="round" size="small"
+                  fill="solid"
                   color="warning" (click)="closeModal()">
         Cancel
       </ion-button>
+      <ng-template #closeButton>
+        <ion-button shape="round" size="small" fill="solid"
+                    color="warning" (click)="closeModal()">
+          Close
+        </ion-button>
+      </ng-template>
     </ion-buttons>
   </ion-toolbar>
   <ion-grid padding-top>
@@ -38,10 +45,17 @@
   </ion-grid>
   <ion-toolbar>
     <ion-buttons slot="end">
-      <ion-button shape="round" size="small" fill="solid"
+      <ion-button *ngIf="eventState == 'edit'; else closeButton"shape="round" size="small"
+                  fill="solid"
                   color="warning" (click)="closeModal()">
         Cancel
       </ion-button>
+      <ng-template #closeButton>
+        <ion-button shape="round" size="small" fill="solid"
+                    color="warning" (click)="closeModal()">
+          Close
+        </ion-button>
+      </ng-template>
     </ion-buttons>
   </ion-toolbar>
 </ion-content>

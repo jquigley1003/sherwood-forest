@@ -118,7 +118,8 @@ export class MemberPage implements OnInit, OnDestroy {
         subTitle: event.subTitle,
         startTime: event.startTime,
         endTime: event.endTime,
-        details: event.details
+        details: event.details,
+        eventState: 'view'
       }
     });
     return await modal.present();
