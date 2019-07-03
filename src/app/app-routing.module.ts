@@ -15,6 +15,10 @@ const routes: Routes = [
   { path: 'social/islands',
     loadChildren: './membership/social/islands/islands.module#IslandsPageModule'
   },
+  { path: 'social/clubs-groups',
+    loadChildren: './membership/social/clubs-groups/clubs-groups.module#ClubsGroupsPageModule',
+    canActivate: [AdminGuard]
+  },
   { path: 'member',
     loadChildren: './membership/member/member.module#MemberPageModule',
     canActivate: [AuthGuard]

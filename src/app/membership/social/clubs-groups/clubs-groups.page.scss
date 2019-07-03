@@ -1,0 +1,22 @@
+ion-card {
+  cursor: pointer;
+}
+
+.cg-image {
+  position: relative;
+  text-align: center;
+}
+
+.cg-title1 {
+  position: absolute;
+  top: 30%;
+  width: 100%;
+  font-size: 6vw;
+  text-shadow: 3px 3px 8px #000000;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.cg-format {
+  padding: 0 10%;
+}

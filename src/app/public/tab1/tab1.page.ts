@@ -21,7 +21,7 @@ import { ModalController } from '@ionic/angular';
 })
 export class Tab1Page implements OnInit, OnDestroy {
 
-  loggedIn$: Observable<boolean>;
+  loggedIn$: Observable<any>;
   allKeyContacts$: Observable<any>;
   keyContactsSub: Subscription;
   keyContacts: [];
