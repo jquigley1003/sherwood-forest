@@ -52,8 +52,25 @@ export class EventFormComponent implements OnInit, AfterViewInit {
     this.toggleUploader();
   }
 
-
   async onCreateEvent() {
+    const { title, subTitle, startTime, endTime, details } = this.eventForm.value;
+    const photoURL = this.photoURL;
+
+    const data: Event = {
+      title: title,
+      subTitle: subTitle,
+      startTime: startTime,
+      endTime: endTime,
+      details: details,
+      photoURL: photoURL
+    };
+    await this.eventService.createEvent('events/', data);
+    await this.toastService.presentToast('The SFCA event has been created',
+      true, 'top', 'Ok', 3000 );
+    await this.eventForm.reset();
+  }
+
+  async onuUpdateEvent() {
     const { title, subTitle, startTime, endTime, details } = this.eventForm.value;
     const photoURL = this.photoURL;
 

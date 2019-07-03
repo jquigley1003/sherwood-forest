@@ -17,4 +17,8 @@ export class EventService {
     return this.dbService.collection$('events', ref => ref.orderBy('startTime'));
   }
 
+  deleteEvent(eventPath) {
+    this.dbService.delete(eventPath);
+  }
+
 }

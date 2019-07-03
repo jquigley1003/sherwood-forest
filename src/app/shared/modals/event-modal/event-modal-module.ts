@@ -5,13 +5,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { EventModalComponent } from './event-modal.component';
+import { EventFormModule } from '../../components/event-form/event-form.module';
 
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    EventFormModule
   ],
   declarations: [
     EventModalComponent

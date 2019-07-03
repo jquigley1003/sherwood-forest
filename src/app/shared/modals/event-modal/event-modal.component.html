@@ -20,7 +20,7 @@
       <ion-col size="12">
         <form [formGroup]="eventForm">
           <ion-header text-center>
-            <ion-img src="{{ photoURL }}"></ion-img>
+            <img src="{{ photoURL }}">
           </ion-header>
           <ion-item><h1>{{ title }}</h1></ion-item>
           <ion-item>
@@ -58,4 +58,7 @@
       </ng-template>
     </ion-buttons>
   </ion-toolbar>
+  <div *ngIf="eventState == 'edit'; then editEvent else viewEvent"></div>
+  <ng-template #editEvent><app-event-form></app-event-form></ng-template>
+  <ng-template #viewEvent>Content to render when condition is false.</ng-template>
 </ion-content>
