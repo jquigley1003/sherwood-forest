@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy, LOCALE_ID, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, LOCALE_ID, ViewChild, Input, OnChanges } from '@angular/core';
 import { formatDate } from '@angular/common';
 
 import { AlertController, ModalController } from '@ionic/angular';
@@ -17,6 +17,7 @@ import { EventModalComponent } from '../../modals/event-modal/event-modal.compon
 })
 export class MyCalendarComponent implements OnInit, OnDestroy {
   @ViewChild(CalendarComponent) myCal:CalendarComponent;
+  @Input() currentEvents: any[];
 
   event = {
     title: '',
@@ -46,19 +47,34 @@ export class MyCalendarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // this.resetEvent();
-    this.getAllEvents();
+    // this.getAllEvents();
+  }
+
+  ngOnChanges() {
+    if (this.currentEvents) {
+      this.getAllEvents();
+    }
   }
 
   async getAllEvents() {
-    this.allEvents = await this.eventService.fetchEvents();
-    this.eventSubscription = await this.allEvents.subscribe(data => {
-      data.forEach(event => {
-        event.startTime = new Date(event.startTime);
-        event.endTime = new Date(event.endTime);
-        this.eventSource.push(event);
-      });
-      this.myCal.loadEvents();
+    // this.allEvents = await this.eventService.fetchEvents();
+    // this.eventSubscription = await this.allEvents.subscribe(data => {
+    //   data.forEach(event => {
+    //     event.startTime = new Date(event.startTime);
+    //     //     event.endTime = new Date(event.endTime);
+    //     //     this.eventSource.push(event);
+    //   });
+    //
+    // });
+
+   this.currentEvents.forEach(event => {
+      event.startTime = new Date(event.startTime);
+      event.endTime = new Date(event.endTime);
+      this.eventSource.push(event);
     });
+
+    this.myCal.loadEvents();
+    console.log('Calendar @Input currentEvents: ',this.currentEvents);
   }
 
   resetEvent() {

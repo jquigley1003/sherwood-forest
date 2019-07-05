@@ -35,8 +35,8 @@ export class AdminPage implements OnInit, OnDestroy {
     this.allUsers = this.userService.fetchUsers();
     this.usersSubscription = this.allUsers.subscribe(data => {
       this.users = data;
-      this.users.sort((a,b) => (a.displayName.lastName + a.displayName.firstName)
-        .localeCompare((b.displayName.lastName + b.displayName.firstName)));
+      // this.users.sort((a,b) => (a.displayName.lastName + a.displayName.firstName)
+      //   .localeCompare((b.displayName.lastName + b.displayName.firstName)));
       this.loadedUsers = this.users;
     });
 

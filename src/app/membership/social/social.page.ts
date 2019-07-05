@@ -48,6 +48,7 @@ export class SocialPage implements OnInit, OnDestroy {
         }
       }
       this.events = data;
+      console.log('Social Page events: ',this.events);
     });
   }
 
