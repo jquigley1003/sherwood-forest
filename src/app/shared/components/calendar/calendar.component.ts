@@ -29,8 +29,6 @@ export class MyCalendarComponent implements OnInit, OnDestroy {
 
   minDate = new Date().toISOString();
 
-  allEvents: Observable<any>;
-  changeEvents = [];
   eventSource = [];
   eventSubscription: Subscription;
   viewTitle;
@@ -47,11 +45,11 @@ export class MyCalendarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // this.resetEvent();
-    // this.getAllEvents();
   }
 
   ngOnChanges() {
     if (this.currentEvents) {
+
       this.getAllEvents();
     }
   }
@@ -67,14 +65,12 @@ export class MyCalendarComponent implements OnInit, OnDestroy {
     //
     // });
 
-   this.currentEvents.forEach(event => {
+    this.currentEvents.forEach(event => {
       event.startTime = new Date(event.startTime);
       event.endTime = new Date(event.endTime);
       this.eventSource.push(event);
     });
-
     this.myCal.loadEvents();
-    console.log('Calendar @Input currentEvents: ',this.currentEvents);
   }
 
   resetEvent() {
@@ -175,6 +171,6 @@ export class MyCalendarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.eventSubscription.unsubscribe();
+    // this.eventSubscription.unsubscribe();
   }
 }

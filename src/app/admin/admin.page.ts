@@ -6,6 +6,7 @@ import { User } from '../models/user.model';
 import { UserService } from '../shared/services/user.service';
 import { ToastService } from '../shared/services/toast.service';
 import { AlertService } from '../shared/services/alert.service';
+import { LoadingService } from '../shared/services/loading.service';
 import { UserModalComponent } from '../shared/modals/user-modal/user-modal.component';
 
 
@@ -24,22 +25,27 @@ export class AdminPage implements OnInit, OnDestroy {
   statusLast: string = "secondary";
   statusAddress: string = "primary";
   usersSubscription;
-  showSpinner: boolean = false;
 
   constructor(private userService: UserService,
               private toastService: ToastService,
               private alertService: AlertService,
+              private loadingService: LoadingService,
               private modalCtrl: ModalController) { }
 
   ngOnInit() {
-    this.allUsers = this.userService.fetchUsers();
+    this.loadingService.present();
+    this.getAllUsers();
+  }
+
+  async getAllUsers() {
+    this.allUsers = await this.userService.fetchUsers();
     this.usersSubscription = this.allUsers.subscribe(data => {
       this.users = data;
       // this.users.sort((a,b) => (a.displayName.lastName + a.displayName.firstName)
       //   .localeCompare((b.displayName.lastName + b.displayName.firstName)));
       this.loadedUsers = this.users;
     });
-
+    this.loadingService.dismiss();
   }
 
   initializeList():void {

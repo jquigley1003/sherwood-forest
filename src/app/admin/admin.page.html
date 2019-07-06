@@ -34,7 +34,6 @@
 <ion-content padding>
   <p text-center>All SFCA Users</p>
   <ion-list>
-    <ion-spinner *ngIf="showSpinner" name="bubbles"></ion-spinner>
     <ion-item *ngFor="let user of users" lines="full" value="user.uid">
       <ion-thumbnail slot="start" (click)="presentUserModal(user)">
         <ion-img src="{{ user.photoURL }}"></ion-img>

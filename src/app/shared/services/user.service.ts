@@ -37,7 +37,7 @@ export class UserService {
   }
 
   fetchUsers() {
-    return this.dbService.collection$('users');
+    return this.dbService.collection$('users', ref => ref.orderBy('displayName.lastName'));
   }
 
   fetchBoardMembers() {
