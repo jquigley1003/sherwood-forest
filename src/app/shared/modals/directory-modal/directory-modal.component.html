@@ -36,6 +36,14 @@
         <ion-item>
           {{ residentSince }}
         </ion-item>
+        <div *ngIf="showBirthDate">
+          <ion-item-divider>
+            <ion-label>Birthday: </ion-label>
+          </ion-item-divider>
+          <ion-item>
+            {{ birthDate | date:'longDate' }}
+          </ion-item>
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>

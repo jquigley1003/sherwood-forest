@@ -100,6 +100,7 @@ export class MemberPage implements OnInit, OnDestroy {
         phone: user.phone,
         email: user.email,
         birthDate: user.birthDate,
+        showBirthDate: user.showBirthDate,
         occupation: user.occupation,
         residentSince: user.residentSince
       }

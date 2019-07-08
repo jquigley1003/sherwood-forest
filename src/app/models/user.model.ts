@@ -34,6 +34,7 @@ export interface User {
   phone?: number;
   email?: string;
   birthDate?: Date;
+  showBirthDate?: boolean;
   occupation?: string;
   duesPaid?: boolean;
   roles?: Roles;

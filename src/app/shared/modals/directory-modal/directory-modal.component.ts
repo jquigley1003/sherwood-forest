@@ -17,6 +17,8 @@ export class DirectoryModalComponent implements OnInit {
   address: string = this.navParams.get('address');
   cityStateZip: string = this.navParams.get('cityStateZip');
   residentSince: string = this.navParams.get('residentSince');
+  showBirthDate: boolean = this.navParams.get('showBirthDate');
+  birthDate: string = this.navParams.get('birthDate');
 
   constructor(private formBuilder: FormBuilder,
               private modalCtrl: ModalController,

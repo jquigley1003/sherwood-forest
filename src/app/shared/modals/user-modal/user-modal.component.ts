@@ -30,8 +30,30 @@ export class UserModalComponent implements OnInit {
   phone: string = this.navParams.get('phone');
   email: string = this.navParams.get('email');
   birthDate: string = this.navParams.get('birthDate');
+  showBirthDate: boolean = this.navParams.get('showBirthDate');
   occupation: string = this.navParams.get('occupation');
   residentSince: string = this.navParams.get('residentSince');
+
+  radioList = [
+    {
+      id: '1',
+      name: 'radioList',
+      value: 'true',
+      text: 'Yes',
+      disabled: false,
+      checked: (this.showBirthDate === true) ? true : false,
+      color: 'primary'
+    },
+    {
+      id: '2',
+      name: 'radioList',
+      value: 'false',
+      text: 'No',
+      disabled: false,
+      checked: (this.showBirthDate === false) ? true : false,
+      color: 'primary'
+    }
+  ]
 
   constructor(private formBuilder: FormBuilder,
               private modalCtrl: ModalController,
@@ -61,6 +83,13 @@ export class UserModalComponent implements OnInit {
     });
   }
 
+
+
+  radioSelect(event) {
+    this.showBirthDate = (event.detail.value === 'true') ? true : false;
+    console.log('showBirthDate = ', this.showBirthDate);
+  }
+
   async onUpdateUser() {
     const firstName = this.userForm.controls['displayName'].value.firstName;
     const lastName = this.userForm.controls['displayName'].value.lastName;
@@ -71,6 +100,7 @@ export class UserModalComponent implements OnInit {
     const state = this.userForm.controls['address'].value.state;
     const zipCode = this.userForm.controls['address'].value.zipCode;
     const { phone, email, birthDate, occupation, residentSince } = this.userForm.value;
+    const showBirthDate = this.showBirthDate;
 
     const data: User = {
       uid: this.uid,
@@ -86,10 +116,11 @@ export class UserModalComponent implements OnInit {
         state: state,
         zipCode: zipCode
       },
-      photoURL: this.photoURL || 'https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/anon.png?alt=media&token=37218266-cecd-4525-bc51-909f388f773f',
+      // photoURL: this.photoURL || 'https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/anon.png?alt=media&token=37218266-cecd-4525-bc51-909f388f773f',
       phone: phone,
       email: email,
       birthDate: birthDate,
+      showBirthDate: showBirthDate,
       occupation: occupation,
       residentSince: residentSince
     };

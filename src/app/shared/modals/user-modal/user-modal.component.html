@@ -1,6 +1,7 @@
 <ion-content>
     <ion-toolbar text-center>
         <h1>Update {{ firstName }}'s Profile</h1>
+        <h3>Items marked with asterisk (*) required</h3>
         <ion-buttons slot="end">
             <ion-button shape="round" size="small" fill="solid"
                         color="warning" (click)="closeModal()">
@@ -22,21 +23,21 @@
                 <form [formGroup]="userForm" (ngSubmit)="onUpdateUser()">
                     <div formGroupName="displayName">
                         <ion-item>
-                            <ion-label position="floating">First Name</ion-label>
+                            <ion-label position="floating">First Name *</ion-label>
                             <ion-input type="text" formControlName="firstName" required></ion-input>
                         </ion-item>
                         <ion-item>
-                            <ion-label position="floating">Last Name</ion-label>
+                            <ion-label position="floating">Last Name *</ion-label>
                             <ion-input type="text" formControlName="lastName" required></ion-input>
                         </ion-item>
                     </div>
                     <div formGroupName="address">
                         <ion-item>
-                            <ion-label position="floating">Street Number</ion-label>
+                            <ion-label position="floating">Street Number *</ion-label>
                             <ion-input type="text" formControlName="streetNumber" required></ion-input>
                         </ion-item>
                         <ion-item>
-                            <ion-label position="floating">Street Name</ion-label>
+                            <ion-label position="floating">Street Name *</ion-label>
                             <ion-input type="text" formControlName="streetName" required></ion-input>
                         </ion-item>
                         <ion-item>
@@ -44,23 +45,23 @@
                             <ion-input type="text" formControlName="subAddress"></ion-input>
                         </ion-item>
                         <ion-item>
-                            <ion-label position="floating">City</ion-label>
+                            <ion-label position="floating">City *</ion-label>
                             <ion-input type="text" formControlName="city" required></ion-input>
                         </ion-item><ion-item>
-                        <ion-label position="floating">State</ion-label>
+                        <ion-label position="floating">State *</ion-label>
                         <ion-input type="text" formControlName="state" required></ion-input>
                     </ion-item>
                         <ion-item>
-                            <ion-label position="floating">Zip Code</ion-label>
+                            <ion-label position="floating">Zip Code *</ion-label>
                             <ion-input type="text" formControlName="zipCode" required></ion-input>
                         </ion-item>
                     </div>
                     <ion-item>
-                        <ion-label position="floating">Phone (ex: 404-444-4444)</ion-label>
+                        <ion-label position="floating">Phone (ex: 404-444-4444) *</ion-label>
                         <ion-input type="tel" formControlName="phone" required></ion-input>
                     </ion-item>
                     <ion-item>
-                        <ion-label position="floating">Email</ion-label>
+                        <ion-label position="floating">Email *</ion-label>
                         <ion-input type="email" formControlName="email" required></ion-input>
                     </ion-item>
                     <ion-item>
@@ -70,6 +71,20 @@
                     <ion-item>
                         <ion-label>Birthday</ion-label>
                         <ion-input type="date" formControlName="birthDate"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Show My Birthday in Directory</ion-label>
+                        <ion-list>
+                            <ion-radio-group (ionChange)="radioSelect($event)">
+                                <ion-item *ngFor="let item of radioList">
+                                   <ion-label>{{ item.text }}</ion-label>
+                                    <ion-radio
+                                    value= "{{ item.value }}"
+                                    checked="{{ item.checked }}"
+                                    color="{{ item.color }}"></ion-radio>
+                                </ion-item>
+                            </ion-radio-group>
+                        </ion-list>
                     </ion-item>
                     <ion-item>
                         <ion-label>Resident Since</ion-label>
