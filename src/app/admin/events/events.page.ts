@@ -58,6 +58,10 @@ export class EventsPage implements OnInit, OnDestroy {
     this.showEventForm = !this.showEventForm;
   }
 
+  closeEventForm() {
+    this.showEventForm = false;
+  }
+
   deleteEvent(eventTitle, eid) {
     this.alertService.presentAlert(
       'Are You Sure?',
@@ -96,5 +100,4 @@ export class EventsPage implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.eventSubscription.unsubscribe();
   }
-
 }

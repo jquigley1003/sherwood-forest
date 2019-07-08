@@ -271,6 +271,6 @@ export class AuthService {
 
   private handleError(error: Error) {
     console.error(error);
-    this.toastService.presentToast(error.message, true, 'top', 'Close', 3000);
+    this.toastService.presentToast(error.message, true, 'middle', 'Close', 5000);
   }
 }

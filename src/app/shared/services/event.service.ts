@@ -9,7 +9,7 @@ export class EventService {
 
   constructor(private dbService: DbService) { }
 
-  createEvent (path, data) {
+  addUpdateEvent (path, data) {
     this.dbService.updateAt(path, data);
   }
 

@@ -4,7 +4,8 @@
     <ion-col size="8">
       <ion-header text-center padding>
         <ion-toolbar>
-          <ion-title>Add a New Event</ion-title>
+          <ion-title *ngIf="eventState === 'edit'">Edit This Event</ion-title>
+          <ion-title *ngIf="eventState === ''">Add a New Event</ion-title>
           <ion-thumbnail ><img src="{{ photoURL }}"></ion-thumbnail>
         </ion-toolbar>
         <ion-button (click)="toggleUploader()">Change Picture</ion-button>
@@ -12,7 +13,7 @@
       <app-uploader-file *ngIf="editEventPic" [fileFolder]="folderName"></app-uploader-file>
       <ion-button *ngIf="editEventPic"
                   (click)="confirmNewPhoto()">Confirm Your Event Picture</ion-button>
-      <form [formGroup]="eventForm" (ngSubmit)="onCreateEvent()">
+      <form [formGroup]="eventForm" (ngSubmit)="onSubmitEvent()">
         <ion-item>
           <ion-label position="floating">Event Title</ion-label>
           <ion-input type="text" formControlName="title" required></ion-input>
@@ -26,6 +27,7 @@
           <ion-textarea formControlName="details" required></ion-textarea>
         </ion-item>
         <ion-item>
+          <ion-label position="floating">Start Time</ion-label>
           <ion-datetime picker-format="MMM DD YYYY h:mm A"
                         display-format="MMM DD YYYY h:mm A"
                         placeholder="Start Date/Time"
@@ -33,6 +35,7 @@
           </ion-datetime>
         </ion-item>
         <ion-item>
+          <ion-label position="floating">End Time</ion-label>
           <ion-datetime picker-format="MMM DD YYYY h:mm A"
                         display-format="MMM DD YYYY h:mm A"
                         placeholder="End Date/Time"

@@ -13,6 +13,7 @@ import { EventService } from '../../services/event.service';
 })
 export class EventModalComponent implements OnInit {
   eventForm: FormGroup;
+  editEventInfo: any[];
   eid: string = this.navParams.get('eid');
   photoURL: string = this.navParams.get('photoURL');
   documentURL: string = this.navParams.get('documentURL');
@@ -23,6 +24,7 @@ export class EventModalComponent implements OnInit {
   details: string = this.navParams.get('details');
   eventState: string = this.navParams.get('eventState');
 
+
   constructor(private formBuilder: FormBuilder,
               private modalCtrl: ModalController,
               private navParams: NavParams,
@@ -31,6 +33,7 @@ export class EventModalComponent implements OnInit {
 
   ngOnInit() {
     this.eventForm = this.formBuilder.group({
+      eid: [this.eid],
       photoURL: [this.photoURL],
       documentURL: [this.documentURL],
       title: [this.title],
@@ -47,6 +50,10 @@ export class EventModalComponent implements OnInit {
   }
 
   closeModal() {
+    this.modalCtrl.dismiss();
+  }
+
+  doneCloseModal() {
     this.modalCtrl.dismiss();
   }
 

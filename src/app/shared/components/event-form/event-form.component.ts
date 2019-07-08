@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -14,11 +14,23 @@ import { UploaderFileComponent } from '../uploader-file/uploader-file.component'
 })
 export class EventFormComponent implements OnInit, AfterViewInit {
   @ViewChild(UploaderFileComponent) uploaderFileComponent: UploaderFileComponent;
+  @Input('eventInfo') eventInfo: any;
+  @Output() eventSubmitted = new EventEmitter();
 
   eventForm: FormGroup;
   photoURL: string;
   folderName: string;
   editEventPic: boolean = false;
+
+  eid: string;
+  eventPhoto: string;
+  documentURL: string;
+  title: string;
+  subTitle: string;
+  startTime: string;
+  endTime: string;
+  details: string;
+  eventState: string;
 
   constructor(private formBuilder: FormBuilder,
               private eventService: EventService,
@@ -26,16 +38,28 @@ export class EventFormComponent implements OnInit, AfterViewInit {
               private router: Router) {}
 
   ngOnInit() {
+    this.eid = (this.eventInfo === '') ? '' : this.eventInfo.eid;
+    this.eventPhoto = (this.eventInfo === '') ? '' :  this.eventInfo.photoURL;
+    this.documentURL = (this.eventInfo === '') ? '' :  this.eventInfo.documentURL;
+    this.title = (this.eventInfo === '') ? '' :  this.eventInfo.title;
+    this.subTitle = (this.eventInfo === '') ? '' :  this.eventInfo.subTitle;
+    this.startTime = (this.eventInfo === '') ? new Date().toISOString() :  this.eventInfo.startTime;
+    this.endTime = (this.eventInfo === '') ? new Date().toISOString() :  this.eventInfo.endTime;
+    this.details =  (this.eventInfo === '') ? '' :  this.eventInfo.details;
+    this.eventState = (this.eventInfo === '') ? '' :  this.eventInfo.eventState;
+
     this.eventForm = this.formBuilder.group({
-      title: ['', Validators.required],
-      subTitle: ['', Validators.required],
-      startTime: ['', Validators.required],
-      endTime: ['', Validators.required],
-      details: ['', Validators.required],
+      title: [this.title || '', Validators.required],
+      subTitle: [this.subTitle || '', Validators.required],
+      startTime: [this.startTime || '', Validators.required],
+      endTime: [this.endTime || '', Validators.required],
+      details: [this.details || '', Validators.required],
     });
 
-    this.photoURL = '/assets/GreenLeaf.jpg';
+    this.photoURL = this.eventPhoto || '/assets/GreenLeaf.jpg';
     this.folderName = 'events';
+
+    console.log('this is the event info for the form: ',this.eventInfo);
   }
 
   ngAfterViewInit() {
@@ -52,7 +76,7 @@ export class EventFormComponent implements OnInit, AfterViewInit {
     this.toggleUploader();
   }
 
-  async onCreateEvent() {
+  async onSubmitEvent() {
     const { title, subTitle, startTime, endTime, details } = this.eventForm.value;
     const photoURL = this.photoURL;
 
@@ -64,28 +88,17 @@ export class EventFormComponent implements OnInit, AfterViewInit {
       details: details,
       photoURL: photoURL
     };
-    await this.eventService.createEvent('events/', data);
-    await this.toastService.presentToast('The SFCA event has been created',
-      true, 'top', 'Ok', 3000 );
-    await this.eventForm.reset();
+    if (this.eid === '') {
+      await this.eventService.addUpdateEvent('events/', data);
+      await this.toastService.presentToast('The SFCA event has been created',
+        true, 'top', 'Ok', 3000 );
+      await this.eventForm.reset();
+    } else {
+      await this.eventService.addUpdateEvent('events/' + this.eid, data);
+      await this.toastService.presentToast('The SFCA event has been updated',
+        true, 'top', 'Ok', 3000 );
+      await this.eventForm.reset();
+    }
+    this.eventSubmitted.emit();
   }
-
-  async onuUpdateEvent() {
-    const { title, subTitle, startTime, endTime, details } = this.eventForm.value;
-    const photoURL = this.photoURL;
-
-    const data: Event = {
-      title: title,
-      subTitle: subTitle,
-      startTime: startTime,
-      endTime: endTime,
-      details: details,
-      photoURL: photoURL
-    };
-    await this.eventService.createEvent('events/', data);
-    await this.toastService.presentToast('The SFCA event has been created',
-      true, 'top', 'Ok', 3000 );
-    await this.eventForm.reset();
-  }
-
 }
