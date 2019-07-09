@@ -9,6 +9,7 @@ import { MemberPage } from './member.page';
 import { UserModalModule } from '../../shared/modals/user-modal/user-modal.module';
 import { FooterModule } from '../../shared/components/footer/footer.module';
 import { EventModalModule } from '../../shared/modals/event-modal/event-modal-module';
+import { JrResidentModalModule } from '../../shared/modals/jr-resident-modal/jr-resident-modal.module';
 
 const routes: Routes = [
   {
@@ -25,7 +26,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     UserModalModule,
     EventModalModule,
-    FooterModule
+    FooterModule,
+    JrResidentModalModule
   ],
   declarations: [MemberPage]
 })

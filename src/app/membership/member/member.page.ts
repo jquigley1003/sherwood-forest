@@ -13,6 +13,7 @@ import { UserModalComponent } from '../../shared/modals/user-modal/user-modal.co
 import { EventModalComponent } from '../../shared/modals/event-modal/event-modal.component';
 
 import { slideTitleLeftTrigger, slideTitleRightTrigger } from '../../shared/components/animations/animations';
+import { JrResidentModalComponent } from '../../shared/modals/jr-resident-modal/jr-resident-modal.component';
 
 @Component({
   selector: 'app-member',
@@ -38,6 +39,10 @@ export class MemberPage implements OnInit, OnDestroy {
   eventsSub: Subscription;
   events = [];
   upcomingEvents = [];
+  getJrResidents$: Observable<any>;
+  jrResSub: Subscription;
+  loadJrRes;
+  jrResidents = [];
 
   eventDocURL: string = 'https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/documents%2FSummerBlockParty.pdf?alt=media&token=dc33e69b-7b00-49c9-b04e-8550e09330a0';
 
@@ -48,26 +53,33 @@ export class MemberPage implements OnInit, OnDestroy {
               private modalCtrl: ModalController) { }
 
   ngOnInit() {
-    this.currentUserSub = this.authService.user$.subscribe(data => {
+    this.getCurrentUser();
+    this.currentYear = new Date();
+
+    this.allBoard$ = this.userService.fetchBoardMembers();
+    this.boardSub = this.allBoard$.subscribe(member => {
+      this.board = member;
+    });
+
+    this.getInfoForMember();
+  }
+
+  async getCurrentUser() {
+    this.currentUserSub = await this.authService.user$.subscribe(data => {
       if(data) {
         this.user = data;
         this.currentUser = this.user.displayName.firstName + ' ' + this.user.displayName.lastName;
         this.duesPaid = this.user.duesPaid;
+        this.getJrResidents(this.user.uid)
       } else {
         this.user = null;
         this.currentUser = null;
         this.duesPaid = false;
       }
     });
-    this.currentYear = new Date();
-    this.allBoard$ = this.userService.fetchBoardMembers();
-    this.boardSub = this.allBoard$.subscribe(member => {
-      this.board = member;
-    });
-    this.findNextEvents();
   }
 
-  async findNextEvents() {
+  async getInfoForMember() {
     this.allEvents$ = await this.eventService.fetchEvents();
     this.eventsSub = await this.allEvents$.subscribe(data => {
       for (var i = 0; i < data.length; i++) {
@@ -80,6 +92,14 @@ export class MemberPage implements OnInit, OnDestroy {
         }
       }
       this.events = data;
+    });
+  }
+
+  async getJrResidents(parentID) {
+    this.getJrResidents$ = await this.userService.fetchJrResidents(parentID);
+    this.jrResSub = await this.getJrResidents$.subscribe(jrRes => {
+      this.jrResidents = jrRes;
+      console.log("This user's jr residents = ", this.jrResidents);
     });
   }
 
@@ -126,6 +146,16 @@ export class MemberPage implements OnInit, OnDestroy {
     return await modal.present();
   }
 
+  async presentJrResidentModal() {
+    const modal = await this.modalCtrl.create({
+      component: JrResidentModalComponent,
+      componentProps: {
+        jrResidents: this.jrResidents
+      }
+    });
+    return await modal.present();
+  }
+
   showBoardMembers() {
     this.showBoard = !this.showBoard;
   }
@@ -146,5 +176,6 @@ export class MemberPage implements OnInit, OnDestroy {
     this.currentUserSub.unsubscribe();
     this.boardSub.unsubscribe();
     this.eventsSub.unsubscribe();
+    this.jrResSub.unsubscribe();
   }
 }

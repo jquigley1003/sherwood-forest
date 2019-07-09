@@ -53,7 +53,7 @@ export class UserModalComponent implements OnInit {
       checked: (this.showBirthDate === false) ? true : false,
       color: 'primary'
     }
-  ]
+  ];
 
   constructor(private formBuilder: FormBuilder,
               private modalCtrl: ModalController,

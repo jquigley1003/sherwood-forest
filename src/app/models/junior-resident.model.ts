@@ -1,8 +1,3 @@
-export interface Parents {
-  firstParent?: string;
-  secondParent?: string;
-}
-
 export interface DisplayName {
   firstName?: string;
   lastName?: string;
@@ -11,5 +6,5 @@ export interface DisplayName {
 export interface JuniorResident {
   displayName?: DisplayName;
   birthDate?: Date;
-  parents?: Parents;
+  parents?: string[];
 }
