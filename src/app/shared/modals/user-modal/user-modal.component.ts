@@ -78,6 +78,7 @@ export class UserModalComponent implements OnInit {
       phone: [this.phone, Validators.required],
       email: [this.email, (Validators.required, Validators.pattern(".+\@.+\..+"))],
       birthDate: [this.birthDate],
+      showBirthDate: [this.showBirthDate],
       occupation: [this.occupation],
       residentSince: [this.residentSince]
     });
