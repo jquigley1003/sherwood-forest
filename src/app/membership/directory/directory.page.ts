@@ -23,7 +23,6 @@ export class DirectoryPage implements OnInit, OnDestroy {
   statusFirst: string = "primary";
   statusLast: string = "secondary";
   statusAddress: string = "primary";
-  residentSince: string;
 
   constructor(private authService: AuthService,
               private userService: UserService,
@@ -34,8 +33,8 @@ export class DirectoryPage implements OnInit, OnDestroy {
     this.allUsers = this.userService.fetchUsers();
     this.usersSubscription = this.allUsers.subscribe(data => {
       this.users = data;
-      this.users.sort((a,b) => (a.displayName.lastName + a.displayName.firstName)
-        .localeCompare((b.displayName.lastName + b.displayName.firstName)));
+      // this.users.sort((a,b) => (a.displayName.lastName + a.displayName.firstName)
+      //   .localeCompare((b.displayName.lastName + b.displayName.firstName)));
       this.loadedUsers = this.users;
     });
   }

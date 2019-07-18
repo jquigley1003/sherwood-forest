@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ModalController } from '@ionic/angular';
-import { User } from '../models/user.model';
+
+import { Subscription } from 'rxjs';
 
 import { UserService } from '../shared/services/user.service';
 import { ToastService } from '../shared/services/toast.service';
@@ -19,12 +20,11 @@ export class AdminPage implements OnInit, OnDestroy {
   allUsers;
   users: any[];
   loadedUsers: any[];
-  userChange;
   filterBy: string = "lastName";
   statusFirst: string = "primary";
   statusLast: string = "secondary";
   statusAddress: string = "primary";
-  usersSubscription;
+  usersSubscription: Subscription;
 
   constructor(private userService: UserService,
               private toastService: ToastService,
