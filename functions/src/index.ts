@@ -93,14 +93,24 @@ export const sendContactMessage = functions.firestore
   .document('contactMessages/{messageId}')
   .onCreate(async (snapshot, context) => {
 
-    const gmailEmail =
+    const fromEmail =
       encodeURIComponent(functions.config().gmail.email);
 
-    const gmailPassword =
+    const fromPassword =
       encodeURIComponent(functions.config().gmail.password);
 
     const mailTransport =
-      nodemailer.createTransport('smtps://'+gmailEmail+':'+gmailPassword+'@smtp.gmail.com');
+      nodemailer.createTransport('smtps://'+fromEmail+':'+fromPassword+'@smtp.gmail.com');
+      // nodemailer.createTransport('smtp://'+fromEmail+':'+fromPassword+'@smtp.office365.com');
+      // nodemailer.createTransport({
+      //   host: 'smtp.office365.com',
+      //   port: 587,
+      //   secure: false,
+      //   auth: {
+      //     user: fromEmail,
+      //     pass: fromPassword
+      //   }
+      // });
 
     const newValue = snapshot.data();
 
