@@ -28,6 +28,7 @@ export class MemberPage implements OnInit, OnDestroy {
   user;
   currentUser;
   currentUserSub: Subscription;
+  allUsers;
   currentYear: Date;
   currentDate: Date = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
   duesPaid: boolean;
@@ -64,13 +65,15 @@ export class MemberPage implements OnInit, OnDestroy {
     this.getInfoForMember();
   }
 
+
   async getCurrentUser() {
     this.currentUserSub = await this.authService.user$.subscribe(data => {
       if(data) {
         this.user = data;
         this.currentUser = this.user.displayName.firstName + ' ' + this.user.displayName.lastName;
         this.duesPaid = this.user.duesPaid;
-        this.getJrResidents(this.user.uid)
+        this.getJrResidents(this.user.uid);
+
       } else {
         this.user = null;
         this.currentUser = null;
