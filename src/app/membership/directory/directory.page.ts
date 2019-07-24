@@ -31,7 +31,11 @@ export class DirectoryPage implements OnInit, OnDestroy {
               private modalCtrl: ModalController) { }
 
   ngOnInit() {
-    this.allUsers = this.userService.fetchUsers();
+    this.getAllUsers();
+  }
+
+  async getAllUsers() {
+    this.allUsers = await this.userService.fetchUsers();
     this.usersSubscription = this.allUsers.subscribe(data => {
       this.users = data;
       this.loadedUsers = this.users;

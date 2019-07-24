@@ -33,19 +33,20 @@ export class AdminPage implements OnInit, OnDestroy {
               private modalCtrl: ModalController) { }
 
   ngOnInit() {
-    this.loadingService.present();
     this.getAllUsers();
   }
 
   async getAllUsers() {
+    this.loadingService.present();
     this.allUsers = await this.userService.fetchUsers();
-    this.usersSubscription = this.allUsers.subscribe(data => {
+    this.usersSubscription = await this.allUsers.subscribe(data => {
       this.users = data;
       // this.users.sort((a,b) => (a.displayName.lastName + a.displayName.firstName)
       //   .localeCompare((b.displayName.lastName + b.displayName.firstName)));
       this.loadedUsers = this.users;
+      this.loadingService.dismiss();
     });
-    this.loadingService.dismiss();
+
   }
 
   initializeList():void {

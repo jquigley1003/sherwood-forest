@@ -22,10 +22,10 @@
         <ion-icon slot="start" name="person"></ion-icon>
         Update Your Member Profile
       </ion-button>
-      <!--<ion-button shape="round" size="small" fill="solid"-->
-                  <!--color="secondary" (click)="presentJrResidentModal()">-->
-        <!--Jr Residents-->
-      <!--</ion-button>-->
+      <ion-button shape="round" size="small" fill="solid"
+                  color="secondary" (click)="presentJrResidentModal()">
+        Jr Residents
+      </ion-button>
       <p *ngIf="duesPaid" @slideTitleRight>2019 Dues Are Paid. Thank You!</p>
       <p *ngIf="!duesPaid" @slideTitleRight>Our neighborhood needs you!<br>Submit your 2019 dues and help
         us grow.</p>
