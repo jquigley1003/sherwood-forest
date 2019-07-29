@@ -40,6 +40,10 @@ export class UserService {
       });
   }
 
+  fetchSpousePartner(spID) {
+    return this.dbService.collection$('users', ref => ref.where('uid', '==', spID));
+  }
+
   fetchUsers() {
     return this.dbService.collection$('users', ref => ref.orderBy('displayName.lastName'));
   }

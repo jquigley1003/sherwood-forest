@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 
 import { Observable, Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 import { AuthService } from '../../shared/services/auth.service';
 import { UserService } from '../../shared/services/user.service';
@@ -28,7 +29,10 @@ export class MemberPage implements OnInit, OnDestroy {
   user;
   currentUser;
   currentUserSub: Subscription;
-  allUsers;
+  spousePartner$: Observable<any>;
+  spousePartnerSub: Subscription;
+  spousePartner = null;
+  spousePartnerName: string = null;
   currentYear: Date;
   currentDate: Date = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
   duesPaid: boolean;
@@ -73,11 +77,31 @@ export class MemberPage implements OnInit, OnDestroy {
         this.currentUser = this.user.displayName.firstName + ' ' + this.user.displayName.lastName;
         this.duesPaid = this.user.duesPaid;
         this.getJrResidents(this.user.uid);
-
+        if (this.user.spousePartner.spID != '') {
+          this.getSpousePartner(this.user.spousePartner.spID);
+        } else {
+          this.spousePartner = null;
+          console.log('this user does not have a spouse/partner ',this.spousePartner);
+        }
       } else {
         this.user = null;
         this.currentUser = null;
         this.duesPaid = false;
+      }
+    });
+  }
+
+  async getSpousePartner(spID) {
+    this.spousePartner$ = await this.userService.fetchSpousePartner(spID);
+    this.spousePartner$
+      .pipe(take(1))
+      .subscribe(data => {
+      if(data && data.length > 0) {
+        this.spousePartner = data;
+        console.log('this users spouse/partner is: ', this.spousePartner);
+      } else {
+        this.spousePartner = null;
+        console.log('this user does not have any information about spouse/partner');
       }
     });
   }

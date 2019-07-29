@@ -153,6 +153,20 @@ export class AdminPage implements OnInit, OnDestroy {
     return await modal.present();
   }
 
+  addDataToUsers() {
+    for(var sfUser of this.users) {
+      const data = {
+        uid: sfUser.uid,
+        spousePartner: {
+          firstName: '',
+          lastName: '',
+          spID: ''
+        }
+      };
+      this.userService.updateUser('users/'+ sfUser.uid, data);
+    }
+  }
+
   makeAdmin(user) {
     this.userService.makeUserAdmin(user);
   }
