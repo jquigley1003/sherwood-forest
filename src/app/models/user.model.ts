@@ -15,7 +15,7 @@ export interface Address {
 export interface SpousePartner {
   firstName?: string;
   lastName?: string;
-  uid?: string;
+  spID?: string;
 }
 
 export interface Roles {

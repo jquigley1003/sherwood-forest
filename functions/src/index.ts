@@ -58,6 +58,11 @@ export const adminCreateUser = functions.https.onCall((data, context) => {
             pendingMember: true,
             approvedMember: false,
             admin: false
+          },
+          spousePartner: {
+            firstName: '',
+            lastName: '',
+            spID: ''
           }
         })
       })

@@ -33,6 +33,7 @@ export class UserModalComponent implements OnInit {
   showBirthDate: boolean = this.navParams.get('showBirthDate');
   occupation: string = this.navParams.get('occupation');
   residentSince: string = this.navParams.get('residentSince');
+  spousePartnerID: string = this.navParams.get('spousePartnerID');
 
   radioList = [
     {
@@ -80,7 +81,8 @@ export class UserModalComponent implements OnInit {
       birthDate: [this.birthDate],
       showBirthDate: [this.showBirthDate],
       occupation: [this.occupation],
-      residentSince: [this.residentSince]
+      residentSince: [this.residentSince],
+      spousePartnerID: [this.spousePartnerID]
     });
   }
 
@@ -100,7 +102,7 @@ export class UserModalComponent implements OnInit {
     const city = this.userForm.controls['address'].value.city;
     const state = this.userForm.controls['address'].value.state;
     const zipCode = this.userForm.controls['address'].value.zipCode;
-    const { phone, email, birthDate, occupation, residentSince } = this.userForm.value;
+    const { phone, email, birthDate, occupation, residentSince, spousePartnerID } = this.userForm.value;
     const showBirthDate = this.showBirthDate;
 
     const data: User = {
@@ -123,7 +125,8 @@ export class UserModalComponent implements OnInit {
       birthDate: birthDate,
       showBirthDate: showBirthDate,
       occupation: occupation,
-      residentSince: residentSince
+      residentSince: residentSince,
+      spousePartnerID: spousePartnerID
     };
     await this.userService.updateUser('users/'+ this.uid, data);
     await this.toastService.presentToast('The member profile for '+ firstName +' has been updated!',

@@ -262,6 +262,11 @@ export class AuthService {
         admin: false,
         pendingMember: true,
         approvedMember: false
+      },
+      spousePartner: {
+        firstName: '',
+        lastName: '',
+        spID: ''
       }
     };
     return userRef.set(data, {merge: true});

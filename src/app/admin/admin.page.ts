@@ -147,7 +147,8 @@ export class AdminPage implements OnInit, OnDestroy {
         birthDate: user.birthDate,
         showBirthDate: (user.showBirthDate != null) ? user.showBirthDate : false,
         occupation: user.occupation,
-        residentSince: user.residentSince
+        residentSince: user.residentSince,
+        spousePartnerID: user.spousePartner.spID
       }
     });
     return await modal.present();

@@ -145,8 +145,8 @@ export class UserService {
     this.authService.resetPassword(userEmail);
   }
 
-  async deleteUser(userPath) {
-    await this.toastService.presentToast('Please wait while we delete this user.', true, 'middle', 'OK', 3000);
+  deleteUser(userPath) {
+    this.toastService.presentToast('Please wait while we delete this user.', true, 'middle', 'OK', 3000);
     this.dbService.delete(userPath)
       .then(() => {
         this.toastService.presentToast('The user has been deleted!',
