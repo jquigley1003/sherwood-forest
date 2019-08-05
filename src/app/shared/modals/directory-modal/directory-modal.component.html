@@ -44,6 +44,14 @@
             {{ birthDate | date:'MMMM d' }}
           </ion-item>
         </div>
+        <div *ngIf="spousePartnerName != ' '">
+          <ion-item-divider>
+            <ion-label>Spouse/Partner: </ion-label>
+          </ion-item-divider>
+          <ion-item>
+            {{ spousePartnerName }}
+          </ion-item>
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>

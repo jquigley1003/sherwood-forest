@@ -16,6 +16,7 @@ export interface SpousePartner {
   firstName?: string;
   lastName?: string;
   spID?: string;
+  photoURL?: string;
 }
 
 export interface Roles {

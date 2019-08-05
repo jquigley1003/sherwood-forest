@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 
 import { ModalController } from '@ionic/angular';
 
-import { Observable, Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
 
 import { AuthService } from '../../shared/services/auth.service';
 import { UserService } from '../../shared/services/user.service';
@@ -26,30 +26,23 @@ import { JrResidentModalComponent } from '../../shared/modals/jr-resident-modal/
   ]
 })
 export class MemberPage implements OnInit, OnDestroy {
+  currentMember$: Observable<any>;
   user;
   currentUser;
-  currentUserSub: Subscription;
   spousePartner$: Observable<any>;
-  spousePartnerSub: Subscription;
   spousePartner = null;
-  spousePartnerName: string = null;
   currentYear: Date;
   currentDate: Date = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
   duesPaid: boolean;
   allBoard$: Observable<any>;
-  boardSub: Subscription;
   board = [];
   showBoard: boolean = false;
   allEvents$: Observable<any>;
-  eventsSub: Subscription;
   events = [];
   upcomingEvents = [];
-  getJrResidents$: Observable<any>;
-  jrResSub: Subscription;
-  loadJrRes;
+  memJrResidents$: Observable<any>;
   jrResidents = [];
-
-  eventDocURL: string = 'https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/documents%2FSummerBlockParty.pdf?alt=media&token=dc33e69b-7b00-49c9-b04e-8550e09330a0';
+  ngUnsubscribe = new Subject<void>();
 
   constructor(private authService: AuthService,
               private userService: UserService,
@@ -58,26 +51,24 @@ export class MemberPage implements OnInit, OnDestroy {
               private modalCtrl: ModalController) { }
 
   ngOnInit() {
-    this.getCurrentUser();
     this.currentYear = new Date();
-
-    this.allBoard$ = this.userService.fetchBoardMembers();
-    this.boardSub = this.allBoard$.subscribe(member => {
-      this.board = member;
-    });
-
-    this.getInfoForMember();
+    this.getCurrentUser();
+    this.getEventsForMember();
+    this.getBoardMembers();
   }
 
 
   async getCurrentUser() {
-    this.currentUserSub = await this.authService.user$.subscribe(data => {
+    this.currentMember$ = await this.authService.user$;
+    this.currentMember$
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(data => {
       if(data) {
         this.user = data;
         this.currentUser = this.user.displayName.firstName + ' ' + this.user.displayName.lastName;
         this.duesPaid = this.user.duesPaid;
         this.getJrResidents(this.user.uid);
-        if (this.user.spousePartner.spID != '') {
+        if (this.user.spousePartner.spID !== '') {
           this.getSpousePartner(this.user.spousePartner.spID);
         } else {
           this.spousePartner = null;
@@ -106,31 +97,50 @@ export class MemberPage implements OnInit, OnDestroy {
     });
   }
 
-  async getInfoForMember() {
+  async getJrResidents(parentID) {
+    this.memJrResidents$ = await this.userService.fetchJrResidents(parentID);
+    this.memJrResidents$
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(data => {
+        if(data && data.length > 0) {
+          this.jrResidents = data;
+          console.log("This user's jr residents = ", this.jrResidents);
+        } else {
+          this.jrResidents = [];
+          console.log('this user does not have any junior residents');
+        }
+      });
+  }
+
+  async getEventsForMember() {
     this.allEvents$ = await this.eventService.fetchEvents();
-    this.eventsSub = await this.allEvents$.subscribe(data => {
-      for (var i = 0; i < data.length; i++) {
-        const eDate = new Date(new Date(data[i].startTime).getFullYear(),new Date(data[i].startTime).getMonth() , new Date(data[i].startTime).getDate());
-        if(eDate >= this.currentDate) {
-          this.upcomingEvents.push(data[i]);
-          if(this.upcomingEvents.length >= 4) {
-            break;
+    this.allEvents$
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(data => {
+        for (var i = 0; i < data.length; i++) {
+          const eDate = new Date(new Date(data[i].startTime).getFullYear(),new Date(data[i].startTime).getMonth() , new Date(data[i].startTime).getDate());
+          if(eDate >= this.currentDate) {
+            this.upcomingEvents.push(data[i]);
+            if(this.upcomingEvents.length >= 4) {
+              break;
+            }
           }
         }
-      }
-      this.events = data;
-    });
+        this.events = data;
+      });
   }
 
-  async getJrResidents(parentID) {
-    this.getJrResidents$ = await this.userService.fetchJrResidents(parentID);
-    this.jrResSub = await this.getJrResidents$.subscribe(jrRes => {
-      this.jrResidents = jrRes;
-      console.log("This user's jr residents = ", this.jrResidents);
+  async getBoardMembers() {
+    this.allBoard$ = await this.userService.fetchBoardMembers();
+    this.allBoard$
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(sfBoard => {
+      this.board = sfBoard;
+      console.log('board members are: ',this.board);
     });
-  }
+  };
 
-  async presentUserModal(user) {
+  async presentUserModal(user, spousePartner) {
     const modal = await this.modalCtrl.create({
       component: UserModalComponent,
       componentProps: {
@@ -149,7 +159,11 @@ export class MemberPage implements OnInit, OnDestroy {
         birthDate: user.birthDate,
         showBirthDate: (user.showBirthDate != null) ? user.showBirthDate : false,
         occupation: user.occupation,
-        residentSince: user.residentSince
+        residentSince: user.residentSince,
+        spID: user.spousePartner.spID,
+        spFirstName: user.spousePartner.firstName,
+        spLastName: user.spousePartner.lastName,
+        spPhotoURL: user.spousePartner.photoURL
       }
     });
     return await modal.present();
@@ -187,10 +201,6 @@ export class MemberPage implements OnInit, OnDestroy {
     this.showBoard = !this.showBoard;
   }
 
-  getDocument(eventDoc) {
-    window.open(eventDoc);
-  }
-
   goHome() {
     this.router.navigate(['/']);
   }
@@ -200,9 +210,7 @@ export class MemberPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.currentUserSub.unsubscribe();
-    this.boardSub.unsubscribe();
-    this.eventsSub.unsubscribe();
-    this.jrResSub.unsubscribe();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

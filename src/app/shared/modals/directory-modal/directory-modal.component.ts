@@ -19,13 +19,14 @@ export class DirectoryModalComponent implements OnInit {
   residentSince: string = this.navParams.get('residentSince');
   showBirthDate: boolean = this.navParams.get('showBirthDate');
   birthDate: string = this.navParams.get('birthDate');
+  spousePartnerName: string = this.navParams.get('spousePartnerName');
 
   constructor(private formBuilder: FormBuilder,
               private modalCtrl: ModalController,
               private navParams: NavParams) { }
 
   ngOnInit() {
-
+    console.log('SpousePartner is: ',this.spousePartnerName);
   }
 
   // showMemberProfile(user) {

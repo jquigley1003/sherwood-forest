@@ -44,6 +44,15 @@ export class UserService {
     return this.dbService.collection$('users', ref => ref.where('uid', '==', spID));
   }
 
+  getSpousePartner(spFirstName, spLastName, streetNumber) {
+    return this.dbService.collection$('users', ref => ref
+      .where('displayName.firstName', '==', spFirstName)
+      .where('displayName.lastName', '==', spLastName)
+      .where('address.streetNumber', '==', streetNumber));
+  }
+
+
+
   fetchUsers() {
     return this.dbService.collection$('users', ref => ref.orderBy('displayName.lastName'));
   }

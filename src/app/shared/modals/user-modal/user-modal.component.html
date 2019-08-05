@@ -61,8 +61,8 @@
                         <ion-input type="tel" formControlName="phone" required></ion-input>
                     </ion-item>
                     <ion-item>
-                        <ion-label position="floating">Email *</ion-label>
-                        <ion-input type="email" formControlName="email" required></ion-input>
+                        <ion-label position="floating">Email <span style="font-style: italic;">(only admin can change)</span></ion-label>
+                        <ion-input type="email" formControlName="email" required readonly></ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label position="floating">Occupation</ion-label>
@@ -91,10 +91,18 @@
                         <ion-input type="date" formControlName="residentSince"></ion-input>
                     </ion-item>
                     <ion-item>
-                        <ion-label position="floating">Spouse/Partner ID</ion-label>
-                        <ion-input type="text" formControlName="spousePartnerID"></ion-input>
+                        <ion-label position="floating">Spouse/Partner Name</ion-label>
+                        <ion-avatar class="spAvatar" *ngIf="spPhotoURL !=''" slot="start">
+                            <img src="{{ spPhotoURL }}">
+                        </ion-avatar>
+                        <ion-input type="text" formControlName="spFirstName"
+                                   placeholder="First Name">
+                        </ion-input>
+                        <ion-input type="text" formControlName="spLastName"
+                                   placeholder="Last Name">
+                        </ion-input>
                     </ion-item>
-                    <ion-button type="submit" [disabled]="!userForm.valid" >
+                    <ion-button expand="block" type="submit" [disabled]="!userForm.valid" >
                         Update Now
                     </ion-button>
                 </form>

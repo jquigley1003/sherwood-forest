@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ModalController, NavParams } from '@ionic/angular';
 
+import { Observable, Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
+
 import { User } from '../../../models/user.model';
 
 import { UserService } from '../../services/user.service';
@@ -33,7 +36,10 @@ export class UserModalComponent implements OnInit {
   showBirthDate: boolean = this.navParams.get('showBirthDate');
   occupation: string = this.navParams.get('occupation');
   residentSince: string = this.navParams.get('residentSince');
-  spousePartnerID: string = this.navParams.get('spousePartnerID');
+  spID: string = this.navParams.get('spID');
+  spFirstName: string = this.navParams.get('spFirstName');
+  spLastName: string = this.navParams.get('spLastName');
+  spPhotoURL: string = this.navParams.get('spPhotoURL');
 
   radioList = [
     {
@@ -55,6 +61,9 @@ export class UserModalComponent implements OnInit {
       color: 'primary'
     }
   ];
+
+  otherHalf = null;
+  otherHalf$: Observable<any>;
 
   constructor(private formBuilder: FormBuilder,
               private modalCtrl: ModalController,
@@ -82,28 +91,63 @@ export class UserModalComponent implements OnInit {
       showBirthDate: [this.showBirthDate],
       occupation: [this.occupation],
       residentSince: [this.residentSince],
-      spousePartnerID: [this.spousePartnerID]
+      spFirstName: [this.spFirstName],
+      spLastName: [this.spLastName],
+      spPhotoURL: [this.spPhotoURL]
     });
   }
 
-
-
   radioSelect(event) {
     this.showBirthDate = (event.detail.value === 'true') ? true : false;
-    console.log('showBirthDate = ', this.showBirthDate);
   }
 
   async onUpdateUser() {
-    const firstName = this.userForm.controls['displayName'].value.firstName;
-    const lastName = this.userForm.controls['displayName'].value.lastName;
-    const streetNumber = this.userForm.controls['address'].value.streetNumber;
-    const streetName = this.userForm.controls['address'].value.streetName;
+    this.otherHalf$ = await this.userService.getSpousePartner(
+      this.userForm.value.spFirstName,
+      this.userForm.value.spLastName,
+      this.userForm.controls['address'].value.streetNumber
+    );
+    this.otherHalf$
+      .pipe(take(1))
+      .subscribe(data => {
+        if(data && data.length > 0) {
+          this.otherHalf = data;
+          console.log('this users otherHalf is: ', this.otherHalf[0]);
+          if(this.spID === this.otherHalf[0].uid) {
+            this.updateCurrentUser();
+          } else {
+            this.addInfoSpousePartner(this.otherHalf[0].uid);
+            this.updateCurrentUser();
+          }
+        } else {
+          this.otherHalf = null;
+          console.log('this user does not have any information about spouse/partner: ', this.otherHalf$);
+          if(this.spID !== '') {
+            this.removeInfoSpousePartner(this.spID);
+            this.updateCurrentUser();
+          } else {
+            this.updateCurrentUser();
+          }
+
+        }
+      });
+  }
+
+  async updateCurrentUser() {
+    const firstName = this.userForm.controls['displayName'].value.firstName.trim();
+    const lastName = this.userForm.controls['displayName'].value.lastName.trim();
+    const streetNumber = this.userForm.controls['address'].value.streetNumber.trim();
+    const streetName = this.userForm.controls['address'].value.streetName.trim();
     const subAddress = this.userForm.controls['address'].value.subAddress;
     const city = this.userForm.controls['address'].value.city;
     const state = this.userForm.controls['address'].value.state;
     const zipCode = this.userForm.controls['address'].value.zipCode;
-    const { phone, email, birthDate, occupation, residentSince, spousePartnerID } = this.userForm.value;
+    const { phone, email, birthDate, occupation, residentSince } = this.userForm.value;
     const showBirthDate = this.showBirthDate;
+    const spID = this.otherHalf == null ? '' : this.otherHalf[0].uid;
+    const spFirstName = this.otherHalf == null ? this.userForm.value.spFirstName : this.otherHalf[0].displayName.firstName;
+    const spLastName = this.otherHalf == null ? this.userForm.value.spLastName : this.otherHalf[0].displayName.lastName;
+    const spPhotoURL = this.otherHalf == null ? '' : this.otherHalf[0].photoURL;
 
     const data: User = {
       uid: this.uid,
@@ -126,15 +170,58 @@ export class UserModalComponent implements OnInit {
       showBirthDate: showBirthDate,
       occupation: occupation,
       residentSince: residentSince,
-      spousePartnerID: spousePartnerID
+      spousePartner: {
+        spID: spID,
+        firstName: spFirstName,
+        lastName: spLastName,
+        photoURL: spPhotoURL
+      }
     };
+
     await this.userService.updateUser('users/'+ this.uid, data);
-    await this.toastService.presentToast('The member profile for '+ firstName +' has been updated!',
-      true, 'top', 'Ok', 3000 );
+    await this.toastService.presentToast('The member profile for '+ firstName + ' ' + lastName +' has been updated!',
+      true, 'middle', 'Ok', 3000 );
     await this.userForm.reset();
-    await this.modalCtrl.dismiss();
-    // this.router.navigate(['/member']);
+    await this.closeModalWithData();
   }
+
+  addInfoSpousePartner(otherHalfID) {
+    const spData = {
+      uid: otherHalfID,
+      spousePartner: {
+        spID: this.uid,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        photoURL: this.photoURL
+      }
+    };
+
+    this.userService.updateUser('users/'+ otherHalfID, spData);
+    this.toastService.presentToast(
+      'Spouse/Partner info changed for ' +
+      this.userForm.value.spFirstName + ' ' + this.userForm.value.spLastName +', too!',
+      true, 'middle', 'Ok', 5000 );
+  }
+
+  removeInfoSpousePartner(otherHalfID) {
+    const spData = {
+      uid: otherHalfID,
+      spousePartner: {
+        spID: '',
+        firstName: '',
+        lastName: '',
+        photoURL: ''
+      }
+    };
+
+    this.userService.updateUser('users/'+ otherHalfID, spData);
+    this.toastService.presentToast(
+      'Spouse/Partner info changed for ' +
+      this.spFirstName + ' ' + this.spLastName +', too!',
+      true, 'middle', 'Ok', 5000
+    );
+  }
+
 
   onResetPassword(email) {
     this.userService.resetUserPassword(email);
@@ -142,8 +229,14 @@ export class UserModalComponent implements OnInit {
   }
 
   closeModal() {
-    this.modalCtrl.dismiss();
+    this.modalCtrl.dismiss()
   }
 
+
+  closeModalWithData() {
+    this.modalCtrl.dismiss({
+      data: this.lastName
+    });
+  }
 
 }

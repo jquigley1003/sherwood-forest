@@ -72,6 +72,9 @@
                 <h1>{{ user.address.streetNumber + ' ' + user.address.streetName }}</h1>
               </ion-text>
             </ion-label>
+            <ion-avatar slot="end" *ngIf="user.roles.pendingMember">
+              <img src="/assets/non-member.png">
+            </ion-avatar>
           </ion-item>
         </div>
       </ion-col>

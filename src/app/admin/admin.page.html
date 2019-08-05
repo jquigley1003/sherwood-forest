@@ -8,13 +8,14 @@
     </ion-title>
   </ion-toolbar>
   <ion-toolbar text-center>
-    <ion-searchbar showCancelButton (ionInput)="filterByFirstName($event)"
+    <ion-searchbar showCancelButton="always" (ionChange)="filterByFirstName($event)"
                    *ngIf="filterBy == 'firstName'" placeholder="Search by First Name">
     </ion-searchbar>
-    <ion-searchbar showCancelButton (ionInput)="filterByLastName($event)"
+    <ion-searchbar showCancelButton="focus" (ionChange)="filterByLastName($event)"
+                   [value]="searchTermValue"
                    *ngIf="filterBy == 'lastName'" placeholder="Search by Last Name">
     </ion-searchbar>
-    <ion-searchbar showCancelButton (ionInput)="filterByAddress($event)"
+    <ion-searchbar showCancelButton="always" (ionChange)="filterByAddress($event)"
                    *ngIf="filterBy == 'address'"placeholder="Search by Address">
     </ion-searchbar>
   </ion-toolbar>
@@ -33,16 +34,22 @@
 
 <ion-content padding>
   <p text-center>All SFCA Users</p>
-  <ion-button color="danger" (click)="addDataToUsers()">
+  <ion-button color="danger">
     Add Data to Users
   </ion-button>
+  <ion-button color="success" (click)="getAllUsers()">
+    Get All Users
+  </ion-button>
   <ion-list>
-    <ion-item *ngFor="let user of users" lines="full" value="user.uid">
+    <ion-item *ngFor="let user of users" lines="full">
       <ion-thumbnail slot="start" (click)="presentUserModal(user)">
-        <ion-img src="{{ user.photoURL }}"></ion-img>
+        <img src="{{ user.photoURL }}">
       </ion-thumbnail>
       <ion-icon slot="end" *ngIf="user.roles.admin" name="medal">Admin</ion-icon>
       <ion-icon slot="end" *ngIf="user.duesPaid" name="cash">Paid</ion-icon>
+      <ion-avatar slot="end" *ngIf="user.roles.pendingMember">
+        <img src="/assets/non-member.png">
+      </ion-avatar>
       <ion-label text-wrap>
         <ion-text>
           <h1>{{ user.displayName.firstName + ' ' + user.displayName.lastName }}</h1>

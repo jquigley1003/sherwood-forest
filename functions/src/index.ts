@@ -62,7 +62,8 @@ export const adminCreateUser = functions.https.onCall((data, context) => {
           spousePartner: {
             firstName: '',
             lastName: '',
-            spID: ''
+            spID: '',
+            photoURL: ''
           }
         })
       })

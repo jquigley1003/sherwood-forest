@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ModalController } from '@ionic/angular';
 
-import { Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { UserService } from '../shared/services/user.service';
 import { ToastService } from '../shared/services/toast.service';
@@ -17,14 +18,16 @@ import { UserModalComponent } from '../shared/modals/user-modal/user-modal.compo
   styleUrls: ['./admin.page.scss'],
 })
 export class AdminPage implements OnInit, OnDestroy {
-  allUsers;
+  allUsers$: Observable<any>;
   users: any[];
   loadedUsers: any[];
+  searchTermValue:string = "";
   filterBy: string = "lastName";
   statusFirst: string = "primary";
   statusLast: string = "secondary";
   statusAddress: string = "primary";
   usersSubscription: Subscription;
+  ngUnsubscribe = new Subject<void>();
 
   constructor(private userService: UserService,
               private toastService: ToastService,
@@ -33,20 +36,19 @@ export class AdminPage implements OnInit, OnDestroy {
               private modalCtrl: ModalController) { }
 
   ngOnInit() {
-    this.getAllUsers();
+
   }
 
   async getAllUsers() {
-    this.loadingService.present();
-    this.allUsers = await this.userService.fetchUsers();
-    this.usersSubscription = await this.allUsers.subscribe(data => {
-      this.users = data;
-      // this.users.sort((a,b) => (a.displayName.lastName + a.displayName.firstName)
-      //   .localeCompare((b.displayName.lastName + b.displayName.firstName)));
-      this.loadedUsers = this.users;
-      this.loadingService.dismiss();
+    await this.loadingService.presentLoading();
+    this.allUsers$ = await this.userService.fetchUsers();
+    await this.allUsers$
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(data => {
+      this.loadedUsers = data;
+      this.users = this.loadedUsers;
     });
-
+    this.loadingService.dismissLoading();
   }
 
   initializeList():void {
@@ -54,6 +56,7 @@ export class AdminPage implements OnInit, OnDestroy {
   }
 
   queryFirstName() {
+    this.initializeList();
     this.filterBy = 'firstName';
     this.statusFirst = "secondary";
     this.statusLast = "primary";
@@ -61,6 +64,7 @@ export class AdminPage implements OnInit, OnDestroy {
   }
 
   queryLastName() {
+    this.initializeList();
     this.filterBy = 'lastName';
     this.statusFirst = "primary";
     this.statusLast = "secondary";
@@ -68,6 +72,7 @@ export class AdminPage implements OnInit, OnDestroy {
   }
 
   queryAddress() {
+    this.initializeList();
     this.filterBy = 'address';
     this.statusFirst = "primary";
     this.statusLast = "primary";
@@ -148,8 +153,17 @@ export class AdminPage implements OnInit, OnDestroy {
         showBirthDate: (user.showBirthDate != null) ? user.showBirthDate : false,
         occupation: user.occupation,
         residentSince: user.residentSince,
-        spousePartnerID: user.spousePartner.spID
+        spID: user.spousePartner.spID,
+        spFirstName: user.spousePartner.firstName,
+        spLastName: user.spousePartner.lastName,
+        spPhotoURL: user.spousePartner.photoURL
       }
+    });
+    modal.onWillDismiss().then((dataReturned) => {
+      if (dataReturned.data !== undefined) {
+        this.searchTermValue = dataReturned.data.data;
+      }
+      console.log(dataReturned);
     });
     return await modal.present();
   }
@@ -159,9 +173,7 @@ export class AdminPage implements OnInit, OnDestroy {
       const data = {
         uid: sfUser.uid,
         spousePartner: {
-          firstName: '',
-          lastName: '',
-          spID: ''
+          photoURL: ''
         }
       };
       this.userService.updateUser('users/'+ sfUser.uid, data);
@@ -232,6 +244,7 @@ export class AdminPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.usersSubscription.unsubscribe();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

@@ -133,7 +133,8 @@ export class DirectoryPage implements OnInit, OnDestroy {
         cityStateZip: user.address.city + ' ' + user.address.state + ' ' + user.address.zipCode,
         residentSince: user.residentSince,
         showBirthDate: user.showBirthDate,
-        birthDate: user.birthDate
+        birthDate: user.birthDate,
+        spousePartnerName: user.spousePartner.firstName + ' ' + user.spousePartner.lastName
       }
     });
     return await modal.present();
