@@ -2,12 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { growImgTrigger, slideTitleLeftTrigger, slideTitleRightTrigger } from '../../shared/components/animations/animations';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 
 import { LoginModalComponent } from '../../shared/modals/login-modal/login-modal.component';
 import { AuthService } from '../../shared/services/auth.service';
 import { UserService } from '../../shared/services/user.service';
 import { ModalController } from '@ionic/angular';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tab1',
@@ -21,10 +22,10 @@ import { ModalController } from '@ionic/angular';
 })
 export class Tab1Page implements OnInit, OnDestroy {
 
-  loggedIn$: Observable<any>;
+  isLoggedIn: boolean;
   allKeyContacts$: Observable<any>;
-  keyContactsSub: Subscription;
   keyContacts: [];
+  ngUnsubscribe = new Subject<void>();
 
   constructor(private router: Router,
               private authService: AuthService,
@@ -32,13 +33,19 @@ export class Tab1Page implements OnInit, OnDestroy {
               private modalCtrl: ModalController){}
 
   ngOnInit() {
-    this.loggedIn$ = this.authService.user$;
+    this.authService.checkLoggedIn
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(loggedInStatus => {
+        this.isLoggedIn = loggedInStatus;
+      });
     this.getKeyContacts();
   }
 
   async getKeyContacts() {
     this.allKeyContacts$ = await this.userService.fetchKeyContacts();
-    this.keyContactsSub = await this.allKeyContacts$.subscribe(key => {
+    await this.allKeyContacts$
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(key => {
       this.keyContacts = key;
     });
   }
@@ -56,7 +63,8 @@ export class Tab1Page implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.keyContactsSub.unsubscribe();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
 }

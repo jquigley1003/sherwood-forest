@@ -5,7 +5,8 @@ import { ModalController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { AuthService } from './shared/services/auth.service';
 import { LoginModalComponent } from './shared/modals/login-modal/login-modal.component';
@@ -17,9 +18,9 @@ import { RegisterModalComponent } from './shared/modals/register-modal/register-
   templateUrl: 'app.component.html'
 })
 export class AppComponent implements OnInit, OnDestroy {
-  loggedIn$: Observable<any>;
+  isLoggedIn: boolean;
   isAdmin: boolean;
-  authSubscription: Subscription;
+  ngUnsubscribe = new Subject<void>();
 
   constructor(
     private platform: Platform,
@@ -40,8 +41,14 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.authService.checkLoggedIn
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(loggedInStatus => {
+        this.isLoggedIn = loggedInStatus;
+      });
     this.authService.initCheckForAdmin();
-    this.authSubscription = this.authService.checkForAdmin
+    this.authService.checkForAdmin
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(adminStatus => {
         this.isAdmin = adminStatus;
       });
@@ -72,6 +79,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.authSubscription.unsubscribe();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

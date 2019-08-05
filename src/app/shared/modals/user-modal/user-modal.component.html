@@ -57,11 +57,13 @@
                         </ion-item>
                     </div>
                     <ion-item>
-                        <ion-label position="floating">Phone (ex: 404-444-4444) *</ion-label>
+                        <ion-label position="floating" text-wrap>Phone *
+                            <span class="formInfo">(ex: 404-444-4444)</span></ion-label>
                         <ion-input type="tel" formControlName="phone" required></ion-input>
                     </ion-item>
                     <ion-item>
-                        <ion-label position="floating">Email <span style="font-style: italic;">(only admin can change)</span></ion-label>
+                        <ion-label position="floating" text-wrap>Email
+                            <span class="formInfo">(only admin can change)</span></ion-label>
                         <ion-input type="email" formControlName="email" required readonly></ion-input>
                     </ion-item>
                     <ion-item>
@@ -91,7 +93,7 @@
                         <ion-input type="date" formControlName="residentSince"></ion-input>
                     </ion-item>
                     <ion-item>
-                        <ion-label position="floating">Spouse/Partner Name</ion-label>
+                        <ion-label position="floating" text-wrap >Spouse/Partner Name</ion-label>
                         <ion-avatar class="spAvatar" *ngIf="spPhotoURL !=''" slot="start">
                             <img src="{{ spPhotoURL }}">
                         </ion-avatar>

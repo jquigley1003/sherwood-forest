@@ -140,7 +140,7 @@ export class MemberPage implements OnInit, OnDestroy {
     });
   };
 
-  async presentUserModal(user, spousePartner) {
+  async presentUserModal(user) {
     const modal = await this.modalCtrl.create({
       component: UserModalComponent,
       componentProps: {

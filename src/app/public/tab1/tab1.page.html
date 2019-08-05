@@ -39,7 +39,7 @@
               <ion-avatar><ion-img src="{{ key.photoURL }}"></ion-img></ion-avatar>
               <h2>{{ key.displayName.firstName}} {{ key.displayName.lastName}}</h2>
               <h3>{{ key.boardTitle }}</h3>
-              <p *ngIf="loggedIn$ | async">{{ key.boardEmail }}</p>
+              <p *ngIf="isLoggedIn">{{ key.boardEmail }}</p>
             </div>
           </ion-col>
         </ion-row>

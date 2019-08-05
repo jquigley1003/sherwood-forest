@@ -18,6 +18,7 @@ import { AlertService } from './alert.service';
 export class AuthService {
   user$: Observable<User>;
   checkForAdmin = new Subject<boolean>();
+  checkLoggedIn = new Subject<boolean>();
   emailVerifySubscription: Subscription;
 
   constructor(
@@ -89,32 +90,31 @@ export class AuthService {
       .signInWithEmailAndPassword(email, password)
       .then(credential => {
         if(credential.user.emailVerified) {
-          this.initCheckForAdmin();
-          this.toastService.presentToast('Welcome back to Sherwood Forest Civic Association!', true, 'top', 'Close', 3000);
-
-          // *** Restore this after admins are done loading users *****
-          // credential.user.getIdTokenResult()
-          //   .then((idTokenResult) => {
-          //     if(idTokenResult.claims.pendingMember) {
-          //       this.alertService.presentAlert(
-          //         'Oops! Please Contact the SFCA Board',
-          //         'You Are Currently a Pending Member',
-          //         'You must be an Approved Member to gain full access to this web app',
-          //         [{
-          //           text: 'OK',
-          //           role: 'cancel',
-          //           handler: () => {
-          //             console.log('Confirm Ok');
-          //             this.signOut();
-          //           }
-          //         }]
-          //       );
-          //       // return this.updateUserData(credential.user);
-          //     } else {
-          //       this.initCheckForAdmin();
-          //       console.log('no need to update user in cloud firestore');
-          //     }
-          //   });
+          credential.user.getIdTokenResult()
+            .then((idTokenResult) => {
+              if(idTokenResult.claims.pendingMember) {
+                this.alertService.presentAlert(
+                  'Oops! Please Contact the SFCA Board',
+                  'You Are Currently a Pending Member',
+                  'You must be an Approved Member to gain full access to this web app',
+                  [{
+                    text: 'OK',
+                    role: 'cancel',
+                    handler: () => {
+                      console.log('Confirm Ok');
+                    }
+                  }]
+                );
+                this.signOut();
+              } else {
+                this.checkLoggedIn.next(true);
+                this.initCheckForAdmin();
+                this.toastService.presentToast(
+                  'Welcome back to Sherwood Forest Civic Association!',
+                  true, 'top', 'Close', 3000);
+                console.log('no need to update user in cloud firestore');
+              }
+            });
         } else {
           this.alertService.presentAlert(
             'Verify Your Email',
@@ -190,6 +190,15 @@ export class AuthService {
       .toPromise();
   }
 
+  approvedMember() {
+    return this.user$
+      .pipe(
+        take(1),
+        map(u => u && u.roles.approvedMember)
+      )
+      .toPromise();
+  }
+
   initCheckForAdmin() {
     return this.user$
       .pipe(
@@ -209,6 +218,7 @@ export class AuthService {
   async signOut() {
     await this.afAuth.auth.signOut();
     await this.checkForAdmin.next(false);
+    this.checkLoggedIn.next(false);
     this.toastService.presentToast('You are signed out!', true, 'top', 'Close', 3000);
     return this.router.navigate(['/']);
   }
