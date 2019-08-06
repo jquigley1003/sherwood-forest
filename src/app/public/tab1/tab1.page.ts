@@ -33,6 +33,7 @@ export class Tab1Page implements OnInit, OnDestroy {
               private modalCtrl: ModalController){}
 
   ngOnInit() {
+    this.authService.initCheckForLogin();
     this.authService.checkLoggedIn
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(loggedInStatus => {

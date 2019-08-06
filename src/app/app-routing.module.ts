@@ -17,7 +17,7 @@ const routes: Routes = [
   },
   { path: 'social/clubs-groups',
     loadChildren: './membership/social/clubs-groups/clubs-groups.module#ClubsGroupsPageModule',
-    canActivate: [AdminGuard]
+    canActivate: [AuthGuard]
   },
   { path: 'member',
     loadChildren: './membership/member/member.module#MemberPageModule',

@@ -178,7 +178,7 @@ export class AuthService {
         take(1),
         map(u => u && u.uid)
       )
-      .toPromise();
+      .toPromise()
   }
 
   adminRole() {
@@ -215,10 +215,26 @@ export class AuthService {
       });
   }
 
+  initCheckForLogin() {
+    return this.user$
+      .pipe(
+        take(1),
+        map(u => u && u.uid)
+      )
+      .toPromise()
+      .then((loggedIn) => {
+        if (loggedIn) {
+          this.checkLoggedIn.next(true);
+        } else {
+          this.checkLoggedIn.next(false);
+        }
+      });;
+  }
+
   async signOut() {
     await this.afAuth.auth.signOut();
     await this.checkForAdmin.next(false);
-    this.checkLoggedIn.next(false);
+    await this.checkLoggedIn.next(false);
     this.toastService.presentToast('You are signed out!', true, 'top', 'Close', 3000);
     return this.router.navigate(['/']);
   }

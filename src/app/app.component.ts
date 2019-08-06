@@ -41,6 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.authService.initCheckForLogin();
     this.authService.checkLoggedIn
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(loggedInStatus => {
