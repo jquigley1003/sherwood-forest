@@ -26,30 +26,7 @@ export class DirectoryModalComponent implements OnInit {
               private navParams: NavParams) { }
 
   ngOnInit() {
-    console.log('SpousePartner is: ',this.spousePartnerName);
   }
-
-  // showMemberProfile(user) {
-  //   this.directoryForm = this.formBuilder.group({
-  //     displayName: this.formBuilder.group({
-  //       firstName: [user.displayName.firstName],
-  //       lastName: [user.displayName.lastName]
-  //     }),
-  //     address: this.formBuilder.group({
-  //       streetNumber: [user.address.streetNumber],
-  //       streetName: [user.address.streetName],
-  //       subAddress: [user.address.subAddress],
-  //       city: [user.address],
-  //       state: [user.address],
-  //       zipCode: [user.address]
-  //     }),
-  //     phone: [user.phone],
-  //     email: [user.email],
-  //     birthDate: [''],
-  //     occupation: [''],
-  //     residentSince: ['']
-  //   });
-  // }
 
   closeModal() {
     this.modalCtrl.dismiss();

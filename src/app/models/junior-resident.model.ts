@@ -5,6 +5,6 @@ export interface DisplayName {
 
 export interface JuniorResident {
   displayName?: DisplayName;
-  birthDate?: Date;
+  age?: number;
   parents?: string[];
 }

@@ -21,10 +21,10 @@ export class JrResidentModalComponent implements OnInit {
   ngOnInit() {
     this.jrResForm = this.formBuilder.group({
       displayName: this.formBuilder.group({
-        firstName: ['', Validators.required],
-        lastName: ['', Validators.required]
+        firstName: ['',Validators.required],
+        lastName: ['',Validators.required]
       }),
-      birthDate: [''],
+      age: [''],
       parents: ['']
     });
   }

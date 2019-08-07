@@ -1,0 +1,28 @@
+ion-content {
+  --background: url(/assets/WoodFenceGreenIvy.jpg);
+  --background-position: center;
+  --background-repeat: no-repeat;
+  --background-size: cover;
+}
+
+ion-label {
+  --color: var(--ion-color-primary-shade) !important;
+  font-weight: bold;
+  font-size: 1.5em !important;
+}
+
+ion-item {
+  --background: transparent;
+}
+
+ion-toolbar {
+  --background: rgba(255,255,255, 0.3);
+  --padding-start: none;
+  --padding-end: none;
+}
+
+ion-input {
+  --background: rgba(255,255,255, 0.3);
+  font-size: 1.5em !important;
+  --color: var(--ion-color-secondary-shade);
+}
