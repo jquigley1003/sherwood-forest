@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content [scrollEvents]="true">
   <ion-toolbar text-center>
     <h1>Update Jr Resident Info</h1>
     <h3>Items marked with asterisk (*) required</h3>
@@ -12,50 +12,52 @@
   <ion-grid padding-top>
     <ion-row>
       <ion-col size="12">
-
+        <div *ngIf="showJrRes">
+          <p>form will go here</p>
+          <form [formGroup]="jrResForm" (ngSubmit)="onUpdateJr()">
+            <div formGroupName="displayName">
+              <ion-item>
+                <ion-label position="floating">First Name *</ion-label>
+                <ion-input type="text"
+                           formControlName="firstName" required></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Last Name *</ion-label>
+                <ion-input type="text"
+                           formControlName="lastName" required></ion-input>
+              </ion-item>
+            </div>
+            <ion-item>
+              <ion-label position="floating">Age</ion-label>
+              <ion-input type="number" formControlName="age"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Parents</ion-label>
+              <ion-input type="text" formControlName="parents"></ion-input>
+            </ion-item>
+            <ion-button type="submit" [disabled]="!jrResForm.valid" >
+              Update Now
+            </ion-button>
+          </form>
+        </div>
       <p>Here are the user's junior residents</p>
       <div *ngIf="jrResidents != ''; else noJrResBlock">
 
-        <!--<ion-list *ngFor="let jr of jrResidents">-->
-          <!--<ion-header>-->
-            <!--<ion-title>-->
+        <ion-list *ngFor="let jr of jrResidents">
+          <ion-header>
+            <ion-title>
 
-            <!--</ion-title>-->
-          <!--</ion-header>-->
-          <!--<ion-item>-->
-            <!--{{ jr.id }}-->
-          <!--</ion-item>-->
-          <!--<ion-item>-->
-            <!--{{ jr.displayName.firstName }} {{ jr.displayName.lastName }}-->
-          <!--</ion-item>-->
-        <!--</ion-list>-->
-
-        <form [formGroup]="jrResForm" (ngSubmit)="onUpdateJr()" *ngFor="let jr of jrResidents">
-          <div formGroupName="displayName">
-            <ion-item>
-              <ion-label position="floating">First Name *</ion-label>
-              <ion-input value="{{ jr.displayName.firstName }}" type="text" formControlName="firstName" required></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="floating">Last Name *</ion-label>
-              <ion-input value="{{ jr.displayName.lastName }}" type="text" formControlName="lastName" required></ion-input>
-            </ion-item>
-          </div>
+            </ion-title>
+          </ion-header>
           <ion-item>
-          <ion-label>Age</ion-label>
-          <ion-input value ="{{ jr.age }}" type="number" formControlName="age"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label>Parents</ion-label>
-          <ion-input value ="{{ jr.parents }}" type="text" formControlName="parents"></ion-input>
-        </ion-item>
-          <ion-button type="submit" [disabled]="!jrResForm.valid" >
-            Update Now
-          </ion-button>
-        </form>
-
+            {{ jr.id }}
+          </ion-item>
+          <ion-item>
+            {{ jr.displayName.firstName }} {{ jr.displayName.lastName }}
+          </ion-item>
+          <ion-button (click)="onChooseJr(jr); scrollToBottom()">click for form</ion-button>
+        </ion-list>
       </div>
-
       <ng-template #noJrResBlock>
         <p>This user does not have any Junior Residents</p>
       </ng-template>

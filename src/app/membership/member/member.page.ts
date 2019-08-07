@@ -191,7 +191,9 @@ export class MemberPage implements OnInit, OnDestroy {
     const modal = await this.modalCtrl.create({
       component: JrResidentModalComponent,
       componentProps: {
-        jrResidents: this.jrResidents
+        jrResidents: this.jrResidents,
+        parentOneID: this.user.uid,
+        parentTwoID: this.user.spousePartner.spID
       }
     });
     return await modal.present();
