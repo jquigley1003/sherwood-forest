@@ -67,7 +67,7 @@ export class UserService {
 
   fetchJrResidents(parentID) {
     return this.dbService.collection$('jrResidents', ref => ref
-      .where('parents', 'array-contains', parentID));
+      .where('parentIDs', 'array-contains', parentID));
   }
 
   makeUserAdmin(user) {

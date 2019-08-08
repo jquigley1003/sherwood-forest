@@ -163,7 +163,8 @@ export class MemberPage implements OnInit, OnDestroy {
         spID: user.spousePartner.spID,
         spFirstName: user.spousePartner.firstName,
         spLastName: user.spousePartner.lastName,
-        spPhotoURL: user.spousePartner.photoURL
+        spPhotoURL: user.spousePartner.photoURL,
+        jrResidents: this.jrResidents
       }
     });
     return await modal.present();
@@ -192,6 +193,9 @@ export class MemberPage implements OnInit, OnDestroy {
       component: JrResidentModalComponent,
       componentProps: {
         jrResidents: this.jrResidents,
+        address: this.user.address,
+        parentOneName: this.user.displayName.firstName + ' ' + this.user.displayName.lastName,
+        parentTwoName: this.user.spousePartner.firstName + ' ' + this.user.spousePartner.lastName,
         parentOneID: this.user.uid,
         parentTwoID: this.user.spousePartner.spID
       }

@@ -21,4 +21,18 @@ export class JrResidentService {
   updateJrRes(path, data) {
     this.dbService.updateAt(path, data);
   }
+
+  deleteJrRes(jrResPath) {
+    this.toastService.presentToast('Please wait while we delete this Junior Resident.', true, 'middle', 'OK', 3000);
+    this.dbService.delete(jrResPath)
+      .then(() => {
+        this.toastService.presentToast('The Junior Resident has been deleted!',
+          true, 'middle', 'Ok', 3000 );
+      })
+      .catch(err => {
+        this.toastService.presentToast(err,
+          true, 'middle', 'OK', 3000);
+      });
+  }
+
 }

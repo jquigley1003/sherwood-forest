@@ -9,6 +9,7 @@ import { take } from 'rxjs/operators';
 import { User } from '../../../models/user.model';
 
 import { UserService } from '../../services/user.service';
+import { JrResidentService } from '../../services/jr-resident.service';
 import { ToastService } from '../../services/toast.service';
 
 @Component({
@@ -40,6 +41,7 @@ export class UserModalComponent implements OnInit {
   spFirstName: string = this.navParams.get('spFirstName');
   spLastName: string = this.navParams.get('spLastName');
   spPhotoURL: string = this.navParams.get('spPhotoURL');
+  jrResidents: any = this.navParams.get('jrResidents');
 
   radioList = [
     {
@@ -69,6 +71,7 @@ export class UserModalComponent implements OnInit {
               private modalCtrl: ModalController,
               private navParams: NavParams,
               private userService: UserService,
+              private jrResService: JrResidentService,
               private toastService: ToastService) { }
 
   ngOnInit() {
@@ -95,6 +98,7 @@ export class UserModalComponent implements OnInit {
       spLastName: [this.spLastName],
       spPhotoURL: [this.spPhotoURL]
     });
+    console.log('jrResidents = ',this.jrResidents);
   }
 
   radioSelect(event) {
@@ -197,6 +201,16 @@ export class UserModalComponent implements OnInit {
     };
 
     this.userService.updateUser('users/'+ otherHalfID, spData);
+    if(this.jrResidents != []) {
+      for (let jrRes of this.jrResidents) {
+        const jrResData = {
+          parents: [this.firstName + ' ' + this.lastName,
+            this.otherHalf[0].displayName.firstName + ' ' + this.otherHalf[0].displayName.lastName],
+          parentIDs: [this.uid, this.otherHalf[0].uid]
+        }
+        this.jrResService.updateJrRes('jrResidents/'+ jrRes.id, jrResData);
+      }
+    }
     this.toastService.presentToast(
       'Spouse/Partner info changed for ' +
       this.userForm.value.spFirstName + ' ' + this.userForm.value.spLastName +', too!',
@@ -215,6 +229,15 @@ export class UserModalComponent implements OnInit {
     };
 
     this.userService.updateUser('users/'+ otherHalfID, spData);
+    if(this.jrResidents != []) {
+      for (let jrRes of this.jrResidents) {
+        const jrResData = {
+          parents: [this.firstName + ' ' + this.lastName],
+          parentIDs: [this.uid]
+        }
+        this.jrResService.updateJrRes('jrResidents/'+ jrRes.id, jrResData);
+      }
+    }
     this.toastService.presentToast(
       'Spouse/Partner info changed for ' +
       this.spFirstName + ' ' + this.spLastName +', too!',

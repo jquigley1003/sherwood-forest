@@ -10,6 +10,7 @@ import { ToastService } from '../shared/services/toast.service';
 import { AlertService } from '../shared/services/alert.service';
 import { LoadingService } from '../shared/services/loading.service';
 import { UserModalComponent } from '../shared/modals/user-modal/user-modal.component';
+import { JrResidentService } from '../shared/services/jr-resident.service';
 
 
 @Component({
@@ -28,8 +29,11 @@ export class AdminPage implements OnInit, OnDestroy {
   statusAddress: string = "primary";
   usersSubscription: Subscription;
   ngUnsubscribe = new Subject<void>();
+  memJrResidents$: Observable<any>;
+  jrResidents = [];
 
   constructor(private userService: UserService,
+              private jrResService: JrResidentService,
               private toastService: ToastService,
               private alertService: AlertService,
               private loadingService: LoadingService,
@@ -49,6 +53,21 @@ export class AdminPage implements OnInit, OnDestroy {
       this.users = this.loadedUsers;
     });
     this.loadingService.dismissLoading();
+  }
+
+  async getJrResidents(parentID) {
+    this.memJrResidents$ = await this.userService.fetchJrResidents(parentID);
+    this.memJrResidents$
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(data => {
+        if(data && data.length > 0) {
+          this.jrResidents = data;
+          console.log("This user's jr residents = ", this.jrResidents);
+        } else {
+          this.jrResidents = [];
+          console.log('this user does not have any junior residents');
+        }
+      });
   }
 
   initializeList():void {
@@ -134,6 +153,7 @@ export class AdminPage implements OnInit, OnDestroy {
   }
 
   async presentUserModal(user) {
+    await this.getJrResidents(user.uid);
     const modal = await this.modalCtrl.create({
       component: UserModalComponent,
       componentProps: {
@@ -156,7 +176,8 @@ export class AdminPage implements OnInit, OnDestroy {
         spID: user.spousePartner.spID,
         spFirstName: user.spousePartner.firstName,
         spLastName: user.spousePartner.lastName,
-        spPhotoURL: user.spousePartner.photoURL
+        spPhotoURL: user.spousePartner.photoURL,
+        jrResidents: this.jrResidents
       }
     });
     modal.onWillDismiss().then((dataReturned) => {
