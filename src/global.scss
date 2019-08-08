@@ -23,3 +23,15 @@ ion-alert {
   --max-width: 80vw;
 }
 
+.alertDanger{
+  color:var(--ion-color-danger) !important;
+  border: 2px solid var(--ion-color-danger) !important;
+  border-radius: 5px !important;
+}
+
+.alertCancel{
+  color: var(--ion-color-primary) !important;
+  border: 2px solid var(--ion-color-primary) !important;
+  border-radius: 5px !important;
+}
+

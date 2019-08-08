@@ -80,7 +80,7 @@
         <ion-button *ngIf="user.duesPaid" color="success" (click)="markDuesUnpaid( user )">
           Dues are Paid
         </ion-button>
-        <ion-button color="danger" (click)="deleteUser( user.displayName.firstName, user.uid )">
+        <ion-button color="danger" (click)="deleteUser( user.displayName.firstName, user.uid, user.spousePartner.spID )">
           Delete User
         </ion-button>
       </ion-label>

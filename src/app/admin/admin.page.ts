@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 import { Observable, Subject, Subscription } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
 import { UserService } from '../shared/services/user.service';
 import { ToastService } from '../shared/services/toast.service';
@@ -31,6 +31,8 @@ export class AdminPage implements OnInit, OnDestroy {
   ngUnsubscribe = new Subject<void>();
   memJrResidents$: Observable<any>;
   jrResidents = [];
+  spousePartner$: Observable<any>;
+  spousePartner: any[];
 
   constructor(private userService: UserService,
               private jrResService: JrResidentService,
@@ -55,6 +57,21 @@ export class AdminPage implements OnInit, OnDestroy {
     this.loadingService.dismissLoading();
   }
 
+  async getSpousePartner(userID) {
+    this.spousePartner$ = await this.userService.fetchSpousePartner(userID);
+      this.spousePartner$
+      .pipe(take(1))
+      .subscribe(data => {
+        if(data && data.length > 0) {
+          this.spousePartner = data;
+          console.log("This user's spousePartner is: ", this.spousePartner);
+        } else {
+          this.spousePartner = null;
+          console.log('this user does not have a spousePartner', this.spousePartner);
+        }
+      });
+  }
+
   async getJrResidents(parentID) {
     this.memJrResidents$ = await this.userService.fetchJrResidents(parentID);
     this.memJrResidents$
@@ -64,7 +81,7 @@ export class AdminPage implements OnInit, OnDestroy {
           this.jrResidents = data;
           console.log("This user's jr residents = ", this.jrResidents);
         } else {
-          this.jrResidents = [];
+          this.jrResidents = null;
           console.log('this user does not have any junior residents');
         }
       });
@@ -231,20 +248,23 @@ export class AdminPage implements OnInit, OnDestroy {
     const data = {
       uid: user.uid,
       duesPaid: false
-    }
+    };
     await this.userService.updateUser('users/'+ user.uid, data);
     this.toastService.presentToast(user.displayName.firstName + ' dues are now marked unpaid',
       true, 'top', 'Ok', 3000 );
   }
 
-  deleteUser(firstName, uid) {
+  async deleteUser(firstName, uid, spID) {
+    await this.getSpousePartner(spID);
     this.alertService.presentAlert(
       'Are You Sure?',
       'You will permanently delete ' + firstName,
-      'This action can not be undone',
+      'If spouse/partner field is blank, Jr Residents and ' +
+      'Pets will be removed. This action can not be undone.',
       [
         {
           text: 'Cancel',
+          cssClass: 'alertCancel',
           role: 'cancel',
           handler: () => {
             console.log('You did not delete '+firstName);
@@ -252,16 +272,43 @@ export class AdminPage implements OnInit, OnDestroy {
         },
         {
           text: 'Yes, Delete',
+          cssClass: 'alertDanger',
           handler: () => {
-            this.deleteUserConfirmed(uid);
+            this.deleteUserConfirmed(uid, spID);
           }
         }
       ]
     );
   }
 
-  deleteUserConfirmed(uid) {
-    this.userService.deleteUser(`users/${uid}`);
+  async deleteUserConfirmed(uid, spID) {
+    if(this.spousePartner == null) {
+      console.log('spousePartner is empty in deleteConfirmed = ',this.spousePartner);
+      await this.getJrResidents(uid);
+      if(this.jrResidents == null) {
+        this.userService.deleteUser(`users/${uid}`);
+      } else {
+        for (let jrRes of this.jrResidents) {
+          this.jrResService.deleteJrRes(`jrResidents/${jrRes.id}`);
+        }
+        this.userService.deleteUser(`users/${uid}`);
+      }
+    } else {
+      console.log('deleteConfirmed spousePartner = ',this.spousePartner);
+      const data = {
+        uid: spID,
+        spousePartner: {
+          firstName: '',
+          lastName: '',
+          photoURL: '',
+          spID: ''
+        }
+      };
+      // remove the user's information from spousePartner
+      this.userService.updateUser('users/'+ spID, data);
+      // delete the user
+      this.userService.deleteUser(`users/${uid}`);
+    }
   }
 
   ngOnDestroy() {

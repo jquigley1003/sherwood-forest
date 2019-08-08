@@ -14,7 +14,6 @@ import { AlertService } from '../../services/alert.service';
   styleUrls: ['./jr-resident-modal.component.scss'],
 })
 export class JrResidentModalComponent implements OnInit {
-  @ViewChild(IonContent) content: IonContent;
 
   currentJrResID: string = '';
   currentJrResName: string = '';
@@ -47,7 +46,6 @@ export class JrResidentModalComponent implements OnInit {
     this.showJrRes = true;
     this.addJrRes = false;
     this.currentJrResID = jrRes.id;
-    console.log('currentJrResID =' , this.currentJrResID);
     this.currentJrResName = jrRes.displayName.firstName;
     this.jrResForm = this.formBuilder.group({
       displayName: this.formBuilder.group({
@@ -64,7 +62,6 @@ export class JrResidentModalComponent implements OnInit {
       await this.jrResForm.reset();
     }
     this.currentJrResID = '';
-    console.log('currentJrResID =' , this.currentJrResID);
     this.addJrRes = true;
     this.showJrRes = false;
     this.jrResForm = this.formBuilder.group({
