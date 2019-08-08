@@ -1,6 +1,10 @@
-export interface PetParents {
-  firstPetParent?: string;
-  secondPetParent?: string;
+export interface Address {
+  streetNumber?: string;
+  streetName?: string;
+  subAddress?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
 }
 
 export interface Pet {
@@ -8,5 +12,8 @@ export interface Pet {
   animal?: string;
   breed?: string;
   color?: string;
-  petParents?: PetParents;
+  age?: number;
+  address?: Address;
+  petParents?: string[];
+  petParentIDs?: string[];
 }

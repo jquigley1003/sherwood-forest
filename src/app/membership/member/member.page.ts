@@ -12,9 +12,10 @@ import { EventService } from '../../shared/services/event.service';
 
 import { UserModalComponent } from '../../shared/modals/user-modal/user-modal.component';
 import { EventModalComponent } from '../../shared/modals/event-modal/event-modal.component';
+import { JrResidentModalComponent } from '../../shared/modals/jr-resident-modal/jr-resident-modal.component';
+import { PetModalComponent } from '../../shared/modals/pet-modal/pet-modal.component';
 
 import { slideTitleLeftTrigger, slideTitleRightTrigger } from '../../shared/components/animations/animations';
-import { JrResidentModalComponent } from '../../shared/modals/jr-resident-modal/jr-resident-modal.component';
 
 @Component({
   selector: 'app-member',
@@ -198,6 +199,15 @@ export class MemberPage implements OnInit, OnDestroy {
         parentTwoName: this.user.spousePartner.firstName + ' ' + this.user.spousePartner.lastName,
         parentOneID: this.user.uid,
         parentTwoID: this.user.spousePartner.spID
+      }
+    });
+    return await modal.present();
+  }
+
+  async presentPetModal() {
+    const modal = await this.modalCtrl.create({
+      component: PetModalComponent,
+      componentProps: {
       }
     });
     return await modal.present();

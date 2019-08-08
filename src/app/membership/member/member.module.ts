@@ -10,6 +10,7 @@ import { UserModalModule } from '../../shared/modals/user-modal/user-modal.modul
 import { FooterModule } from '../../shared/components/footer/footer.module';
 import { EventModalModule } from '../../shared/modals/event-modal/event-modal-module';
 import { JrResidentModalModule } from '../../shared/modals/jr-resident-modal/jr-resident-modal.module';
+import { PetModalModule } from '../../shared/modals/pet-modal/pet-modal.module';
 
 const routes: Routes = [
   {
@@ -27,7 +28,8 @@ const routes: Routes = [
     UserModalModule,
     EventModalModule,
     FooterModule,
-    JrResidentModalModule
+    JrResidentModalModule,
+    PetModalModule
   ],
   declarations: [MemberPage]
 })

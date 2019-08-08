@@ -2,6 +2,7 @@ export interface DisplayName {
   firstName?: string;
   lastName?: string;
 }
+
 export interface Address {
   streetNumber?: string;
   streetName?: string;
