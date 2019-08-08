@@ -68,10 +68,13 @@
               <ion-title>
                 {{ jr.displayName.firstName }} {{ jr.displayName.lastName }}
               </ion-title>
-              <ion-button slot="end" color="danger" (click)="deleteJrRes( jr.displayName.firstName, jr.id )">
-                Remove
-              </ion-button>
-              <ion-button slot="end" (click)="onChooseJr(jr)">Edit</ion-button>
+              <ion-buttons slot="end">
+                <ion-button fill="outline" shape="round" color="danger"
+                            (click)="deleteJrRes( jr.displayName.firstName, jr.id )">
+                  Remove
+                </ion-button>
+                <ion-button fill="outline" shape="round" (click)="onChooseJr(jr)">Edit</ion-button>
+              </ion-buttons>
             </ion-toolbar>
           </ion-header>
           <ion-item>
