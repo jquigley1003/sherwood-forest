@@ -9,29 +9,27 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
-
-export class JrResidentService {
+export class PetService {
 
   constructor(private authService: AuthService,
               private dbService: DbService,
               private afFunctions: AngularFireFunctions,
               private toastService: ToastService) { }
 
-
-  fetchJrResidents(parentID) {
-    return this.dbService.collection$('jrResidents', ref => ref
-      .where('parentIDs', 'array-contains', parentID));
+  fetchPets(petParentID) {
+    return this.dbService.collection$('pets', ref => ref
+      .where('petParentIDs', 'array-contains', petParentID));
   }
 
-  updateJrRes(path, data) {
+  updatePet(path, data) {
     this.dbService.updateAt(path, data);
   }
 
-  deleteJrRes(jrResPath) {
-    this.toastService.presentToast('Please wait while we delete this Junior Resident.', true, 'middle', 'OK', 3000);
-    this.dbService.delete(jrResPath)
+  deletePet(petPath) {
+    this.toastService.presentToast('Please wait while we remove this Pet.', true, 'middle', 'OK', 3000);
+    this.dbService.delete(petPath)
       .then(() => {
-        this.toastService.presentToast('The Junior Resident has been deleted!',
+        this.toastService.presentToast('The Pet has been removed!',
           true, 'middle', 'Ok', 3000 );
       })
       .catch(err => {
@@ -39,5 +37,4 @@ export class JrResidentService {
           true, 'middle', 'OK', 3000);
       });
   }
-
 }

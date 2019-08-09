@@ -11,6 +11,7 @@ import { AlertService } from '../shared/services/alert.service';
 import { LoadingService } from '../shared/services/loading.service';
 import { UserModalComponent } from '../shared/modals/user-modal/user-modal.component';
 import { JrResidentService } from '../shared/services/jr-resident.service';
+import { PetService } from '../shared/services/pet.service';
 
 
 @Component({
@@ -31,11 +32,14 @@ export class AdminPage implements OnInit, OnDestroy {
   ngUnsubscribe = new Subject<void>();
   memJrResidents$: Observable<any>;
   jrResidents = [];
+  memPets$: Observable<any>;
+  pets = [];
   spousePartner$: Observable<any>;
   spousePartner: any[];
 
   constructor(private userService: UserService,
               private jrResService: JrResidentService,
+              private petService: PetService,
               private toastService: ToastService,
               private alertService: AlertService,
               private loadingService: LoadingService,
@@ -73,7 +77,7 @@ export class AdminPage implements OnInit, OnDestroy {
   }
 
   async getJrResidents(parentID) {
-    this.memJrResidents$ = await this.userService.fetchJrResidents(parentID);
+    this.memJrResidents$ = await this.jrResService.fetchJrResidents(parentID);
     this.memJrResidents$
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(data => {
@@ -83,6 +87,21 @@ export class AdminPage implements OnInit, OnDestroy {
         } else {
           this.jrResidents = null;
           console.log('this user does not have any junior residents');
+        }
+      });
+  }
+
+  async getPets(petParentID) {
+    this.memPets$ = await this.petService.fetchPets(petParentID);
+    this.memPets$
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(data => {
+        if(data && data.length > 0) {
+          this.pets = data;
+          console.log("This user's pets = ", this.pets);
+        } else {
+          this.pets = null;
+          console.log('this user does not have any pets');
         }
       });
   }
@@ -171,6 +190,7 @@ export class AdminPage implements OnInit, OnDestroy {
 
   async presentUserModal(user) {
     await this.getJrResidents(user.uid);
+    await this.getPets(user.uid);
     const modal = await this.modalCtrl.create({
       component: UserModalComponent,
       componentProps: {
@@ -194,7 +214,8 @@ export class AdminPage implements OnInit, OnDestroy {
         spFirstName: user.spousePartner.firstName,
         spLastName: user.spousePartner.lastName,
         spPhotoURL: user.spousePartner.photoURL,
-        jrResidents: this.jrResidents
+        jrResidents: this.jrResidents,
+        pets: this.pets
       }
     });
     modal.onWillDismiss().then((dataReturned) => {
@@ -285,14 +306,18 @@ export class AdminPage implements OnInit, OnDestroy {
     if(this.spousePartner == null) {
       console.log('spousePartner is empty in deleteConfirmed = ',this.spousePartner);
       await this.getJrResidents(uid);
-      if(this.jrResidents == null) {
-        this.userService.deleteUser(`users/${uid}`);
-      } else {
+      await this.getPets(uid);
+      if(this.jrResidents != null) {
         for (let jrRes of this.jrResidents) {
           this.jrResService.deleteJrRes(`jrResidents/${jrRes.id}`);
         }
-        this.userService.deleteUser(`users/${uid}`);
       }
+      if(this.pets != null) {
+        for (let pet of this.pets) {
+          this.petService.deletePet(`pets/${pet.id}`);
+        }
+      }
+      this.userService.deleteUser(`users/${uid}`);
     } else {
       console.log('deleteConfirmed spousePartner = ',this.spousePartner);
       const data = {

@@ -10,6 +10,7 @@ import { User } from '../../../models/user.model';
 
 import { UserService } from '../../services/user.service';
 import { JrResidentService } from '../../services/jr-resident.service';
+import { PetService } from '../../services/pet.service';
 import { ToastService } from '../../services/toast.service';
 
 @Component({
@@ -42,6 +43,7 @@ export class UserModalComponent implements OnInit {
   spLastName: string = this.navParams.get('spLastName');
   spPhotoURL: string = this.navParams.get('spPhotoURL');
   jrResidents: any = this.navParams.get('jrResidents');
+  pets: any = this.navParams.get('pets');
 
   radioList = [
     {
@@ -72,6 +74,7 @@ export class UserModalComponent implements OnInit {
               private navParams: NavParams,
               private userService: UserService,
               private jrResService: JrResidentService,
+              private petService: PetService,
               private toastService: ToastService) { }
 
   ngOnInit() {
@@ -201,7 +204,7 @@ export class UserModalComponent implements OnInit {
     };
 
     this.userService.updateUser('users/'+ otherHalfID, spData);
-    if(this.jrResidents != []) {
+    if(this.jrResidents != null) {
       for (let jrRes of this.jrResidents) {
         const jrResData = {
           parents: [this.firstName + ' ' + this.lastName,
@@ -209,6 +212,16 @@ export class UserModalComponent implements OnInit {
           parentIDs: [this.uid, this.otherHalf[0].uid]
         }
         this.jrResService.updateJrRes('jrResidents/'+ jrRes.id, jrResData);
+      }
+    }
+    if(this.pets != null) {
+      for (let pet of this.pets) {
+        const petData = {
+          petParents: [this.firstName + ' ' + this.lastName,
+            this.otherHalf[0].displayName.firstName + ' ' + this.otherHalf[0].displayName.lastName],
+          petParentIDs: [this.uid, this.otherHalf[0].uid]
+        }
+        this.petService.updatePet('pets/'+ pet.id, petData);
       }
     }
     this.toastService.presentToast(
@@ -229,13 +242,22 @@ export class UserModalComponent implements OnInit {
     };
 
     this.userService.updateUser('users/'+ otherHalfID, spData);
-    if(this.jrResidents != []) {
+    if(this.jrResidents != null) {
       for (let jrRes of this.jrResidents) {
         const jrResData = {
           parents: [this.firstName + ' ' + this.lastName],
           parentIDs: [this.uid]
         }
         this.jrResService.updateJrRes('jrResidents/'+ jrRes.id, jrResData);
+      }
+    }
+    if(this.pets != null) {
+      for (let pet of this.pets) {
+        const petData = {
+          petParents: [this.firstName + ' ' + this.lastName],
+          petParentIDs: [this.uid]
+        }
+        this.petService.updatePet('pets/'+ pet.id, petData);
       }
     }
     this.toastService.presentToast(

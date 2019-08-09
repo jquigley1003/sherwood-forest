@@ -5,7 +5,7 @@
         <h2 text-center>Register for SFCA Membership</h2>
         <p text-center>Only Sherwood Forest residents will be accepted</p>
 
-        <form [formGroup]="registerForm" (ngSubmit)="onAdminRegisterForm()">
+        <form [formGroup]="registerForm" (ngSubmit)="onAdminRegisterForm()" (keyup.enter)="onAdminRegisterForm()">
           <ion-item>
             <ion-label position="floating">Email</ion-label>
             <ion-input type="email" formControlName="email" required></ion-input>

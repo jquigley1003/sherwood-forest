@@ -1,3 +1,119 @@
-<p>
-  pet-modal works!
-</p>
+<ion-content>
+  <ion-toolbar text-center>
+    <h1>Update Pet Info</h1>
+    <h3>Items marked with asterisk (*) required</h3>
+    <ion-buttons slot="end">
+      <ion-button shape="round" size="small" fill="solid"
+                  color="warning" (click)="closeModal()">
+        Cancel
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-grid padding-top>
+    <ion-row>
+      <ion-col size="12">
+        <div *ngIf="showPet">
+          <h2>Update Information for {{ currentPetName }}</h2>
+          <form [formGroup]="petForm" (ngSubmit)="onUpdatePet()">
+            <ion-item>
+              <ion-label position="floating">Pet Name *</ion-label>
+              <ion-input type="text"
+                         formControlName="petName" required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Animal</ion-label>
+              <ion-input type="text" formControlName="animal"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Breed</ion-label>
+              <ion-input type="text" formControlName="breed"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Color</ion-label>
+              <ion-input type="text" formControlName="color"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Age</ion-label>
+              <ion-input type="number" formControlName="age"></ion-input>
+            </ion-item>
+            <ion-button type="submit" [disabled]="!petForm.valid" >
+              Update Now
+            </ion-button>
+          </form>
+        </div>
+        <div *ngIf="addPet">
+          <h2>Add a Family Pet</h2>
+          <form [formGroup]="petForm" (ngSubmit)="onUpdatePet()">
+            <ion-item>
+              <ion-label position="floating">Pet Name *</ion-label>
+              <ion-input type="text"
+                         formControlName="petName" required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Animal</ion-label>
+              <ion-input type="text" formControlName="animal"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Breed</ion-label>
+              <ion-input type="text" formControlName="breed"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Color</ion-label>
+              <ion-input type="text" formControlName="color"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Age</ion-label>
+              <ion-input type="number" formControlName="age"></ion-input>
+            </ion-item>
+            <ion-button type="submit" [disabled]="!petForm.valid" >
+              Add Now
+            </ion-button>
+          </form>
+        </div>
+        <div *ngIf="pets != ''; else noPetBlock">
+          <h2>Your Family Pets</h2>
+          <ion-list *ngFor="let pet of pets">
+            <ion-header>
+              <ion-toolbar>
+                <ion-title>
+                  {{ pet.petName }}
+                </ion-title>
+                <ion-buttons slot="end">
+                  <ion-button fill="outline" shape="round" color="danger"
+                              (click)="deletePet( pet.petName, pet.id )">
+                    Remove
+                  </ion-button>
+                  <ion-button fill="outline" shape="round" (click)="onChoosePet(pet)">Edit</ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+            </ion-header>
+            <ion-item>
+              Age: {{ pet.age }}
+            </ion-item>
+            <ion-item *ngIf="petParentTwoName != ' '; else onePetParentBlock">
+              Parents: {{ petParentOneName }} & {{ petParentTwoName }}
+            </ion-item>
+            <ng-template #onePetParentBlock>
+              <ion-item>
+                Parent: {{ petParentOneName }}
+              </ion-item>
+            </ng-template>
+          </ion-list>
+        </div>
+        <ng-template #noPetBlock>
+          <h2>No Family Pets Listed</h2>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-button expand="block" (click)="onAddPet()">Add Pet</ion-button>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button shape="round" size="small" fill="solid"
+                  color="warning" (click)="closeModal()">
+        Cancel
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-content>

@@ -9,6 +9,8 @@ import { take, takeUntil } from 'rxjs/operators';
 import { AuthService } from '../../shared/services/auth.service';
 import { UserService } from '../../shared/services/user.service';
 import { EventService } from '../../shared/services/event.service';
+import { JrResidentService } from '../../shared/services/jr-resident.service';
+import { PetService } from '../../shared/services/pet.service';
 
 import { UserModalComponent } from '../../shared/modals/user-modal/user-modal.component';
 import { EventModalComponent } from '../../shared/modals/event-modal/event-modal.component';
@@ -43,10 +45,14 @@ export class MemberPage implements OnInit, OnDestroy {
   upcomingEvents = [];
   memJrResidents$: Observable<any>;
   jrResidents = [];
+  memPets$: Observable<any>;
+  pets = [];
   ngUnsubscribe = new Subject<void>();
 
   constructor(private authService: AuthService,
               private userService: UserService,
+              private jrResService: JrResidentService,
+              private petService: PetService,
               private eventService: EventService,
               private router: Router,
               private modalCtrl: ModalController) { }
@@ -69,6 +75,7 @@ export class MemberPage implements OnInit, OnDestroy {
         this.currentUser = this.user.displayName.firstName + ' ' + this.user.displayName.lastName;
         this.duesPaid = this.user.duesPaid;
         this.getJrResidents(this.user.uid);
+        this.getPets(this.user.uid);
         if (this.user.spousePartner.spID !== '') {
           this.getSpousePartner(this.user.spousePartner.spID);
         } else {
@@ -99,7 +106,7 @@ export class MemberPage implements OnInit, OnDestroy {
   }
 
   async getJrResidents(parentID) {
-    this.memJrResidents$ = await this.userService.fetchJrResidents(parentID);
+    this.memJrResidents$ = await this.jrResService.fetchJrResidents(parentID);
     this.memJrResidents$
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(data => {
@@ -107,8 +114,23 @@ export class MemberPage implements OnInit, OnDestroy {
           this.jrResidents = data;
           console.log("This user's jr residents = ", this.jrResidents);
         } else {
-          this.jrResidents = [];
+          this.jrResidents = null;
           console.log('this user does not have any junior residents');
+        }
+      });
+  }
+
+  async getPets(petParentID) {
+    this.memPets$ = await this.petService.fetchPets(petParentID);
+    this.memPets$
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(data => {
+        if(data && data.length > 0) {
+          this.pets = data;
+          console.log("This user's family pets = ", this.pets);
+        } else {
+          this.pets = null;
+          console.log('this user does not have any family pets');
         }
       });
   }
@@ -165,7 +187,8 @@ export class MemberPage implements OnInit, OnDestroy {
         spFirstName: user.spousePartner.firstName,
         spLastName: user.spousePartner.lastName,
         spPhotoURL: user.spousePartner.photoURL,
-        jrResidents: this.jrResidents
+        jrResidents: this.jrResidents,
+        pets: this.pets
       }
     });
     return await modal.present();
@@ -208,6 +231,12 @@ export class MemberPage implements OnInit, OnDestroy {
     const modal = await this.modalCtrl.create({
       component: PetModalComponent,
       componentProps: {
+        pets: this.pets,
+        address: this.user.address,
+        petParentOneName: this.user.displayName.firstName + ' ' + this.user.displayName.lastName,
+        petParentTwoName: this.user.spousePartner.firstName + ' ' + this.user.spousePartner.lastName,
+        petParentOneID: this.user.uid,
+        petParentTwoID: this.user.spousePartner.spID
       }
     });
     return await modal.present();

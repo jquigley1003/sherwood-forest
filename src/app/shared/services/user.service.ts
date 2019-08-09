@@ -65,11 +65,6 @@ export class UserService {
     return this.dbService.collection$('users', ref => ref.where('boardKeyContact', '==', true));
   }
 
-  fetchJrResidents(parentID) {
-    return this.dbService.collection$('jrResidents', ref => ref
-      .where('parentIDs', 'array-contains', parentID));
-  }
-
   makeUserAdmin(user) {
     this.toastService.presentToast('Please wait while we make this member an admin.', true, 'top', 'OK', 3000);
     this.afFunctions.httpsCallable('addAdmin')(user)

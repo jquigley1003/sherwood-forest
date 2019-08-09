@@ -3,6 +3,7 @@ import { ModalController, NavParams } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { JuniorResident } from '../../../models/junior-resident.model';
+
 import { JrResidentService } from '../../services/jr-resident.service';
 import { ToastService } from '../../services/toast.service';
 import { AlertService } from '../../services/alert.service';
@@ -118,6 +119,7 @@ export class JrResidentModalComponent implements OnInit {
       await this.modalCtrl.dismiss();
     }
   }
+
   deleteJrRes(firstName, jrResID) {
     this.alertService.presentAlert(
       'Are You Sure?',
