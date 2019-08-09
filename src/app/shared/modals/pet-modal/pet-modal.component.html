@@ -1,7 +1,6 @@
 <ion-content>
   <ion-toolbar text-center>
     <h1>Update Pet Info</h1>
-    <h3>Items marked with asterisk (*) required</h3>
     <ion-buttons slot="end">
       <ion-button shape="round" size="small" fill="solid"
                   color="warning" (click)="closeModal()">
@@ -14,6 +13,7 @@
       <ion-col size="12">
         <div *ngIf="showPet">
           <h2>Update Information for {{ currentPetName }}</h2>
+          <h3>Items marked with asterisk (*) required</h3>
           <form [formGroup]="petForm" (ngSubmit)="onUpdatePet()">
             <ion-item>
               <ion-label position="floating">Pet Name *</ion-label>
@@ -43,6 +43,7 @@
         </div>
         <div *ngIf="addPet">
           <h2>Add a Family Pet</h2>
+          <h3>Items marked with asterisk (*) required</h3>
           <form [formGroup]="petForm" (ngSubmit)="onUpdatePet()">
             <ion-item>
               <ion-label position="floating">Pet Name *</ion-label>
@@ -70,7 +71,7 @@
             </ion-button>
           </form>
         </div>
-        <div *ngIf="pets != ''; else noPetBlock">
+        <div *ngIf="pets != null; else noPetBlock">
           <h2>Your Family Pets</h2>
           <ion-list *ngFor="let pet of pets">
             <ion-header>
@@ -91,11 +92,11 @@
               Age: {{ pet.age }}
             </ion-item>
             <ion-item *ngIf="petParentTwoName != ' '; else onePetParentBlock">
-              Parents: {{ petParentOneName }} & {{ petParentTwoName }}
+              Pet Parents: {{ petParentOneName }} & {{ petParentTwoName }}
             </ion-item>
             <ng-template #onePetParentBlock>
               <ion-item>
-                Parent: {{ petParentOneName }}
+                Pet Parent: {{ petParentOneName }}
               </ion-item>
             </ng-template>
           </ion-list>
