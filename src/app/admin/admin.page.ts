@@ -68,10 +68,8 @@ export class AdminPage implements OnInit, OnDestroy {
       .subscribe(data => {
         if(data && data.length > 0) {
           this.spousePartner = data;
-          console.log("This user's spousePartner is: ", this.spousePartner);
         } else {
           this.spousePartner = null;
-          console.log('this user does not have a spousePartner', this.spousePartner);
         }
       });
   }
@@ -83,10 +81,8 @@ export class AdminPage implements OnInit, OnDestroy {
       .subscribe(data => {
         if(data && data.length > 0) {
           this.jrResidents = data;
-          console.log("This user's jr residents = ", this.jrResidents);
         } else {
           this.jrResidents = null;
-          console.log('this user does not have any junior residents');
         }
       });
   }
@@ -101,7 +97,6 @@ export class AdminPage implements OnInit, OnDestroy {
           console.log("This user's pets = ", this.pets);
         } else {
           this.pets = null;
-          console.log('this user does not have any pets');
         }
       });
   }
@@ -222,7 +217,6 @@ export class AdminPage implements OnInit, OnDestroy {
       if (dataReturned.data !== undefined) {
         this.searchTermValue = dataReturned.data.data;
       }
-      console.log(dataReturned);
     });
     return await modal.present();
   }
@@ -304,7 +298,6 @@ export class AdminPage implements OnInit, OnDestroy {
 
   async deleteUserConfirmed(uid, spID) {
     if(this.spousePartner == null) {
-      console.log('spousePartner is empty in deleteConfirmed = ',this.spousePartner);
       await this.getJrResidents(uid);
       await this.getPets(uid);
       if(this.jrResidents != null) {
@@ -319,7 +312,6 @@ export class AdminPage implements OnInit, OnDestroy {
       }
       this.userService.deleteUser(`users/${uid}`);
     } else {
-      console.log('deleteConfirmed spousePartner = ',this.spousePartner);
       const data = {
         uid: spID,
         spousePartner: {

@@ -11,47 +11,76 @@
         <ion-header text-center>
           <img src="{{ photoURL }}">
         </ion-header>
-        <ion-item>{{ name }}</ion-item>
-        <ion-item-divider>
-          <ion-label>Phone: </ion-label>
-        </ion-item-divider>
-        <ion-item>
-          {{ phone }}
-        </ion-item>
-        <ion-item-divider>
-          <ion-label>Email: </ion-label>
-        </ion-item-divider>
-        <ion-item>
-          {{ email }}
-        </ion-item>
-        <ion-item-divider>
-          <ion-label>Address: </ion-label>
-        </ion-item-divider>
-        <ion-item class="ion-text-wrap">
-          {{ address }} {{ cityStateZip }}
-        </ion-item>
-        <ion-item-divider>
-          <ion-label>Resident Since: </ion-label>
-        </ion-item-divider>
-        <ion-item>
-          {{ residentSince }}
-        </ion-item>
-        <div *ngIf="showBirthDate">
+        <ion-list>
+          <ion-item>{{ name }}</ion-item>
           <ion-item-divider>
-            <ion-label>Birthday: </ion-label>
+            <ion-label>Phone: </ion-label>
           </ion-item-divider>
           <ion-item>
-            {{ birthDate | date:'MMMM d' }}
+            {{ phone }}
           </ion-item>
-        </div>
-        <div *ngIf="spousePartnerName != ' '">
           <ion-item-divider>
-            <ion-label>Spouse/Partner: </ion-label>
+            <ion-label>Email: </ion-label>
           </ion-item-divider>
           <ion-item>
-            {{ spousePartnerName }}
+            {{ email }}
           </ion-item>
-        </div>
+          <ion-item-divider>
+            <ion-label>Address: </ion-label>
+          </ion-item-divider>
+          <ion-item class="ion-text-wrap">
+            {{ address }} {{ cityStateZip }}
+          </ion-item>
+          <ion-item-divider>
+            <ion-label>Resident Since: </ion-label>
+          </ion-item-divider>
+          <ion-item>
+            {{ residentSince }}
+          </ion-item>
+          <div *ngIf="showBirthDate">
+            <ion-item-divider>
+              <ion-label>Birthday: </ion-label>
+            </ion-item-divider>
+            <ion-item>
+              {{ birthDate | date:'MMMM d' }}
+            </ion-item>
+          </div>
+          <div *ngIf="spousePartnerName != ' '">
+            <ion-item-divider>
+              <ion-label>Spouse/Partner: </ion-label>
+            </ion-item-divider>
+            <ion-item>
+              {{ spousePartnerName }}
+            </ion-item>
+          </div>
+          <div *ngIf="jrResidents != ''">
+            <ion-item-divider>
+              <ion-label>Junior Residents: </ion-label>
+            </ion-item-divider>
+            <ion-item *ngFor="let jrRes of jrResidents">
+              {{ jrRes.displayName.firstName }} {{ jrRes.displayName.lastName }}
+            </ion-item>
+          </div>
+          <div *ngIf="pets != ''">
+            <ion-item-divider>
+              <ion-label>Pets: </ion-label>
+            </ion-item-divider>
+            <ion-list *ngFor="let pet of pets" >
+              <ion-item lines="none">
+                {{ pet.petName }}
+              </ion-item>
+              <ion-item lines="none">
+                {{ pet.breed }}
+              </ion-item>
+              <ion-item lines="none">
+                {{ pet.color }}
+              </ion-item>
+              <ion-item>
+                Age: {{ pet.age }}
+              </ion-item>
+            </ion-list>
+          </div>
+        </ion-list>
       </ion-col>
     </ion-row>
   </ion-grid>

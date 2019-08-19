@@ -16,6 +16,10 @@ export class PetService {
               private afFunctions: AngularFireFunctions,
               private toastService: ToastService) { }
 
+  fetchAllPets() {
+    return this.dbService.collection$('pets', ref => ref.orderBy('petName'));
+  }
+
   fetchPets(petParentID) {
     return this.dbService.collection$('pets', ref => ref
       .where('petParentIDs', 'array-contains', petParentID));

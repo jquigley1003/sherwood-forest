@@ -22,7 +22,6 @@ export class AuthGuard implements CanActivate {
   ): Promise<boolean> {
     const uid = await this.authService.uid();
     const isLoggedIn = !!uid;
-    console.log('auth guard isLoggedIn = ', isLoggedIn);
 
     if(!isLoggedIn) {
       const alert = await this.alertController.create({

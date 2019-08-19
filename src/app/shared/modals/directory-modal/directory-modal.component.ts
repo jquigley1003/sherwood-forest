@@ -20,6 +20,8 @@ export class DirectoryModalComponent implements OnInit {
   showBirthDate: boolean = this.navParams.get('showBirthDate');
   birthDate: string = this.navParams.get('birthDate');
   spousePartnerName: string = this.navParams.get('spousePartnerName');
+  jrResidents: any = this.navParams.get('jrResidents');
+  pets: any = this.navParams.get('pets');
 
   constructor(private formBuilder: FormBuilder,
               private modalCtrl: ModalController,

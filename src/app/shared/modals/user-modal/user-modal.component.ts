@@ -101,7 +101,6 @@ export class UserModalComponent implements OnInit {
       spLastName: [this.spLastName],
       spPhotoURL: [this.spPhotoURL]
     });
-    console.log('jrResidents = ',this.jrResidents);
   }
 
   radioSelect(event) {
@@ -119,7 +118,6 @@ export class UserModalComponent implements OnInit {
       .subscribe(data => {
         if(data && data.length > 0) {
           this.otherHalf = data;
-          console.log('this users otherHalf is: ', this.otherHalf[0]);
           if(this.spID === this.otherHalf[0].uid) {
             this.updateCurrentUser();
           } else {
@@ -128,7 +126,6 @@ export class UserModalComponent implements OnInit {
           }
         } else {
           this.otherHalf = null;
-          console.log('this user does not have any information about spouse/partner: ', this.otherHalf$);
           if(this.spID !== '') {
             this.removeInfoSpousePartner(this.spID);
             this.updateCurrentUser();

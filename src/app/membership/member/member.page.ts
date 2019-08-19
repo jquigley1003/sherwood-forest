@@ -80,7 +80,6 @@ export class MemberPage implements OnInit, OnDestroy {
           this.getSpousePartner(this.user.spousePartner.spID);
         } else {
           this.spousePartner = null;
-          console.log('this user does not have a spouse/partner ',this.spousePartner);
         }
       } else {
         this.user = null;
@@ -97,10 +96,8 @@ export class MemberPage implements OnInit, OnDestroy {
       .subscribe(data => {
       if(data && data.length > 0) {
         this.spousePartner = data;
-        console.log('this users spouse/partner is: ', this.spousePartner);
       } else {
         this.spousePartner = null;
-        console.log('this user does not have any information about spouse/partner');
       }
     });
   }
@@ -112,10 +109,8 @@ export class MemberPage implements OnInit, OnDestroy {
       .subscribe(data => {
         if(data && data.length > 0) {
           this.jrResidents = data;
-          console.log("This user's jr residents = ", this.jrResidents);
         } else {
           this.jrResidents = null;
-          console.log('this user does not have any junior residents');
         }
       });
   }
@@ -127,10 +122,8 @@ export class MemberPage implements OnInit, OnDestroy {
       .subscribe(data => {
         if(data && data.length > 0) {
           this.pets = data;
-          console.log("This user's family pets = ", this.pets);
         } else {
           this.pets = null;
-          console.log('this user does not have any family pets');
         }
       });
   }
@@ -159,7 +152,6 @@ export class MemberPage implements OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(sfBoard => {
       this.board = sfBoard;
-      console.log('board members are: ',this.board);
     });
   };
 

@@ -3,10 +3,13 @@ import { Router } from '@angular/router';
 
 import { ModalController } from '@ionic/angular';
 
-import { Subscription } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { AuthService } from '../../shared/services/auth.service';
 import { UserService } from '../../shared/services/user.service';
+import { JrResidentService } from '../../shared/services/jr-resident.service';
+import { PetService } from '../../shared/services/pet.service';
 import { DirectoryModalComponent } from '../../shared/modals/directory-modal/directory-modal.component';
 
 @Component({
@@ -15,31 +18,79 @@ import { DirectoryModalComponent } from '../../shared/modals/directory-modal/dir
   styleUrls: ['./directory.page.scss'],
 })
 export class DirectoryPage implements OnInit, OnDestroy {
-  allUsers;
+  allUsers$: Observable<any>;
   users: any[];
   loadedUsers: any[];
-  usersSubscription: Subscription;
+  allJrRes$: Observable<any>;
+  jrResidents: any[];
+  userJrRes = [];
+  allPets$: Observable<any>;
+  pets: any[];
+  userPets = [];
   filterBy: string = "lastName";
   statusFirst: string = "primary";
   statusLast: string = "secondary";
   statusAddress: string = "primary";
   residentSince: string;
+  ngUnsubscribe = new Subject<void>();
 
   constructor(private authService: AuthService,
               private userService: UserService,
+              private jrResService: JrResidentService,
+              private petService: PetService,
               private router: Router,
               private modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.getAllUsers();
+    this.getAllJrRes();
+    this.getAllPets();
   }
 
   async getAllUsers() {
-    this.allUsers = await this.userService.fetchUsers();
-    this.usersSubscription = this.allUsers.subscribe(data => {
-      this.users = data;
-      this.loadedUsers = this.users;
+    this.allUsers$ = await this.userService.fetchUsers();
+    this.allUsers$
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(data => {
+        this.users = data;
+        this.loadedUsers = this.users;
+      });
+  }
+
+  async getAllJrRes() {
+    this.allJrRes$ = await this.jrResService.fetchAllJrResidents();
+    this.allJrRes$
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(data => {
+      this.jrResidents = data;
     });
+  }
+
+  async getUserJrRes(userID) {
+    this.userJrRes = [];
+    for (let jrRes of this.jrResidents) {
+      if(jrRes.parentIDs.includes(userID)) {
+        this.userJrRes.push(jrRes);
+      }
+    }
+  }
+
+  async getAllPets() {
+    this.allPets$ = await this.petService.fetchAllPets();
+    this.allPets$
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(data => {
+        this.pets = data;
+      });
+  }
+
+  async getUserPets(userID) {
+    this.userPets = [];
+    for (let pet of this.pets) {
+      if(pet.petParentIDs.includes(userID)) {
+        this.userPets.push(pet);
+      }
+    }
   }
 
   initializeList():void {
@@ -75,7 +126,7 @@ export class DirectoryPage implements OnInit, OnDestroy {
       return;
     }
     this.users = this.users.filter(member => {
-      if (member.displayName.firstName && searchTerm) {
+      if(member.displayName.firstName && searchTerm) {
         if (member.displayName.firstName.toLowerCase()
           .indexOf(searchTerm.toLowerCase()) > -1) {
           return true;
@@ -94,7 +145,7 @@ export class DirectoryPage implements OnInit, OnDestroy {
     }
     this.users = this.users.filter(member => {
       if (member.displayName.lastName && searchTerm) {
-        if (member.displayName.lastName.toLowerCase()
+        if(member.displayName.lastName.toLowerCase()
           .indexOf(searchTerm.toLowerCase()) > -1) {
           return true;
         }
@@ -111,8 +162,8 @@ export class DirectoryPage implements OnInit, OnDestroy {
       return;
     }
     this.users = this.users.filter(member => {
-      if ((member.address.streetNumber + ' ' + member.address.streetName) && searchTerm) {
-        if ((member.address.streetNumber + ' ' + member.address.streetName).toLowerCase()
+      if((member.address.streetNumber + ' ' + member.address.streetName) && searchTerm) {
+        if((member.address.streetNumber + ' ' + member.address.streetName).toLowerCase()
           .indexOf(searchTerm.toLowerCase()) > -1) {
           return true;
         }
@@ -122,6 +173,9 @@ export class DirectoryPage implements OnInit, OnDestroy {
   }
 
   async presentDirectoryModal(user) {
+    await this.getUserJrRes(user.uid);
+    await this.getUserPets(user.uid);
+
     const modal = await this.modalCtrl.create({
       component: DirectoryModalComponent,
       componentProps: {
@@ -134,7 +188,9 @@ export class DirectoryPage implements OnInit, OnDestroy {
         residentSince: user.residentSince,
         showBirthDate: user.showBirthDate,
         birthDate: user.birthDate,
-        spousePartnerName: user.spousePartner.firstName + ' ' + user.spousePartner.lastName
+        spousePartnerName: user.spousePartner.firstName + ' ' + user.spousePartner.lastName,
+        jrResidents: this.userJrRes,
+        pets: this.userPets
       }
     });
     return await modal.present();
@@ -149,6 +205,7 @@ export class DirectoryPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.usersSubscription.unsubscribe();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

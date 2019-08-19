@@ -18,6 +18,10 @@ export class JrResidentService {
               private toastService: ToastService) { }
 
 
+  fetchAllJrResidents() {
+    return this.dbService.collection$('jrResidents', ref => ref.orderBy('displayName.lastName'));
+  }
+
   fetchJrResidents(parentID) {
     return this.dbService.collection$('jrResidents', ref => ref
       .where('parentIDs', 'array-contains', parentID));
