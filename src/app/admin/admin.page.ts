@@ -343,13 +343,13 @@ export class AdminPage implements OnInit, OnDestroy {
     if(this.spousePartner == null) {
       await this.getUserJrRes(uid);
       await this.getUserPets(uid);
-      if(this.userJrRes != ['']) {
-        for (let jrRes of this.jrResidents) {
+      if(this.userJrRes.length != 0) {
+        for (let jrRes of this.userJrRes) {
           this.jrResService.deleteJrRes(`jrResidents/${jrRes.id}`);
         }
       }
-      if(this.userPets != ['']) {
-        for (let pet of this.pets) {
+      if(this.userPets.length != 0) {
+        for (let pet of this.userPets) {
           this.petService.deletePet(`pets/${pet.id}`);
         }
       }
