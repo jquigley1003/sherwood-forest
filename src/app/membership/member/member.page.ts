@@ -179,26 +179,6 @@ export class MemberPage implements OnInit, OnDestroy {
         spFirstName: user.spousePartner.firstName,
         spLastName: user.spousePartner.lastName,
         spPhotoURL: user.spousePartner.photoURL,
-        jrResidents: this.jrResidents,
-        pets: this.pets
-      }
-    });
-    return await modal.present();
-  }
-
-  async presentEventModal(event) {
-    const modal = await this.modalCtrl.create({
-      component: EventModalComponent,
-      componentProps: {
-        eid: event.id,
-        photoURL: event.photoURL,
-        documentURL: event.documentURL,
-        title: event.title,
-        subTitle: event.subTitle,
-        startTime: event.startTime,
-        endTime: event.endTime,
-        details: event.details,
-        eventState: 'view'
       }
     });
     return await modal.present();
@@ -229,6 +209,24 @@ export class MemberPage implements OnInit, OnDestroy {
         petParentTwoName: this.user.spousePartner.firstName + ' ' + this.user.spousePartner.lastName,
         petParentOneID: this.user.uid,
         petParentTwoID: this.user.spousePartner.spID
+      }
+    });
+    return await modal.present();
+  }
+
+  async presentEventModal(event) {
+    const modal = await this.modalCtrl.create({
+      component: EventModalComponent,
+      componentProps: {
+        eid: event.id,
+        photoURL: event.photoURL,
+        documentURL: event.documentURL,
+        title: event.title,
+        subTitle: event.subTitle,
+        startTime: event.startTime,
+        endTime: event.endTime,
+        details: event.details,
+        eventState: 'view'
       }
     });
     return await modal.present();

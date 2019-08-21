@@ -11,7 +11,7 @@
     <ion-searchbar showCancelButton="always" (ionChange)="filterByFirstName($event)"
                    *ngIf="filterBy == 'firstName'" placeholder="Search by First Name">
     </ion-searchbar>
-    <ion-searchbar showCancelButton="focus" (ionChange)="filterByLastName($event)"
+    <ion-searchbar showCancelButton="focus" (ionChange)="filterByLastName($event)" (keyup.enter)="filterByLastName($event)"
                    [value]="searchTermValue"
                    *ngIf="filterBy == 'lastName'" placeholder="Search by Last Name">
     </ion-searchbar>
@@ -43,18 +43,23 @@
   <ion-list>
     <ion-item-sliding *ngFor="let user of users" lines="full">
       <ion-item-options side="start">
-        <ion-item-option *ngIf="user.roles.pendingMember" color="dark" (click)="makeApproved( user )">
-          Pending
-        </ion-item-option>
-        <ion-item-option *ngIf="user.roles.approvedMember" color="light" (click)="makePending( user )">
-          Approved
-        </ion-item-option>
-
         <ion-item-option *ngIf="!user.duesPaid" color="warning" (click)="markDuesPaid( user )">
-          Dues Unpaid
+          Dues<br>Unpaid
         </ion-item-option>
         <ion-item-option *ngIf="user.duesPaid" color="success" (click)="markDuesUnpaid( user )">
-          Dues Paid
+          Dues<br>Paid
+        </ion-item-option>
+        <ion-item-option *ngIf="user.roles.pendingMember" color="dark" (click)="makeApproved( user )">
+          Pending<br>Member
+        </ion-item-option>
+        <ion-item-option *ngIf="user.roles.approvedMember" color="light" (click)="makePending( user )">
+          Approved<br>Member
+        </ion-item-option>
+        <ion-item-option *ngIf="!user.roles.admin" color="secondary" (click)="makeAdmin( user )">
+          Add<br>Admin
+        </ion-item-option>
+        <ion-item-option *ngIf="user.roles.admin" color="tertiary" (click)="removeAdmin( user )">
+          Remove<br>Admin
         </ion-item-option>
       </ion-item-options>
 
@@ -77,25 +82,17 @@
           <ion-text>
             <h2>{{ user.email }}</h2>
           </ion-text>
+          <ion-buttons slot="start">
+            <ion-button color="secondary" (click)="presentJrResidentModal(user)">
+              Jr Residents
+            </ion-button>
+            <ion-button color="secondary" (click)="presentPetModal(user)">
+              Pets
+            </ion-button>
+          </ion-buttons>
         </ion-label>
-        <ion-buttons>
-          <ion-button color="secondary">
-            Jr Residents
-          </ion-button>
-          <ion-button color="secondary">
-            Pets
-          </ion-button>
-        </ion-buttons>
       </ion-item>
-
       <ion-item-options side="end">
-        <ion-item-option *ngIf="!user.roles.admin" color="secondary" (click)="makeAdmin( user )">
-          Add<br>Admin
-        </ion-item-option>
-        <ion-item-option *ngIf="user.roles.admin" color="tertiary" (click)="removeAdmin( user )">
-          Remove<br>Admin
-        </ion-item-option>
-
         <ion-item-option color="danger" (click)="deleteUser( user.displayName.firstName, user.uid, user.spousePartner.spID )">
           Delete
         </ion-item-option>

@@ -8,6 +8,8 @@ import { IonicModule } from '@ionic/angular';
 import { AdminPage } from './admin.page';
 import { OrderByPipe } from '../shared/pipes/order-by.pipe';
 import { UserModalModule } from '../shared/modals/user-modal/user-modal.module';
+import { JrResidentModalModule } from '../shared/modals/jr-resident-modal/jr-resident-modal.module';
+import { PetModalModule } from '../shared/modals/pet-modal/pet-modal.module';
 
 
 const routes: Routes = [
@@ -23,7 +25,9 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    UserModalModule
+    UserModalModule,
+    JrResidentModalModule,
+    PetModalModule
   ],
   declarations: [
     AdminPage,

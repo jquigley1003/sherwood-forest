@@ -12,6 +12,8 @@ import { LoadingService } from '../shared/services/loading.service';
 import { UserModalComponent } from '../shared/modals/user-modal/user-modal.component';
 import { JrResidentService } from '../shared/services/jr-resident.service';
 import { PetService } from '../shared/services/pet.service';
+import { JrResidentModalComponent } from '../shared/modals/jr-resident-modal/jr-resident-modal.component';
+import { PetModalComponent } from '../shared/modals/pet-modal/pet-modal.component';
 
 
 @Component({
@@ -23,17 +25,18 @@ export class AdminPage implements OnInit, OnDestroy {
   allUsers$: Observable<any>;
   users: any[];
   loadedUsers: any[];
+  allJrRes$: Observable<any>;
+  jrResidents: any[];
+  userJrRes = [];
+  allPets$: Observable<any>;
+  pets: any[];
+  userPets = [];
   searchTermValue:string = "";
   filterBy: string = "lastName";
   statusFirst: string = "primary";
   statusLast: string = "secondary";
   statusAddress: string = "primary";
-  usersSubscription: Subscription;
   ngUnsubscribe = new Subject<void>();
-  memJrResidents$: Observable<any>;
-  jrResidents = [];
-  memPets$: Observable<any>;
-  pets = [];
   spousePartner$: Observable<any>;
   spousePartner: any[];
 
@@ -46,7 +49,8 @@ export class AdminPage implements OnInit, OnDestroy {
               private modalCtrl: ModalController) { }
 
   ngOnInit() {
-
+    this.getAllJrRes();
+    this.getAllPets();
   }
 
   async getAllUsers() {
@@ -74,31 +78,40 @@ export class AdminPage implements OnInit, OnDestroy {
       });
   }
 
-  async getJrResidents(parentID) {
-    this.memJrResidents$ = await this.jrResService.fetchJrResidents(parentID);
-    this.memJrResidents$
+  async getAllJrRes() {
+    this.allJrRes$ = await this.jrResService.fetchAllJrResidents();
+    this.allJrRes$
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(data => {
-        if(data && data.length > 0) {
-          this.jrResidents = data;
-        } else {
-          this.jrResidents = null;
-        }
+        this.jrResidents = data;
       });
   }
 
-  async getPets(petParentID) {
-    this.memPets$ = await this.petService.fetchPets(petParentID);
-    this.memPets$
+  async getUserJrRes(userID) {
+    this.userJrRes = [];
+    for (let jrRes of this.jrResidents) {
+      if(jrRes.parentIDs.includes(userID)) {
+        this.userJrRes.push(jrRes);
+      }
+    }
+  }
+
+  async getAllPets() {
+    this.allPets$ = await this.petService.fetchAllPets();
+    this.allPets$
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(data => {
-        if(data && data.length > 0) {
-          this.pets = data;
-          console.log("This user's pets = ", this.pets);
-        } else {
-          this.pets = null;
-        }
+        this.pets = data;
       });
+  }
+
+  async getUserPets(userID) {
+    this.userPets = [];
+    for (let pet of this.pets) {
+      if(pet.petParentIDs.includes(userID)) {
+        this.userPets.push(pet);
+      }
+    }
   }
 
   initializeList():void {
@@ -184,8 +197,6 @@ export class AdminPage implements OnInit, OnDestroy {
   }
 
   async presentUserModal(user) {
-    await this.getJrResidents(user.uid);
-    await this.getPets(user.uid);
     const modal = await this.modalCtrl.create({
       component: UserModalComponent,
       componentProps: {
@@ -208,14 +219,44 @@ export class AdminPage implements OnInit, OnDestroy {
         spID: user.spousePartner.spID,
         spFirstName: user.spousePartner.firstName,
         spLastName: user.spousePartner.lastName,
-        spPhotoURL: user.spousePartner.photoURL,
-        jrResidents: this.jrResidents,
-        pets: this.pets
+        spPhotoURL: user.spousePartner.photoURL
       }
     });
     modal.onWillDismiss().then((dataReturned) => {
       if (dataReturned.data !== undefined) {
         this.searchTermValue = dataReturned.data.data;
+      }
+    });
+    return await modal.present();
+  }
+
+  async presentJrResidentModal(user) {
+    await this.getUserJrRes(user.uid);
+    const modal = await this.modalCtrl.create({
+      component: JrResidentModalComponent,
+      componentProps: {
+        jrResidents: this.userJrRes,
+        address: user.address,
+        parentOneName: user.displayName.firstName + ' ' + user.displayName.lastName,
+        parentTwoName: user.spousePartner.firstName + ' ' + user.spousePartner.lastName,
+        parentOneID: user.uid,
+        parentTwoID: user.spousePartner.spID
+      }
+    });
+    return await modal.present();
+  }
+
+  async presentPetModal(user) {
+    await this.getUserPets(user.uid);
+    const modal = await this.modalCtrl.create({
+      component: PetModalComponent,
+      componentProps: {
+        pets: this.userPets,
+        address: user.address,
+        petParentOneName: user.displayName.firstName + ' ' + user.displayName.lastName,
+        petParentTwoName: user.spousePartner.firstName + ' ' + user.spousePartner.lastName,
+        petParentOneID: user.uid,
+        petParentTwoID: user.spousePartner.spID
       }
     });
     return await modal.present();
@@ -243,10 +284,12 @@ export class AdminPage implements OnInit, OnDestroy {
 
   makeApproved(user) {
     this.userService.makeUserApproved(user);
+    this.searchTermValue = user.displayName.lastName;
   }
 
   makePending(user) {
     this.userService.makeUserPending(user);
+    this.searchTermValue = user.displayName.lastName;
   }
 
   async markDuesPaid(user) {
@@ -298,14 +341,14 @@ export class AdminPage implements OnInit, OnDestroy {
 
   async deleteUserConfirmed(uid, spID) {
     if(this.spousePartner == null) {
-      await this.getJrResidents(uid);
-      await this.getPets(uid);
-      if(this.jrResidents != null) {
+      await this.getUserJrRes(uid);
+      await this.getUserPets(uid);
+      if(this.userJrRes != ['']) {
         for (let jrRes of this.jrResidents) {
           this.jrResService.deleteJrRes(`jrResidents/${jrRes.id}`);
         }
       }
-      if(this.pets != null) {
+      if(this.userPets != ['']) {
         for (let pet of this.pets) {
           this.petService.deletePet(`pets/${pet.id}`);
         }
