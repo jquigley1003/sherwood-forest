@@ -69,13 +69,13 @@
               <ion-item lines="none">
                 {{ pet.petName }}
               </ion-item>
-              <ion-item lines="none">
-                {{ pet.breed }}
+              <ion-item lines="none" padding-start>
+                {{ pet.animal }}: {{ pet.breed }}
               </ion-item>
-              <ion-item lines="none">
-                {{ pet.color }}
+              <ion-item lines="none" padding-start>
+                Color: {{ pet.color }}
               </ion-item>
-              <ion-item>
+              <ion-item padding-start>
                 Age: {{ pet.age }}
               </ion-item>
             </ion-list>
