@@ -274,6 +274,14 @@ export class AdminPage implements OnInit, OnDestroy {
     }
   }
 
+  sendGeneralEmail() {
+    // const data = {
+    //   subject: 'This is a test email using SendGrid',
+    //   body: 'This is your first email from SendGrid. Congratulations!'
+    // };
+    // this.userService.sendGeneralEmail(data);
+  }
+
   makeAdmin(user) {
     this.userService.makeUserAdmin(user);
   }

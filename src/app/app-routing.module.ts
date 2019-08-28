@@ -66,6 +66,11 @@ const routes: Routes = [
   { path: 'admin/events',
     loadChildren: './admin/events/events.module#EventsPageModule',
     canActivate: [AdminGuard]
+  },
+  {
+    path: 'admin/notifications',
+    loadChildren: './admin/notifications/notifications.module#NotificationsPageModule',
+    canActivate: [AdminGuard]
   }
 ];
 @NgModule({

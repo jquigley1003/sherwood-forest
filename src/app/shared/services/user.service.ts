@@ -21,6 +21,26 @@ export class UserService {
               private toastService: ToastService) {}
 
 
+  sendNotificationEmail(emailType, data) {
+    const callable = this.afFunctions.httpsCallable(emailType);
+    callable({
+      subject: data.subject,
+      emailmessage: data.emailmessage
+    }).subscribe(resp => {
+      if(resp.error) {
+        this.msg = resp.error;
+      } else {
+        this.msg = resp.result;
+      }
+      this.toastService.presentToast(this.msg, true, 'middle', 'OK', 3000);
+      console.log({resp});
+    },
+      err => {
+        this.toastService.presentToast(err.error, true, 'middle', 'OK', 3000);
+        console.log({err});
+      });
+  }
+
   adminAddUser(data) {
     this.toastService.presentToast('Please wait while we add a new user.', true, 'top', 'OK', 3000);
     this.afFunctions.httpsCallable('adminCreateUser')(data)
@@ -50,8 +70,6 @@ export class UserService {
       .where('displayName.lastName', '==', spLastName)
       .where('address.streetNumber', '==', streetNumber));
   }
-
-
 
   fetchUsers() {
     return this.dbService.collection$('users', ref => ref.orderBy('displayName.lastName'));

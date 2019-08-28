@@ -13,7 +13,7 @@ import { UploaderFileComponent } from '../uploader-file/uploader-file.component'
   styleUrls: ['./event-form.component.scss'],
 })
 export class EventFormComponent implements OnInit, AfterViewInit {
-  @ViewChild(UploaderFileComponent) uploaderFileComponent: UploaderFileComponent;
+  @ViewChild(UploaderFileComponent, {static: false}) uploaderFileComponent: UploaderFileComponent;
   @Input('eventInfo') eventInfo: any;
   @Output() eventSubmitted = new EventEmitter();
 

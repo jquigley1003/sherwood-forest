@@ -16,7 +16,7 @@ import { EventModalComponent } from '../../modals/event-modal/event-modal.compon
   styleUrls: ['./calendar.component.scss'],
 })
 export class MyCalendarComponent implements OnInit, OnDestroy {
-  @ViewChild(CalendarComponent) myCal:CalendarComponent;
+  @ViewChild(CalendarComponent, {static: false}) myCal:CalendarComponent;
   @Input() currentEvents: any[];
 
   event = {

@@ -2,6 +2,7 @@ import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
 import { ToastService } from '../../services/toast.service';
 import { ModalController } from '@ionic/angular';
 import { UploadFileTaskComponent } from '../upload-file-task/upload-file-task.component';
+import { CalendarComponent } from 'ionic2-calendar/calendar';
 
 @Component({
   selector: 'app-uploader-file',
@@ -9,7 +10,7 @@ import { UploadFileTaskComponent } from '../upload-file-task/upload-file-task.co
   styleUrls: ['./uploader-file.component.scss'],
 })
 export class UploaderFileComponent implements AfterViewInit {
-  @ViewChild(UploadFileTaskComponent) uploadFileTaskComponent: UploadFileTaskComponent;
+  @ViewChild(UploadFileTaskComponent, {static: false}) uploadFileTaskComponent: UploadFileTaskComponent;
   @Input() fileFolder: string;
 
   getNewPhotoURL: string;
