@@ -13,16 +13,8 @@ const GENTEMPLATE_ID = functions.config().sendgrid.generaltemplate;
 const EVENTTEMPLATE_ID = functions.config().sendgrid.eventtemplate;
 const SECTEMPLATE_ID = functions.config().sendgrid.securitytemplate;
 const FILMTEMPLATE_ID = functions.config().sendgrid.filmingtemplate;
+
 sendgridMail.setApiKey(SGAPI_KEY);
-
-
-
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
 
 export const sendGeneralEmail = functions.https.onCall(async (data, context) => {
   // check if context.auth is not null
@@ -36,8 +28,11 @@ export const sendGeneralEmail = functions.https.onCall(async (data, context) => 
       };
     }
 
+    const userSnapshots = await admin.firestore().collection('users').where('roles.admin', '==', true).get();
+    const emails = userSnapshots.docs.map(snap => snap.data().email);
+
     const msg = {
-      to: context.auth.token.email,
+      to: emails,
       from: 'sfca@sherwoodforestatl.org',
       templateId: GENTEMPLATE_ID,
       dynamic_template_data: {

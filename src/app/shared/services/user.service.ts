@@ -33,7 +33,6 @@ export class UserService {
         this.msg = resp.result;
       }
       this.toastService.presentToast(this.msg, true, 'middle', 'OK', 3000);
-      console.log({resp});
     },
       err => {
         this.toastService.presentToast(err.error, true, 'middle', 'OK', 3000);
