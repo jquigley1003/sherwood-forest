@@ -28,10 +28,11 @@ export const sendGeneralEmail = functions.https.onCall(async (data, context) => 
       };
     }
 
-    const userSnapshots = await admin.firestore().collection('users').where('roles.admin', '==', true).get();
+    const userSnapshots = await admin.firestore().collection('users').where('roles.approvedMember', '==', true).get();
     const emails = userSnapshots.docs.map(snap => snap.data().email);
 
     const msg = {
+      // to: context.auth.token.email,
       to: emails,
       from: 'sfca@sherwoodforestatl.org',
       templateId: GENTEMPLATE_ID,
@@ -74,8 +75,12 @@ export const sendEventEmail = functions.https.onCall(async (data, context) => {
       };
     }
 
+    const userSnapshots = await admin.firestore().collection('users').where('roles.approvedMember', '==', true).get();
+    const emails = userSnapshots.docs.map(snap => snap.data().email);
+
     const msg = {
-      to: context.auth.token.email,
+      // to: context.auth.token.email,
+      to: emails,
       from: 'sfca@sherwoodforestatl.org',
       templateId: EVENTTEMPLATE_ID,
       dynamic_template_data: {
@@ -117,8 +122,11 @@ export const sendSecurityEmail = functions.https.onCall(async (data, context) =>
       };
     }
 
+    const userSnapshots = await admin.firestore().collection('users').where('roles.approvedMember', '==', true).get();
+    const emails = userSnapshots.docs.map(snap => snap.data().email);
+
     const msg = {
-      to: context.auth.token.email,
+      to: emails,
       from: 'sfca@sherwoodforestatl.org',
       templateId: SECTEMPLATE_ID,
       dynamic_template_data: {
@@ -160,8 +168,11 @@ export const sendFilmingEmail = functions.https.onCall(async (data, context) => 
       };
     }
 
+    const userSnapshots = await admin.firestore().collection('users').where('roles.approvedMember', '==', true).get();
+    const emails = userSnapshots.docs.map(snap => snap.data().email);
+
     const msg = {
-      to: context.auth.token.email,
+      to: emails,
       from: 'sfca@sherwoodforestatl.org',
       templateId: FILMTEMPLATE_ID,
       dynamic_template_data: {

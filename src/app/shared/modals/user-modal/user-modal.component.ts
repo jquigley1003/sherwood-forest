@@ -119,6 +119,7 @@ export class UserModalComponent implements OnInit {
         if(data && data.length > 0) {
           this.otherHalf = data;
           if(this.spID === this.otherHalf[0].uid) {
+            this.addInfoSpousePartner(this.otherHalf[0].uid);
             this.updateCurrentUser();
           } else {
             this.addInfoSpousePartner(this.otherHalf[0].uid);
