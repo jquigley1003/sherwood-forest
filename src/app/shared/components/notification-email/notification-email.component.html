@@ -2,12 +2,23 @@
   <ion-row>
     <ion-col size="2"></ion-col>
     <ion-col size="8">
-      <ion-row>
-        <ion-col text-center>
+      <ion-row class="group-buttons">
+        <ion-col size="12" text-center>
+          <h2>Templates for Approved Members</h2>
+        </ion-col>
+        <ion-col size="12" text-center>
           <ion-button (click)="buildEmailType('sendGeneralEmail')">General Email</ion-button>
           <ion-button (click)="buildEmailType('sendEventEmail')">Events Email</ion-button>
           <ion-button (click)="buildEmailType('sendSecurityEmail')">Security Email</ion-button>
           <ion-button (click)="buildEmailType('sendFilmingEmail')">Filming Email</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row class="group-buttons">
+        <ion-col size="12" text-center>
+          <h2>Templates for All Residents</h2>
+        </ion-col>
+        <ion-col size="12" text-center>
+          <ion-button (click)="buildEmailType('sendAllResidentsEmail')">General Email</ion-button>
         </ion-col>
       </ion-row>
       <ion-header *ngIf="emailType == 'sendGeneralEmail'" text-center padding>
@@ -33,6 +44,12 @@
           Your Filming Message to All Approved Members
         </h1>
         <ion-img src="/assets/SF-filming-banner.jpg"></ion-img>
+      </ion-header>
+      <ion-header *ngIf="emailType == 'sendAllResidentsEmail'" text-center padding>
+        <h1>
+          Your Message to All Sherwood Forest Residents
+        </h1>
+        <ion-img src="/assets/SF-allresidents-banner.jpg"></ion-img>
       </ion-header>
       <form *ngIf="emailType != ''" [formGroup]="emailForm" (ngSubmit)="onSubmitForm(emailType)">
         <ion-item>

@@ -55,7 +55,6 @@ export class NotificationEmailComponent implements OnInit {
   }
 
   async onSubmitForm(emailType) {
-    console.log(this.emailForm.value);
 
     const {subject, emailmessage} = this.emailForm.value;
 

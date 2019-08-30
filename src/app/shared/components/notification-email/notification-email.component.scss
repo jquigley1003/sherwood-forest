@@ -2,3 +2,9 @@
   -webkit-user-select: text;
   user-select: text;
 }
+
+.group-buttons {
+  margin-top: 1em;
+  border: 2px solid var(--ion-color-primary);
+  border-radius: 10px;
+}
