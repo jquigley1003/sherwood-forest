@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../../../shared/services/auth.service';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { UploadFileTaskComponent } from '../../../shared/components/upload-file-task/upload-file-task.component';
 
 declare var Stripe;
 
@@ -16,7 +15,7 @@ export class PaymentPage implements OnInit {
 
   @Input() paymentAmount: number;
   @Input() description: string;
-  @ViewChild('cardElement', {static: false}) cardElement: ElementRef;
+  @ViewChild('cardElement', {read: ElementRef}) cardElement: ElementRef;
 
   stripe;
   card;

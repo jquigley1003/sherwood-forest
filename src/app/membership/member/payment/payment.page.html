@@ -45,12 +45,14 @@
       </ion-row>
     </ion-card-header>
     <ion-card-content>
+      <div #cardElement>
+        Hello, this is a test.
+      </div>
       <form (submit)="handleForm($event)">
 
-
-        <div #cardElement>
-          <!-- A Stripe Element will be inserted here. -->
-        </div>
+        <!--<div #cardElement>-->
+          <!--&lt;!&ndash; A Stripe Element will be inserted here. &ndash;&gt;-->
+        <!--</div>-->
 
 
         <!-- Used to display Element errors. -->
