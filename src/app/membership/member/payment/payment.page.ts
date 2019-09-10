@@ -33,14 +33,13 @@ export class PaymentPage implements OnInit, AfterViewInit {
     const elements = this.stripe.elements();
 
     this.card = elements.create('card');
+    this.card.addEventListener('change', ({ error }) => {
+      this.cardErrors = error && error.message;
+    });
   }
 
   ngAfterViewInit() {
     this.card.mount(this.cardElement.nativeElement);
-
-    this.card.addEventListener('change', ({ error }) => {
-      this.cardErrors = error && error.message;
-    });
   }
 
 
@@ -57,8 +56,9 @@ export class PaymentPage implements OnInit, AfterViewInit {
       this.loading = true;
       const user = await this.authService.uid();
       console.log('User id is: ', user);
-      const fun = this.afFunctions.httpsCallable('stripeCreateCharge');
-      this.confirmation = await fun({ source: source.id, uid: user, amount: this.paymentAmount }).toPromise();
+      // const fun = this.afFunctions.httpsCallable('stripeCreateCharge');
+      // this.confirmation = await fun({ source: source.id, uid: user, amount: this.paymentAmount }).toPromise();
+      console.log(source);
       this.loading = false;
 
     }

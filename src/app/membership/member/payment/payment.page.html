@@ -44,14 +44,16 @@
       </ion-row>
     </ion-card-header>
     <ion-card-content>
-      <form (submit)="handleForm($event)">
+      <form>
         <div #cardElement>
           <!-- A Stripe Element will be inserted here. -->
         </div>
         <!-- Used to display Element errors. -->
         <p>{{ cardErrors }}</p>
-        <ion-button >Buy for {{ paymentAmount / 100 | currency }}</ion-button>
+        <ion-button (click)="handleForm($event)">Buy for {{ paymentAmount / 100 | currency
+          }}</ion-button>
       </form>
+      <ion-progress-bar *ngIf="loading"></ion-progress-bar>
     </ion-card-content>
   </ion-card>
   <app-footer></app-footer>
