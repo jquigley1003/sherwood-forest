@@ -24,7 +24,6 @@
         <h1>Member Payments</h1>
       </ion-col>
     </ion-row>
-    <app-footer></app-footer>
   </ion-grid>
   <ion-card>
     <img src="/assets/stripe-logo.png">
@@ -45,22 +44,15 @@
       </ion-row>
     </ion-card-header>
     <ion-card-content>
-      <div #cardElement>
-        Hello, this is a test.
-      </div>
       <form (submit)="handleForm($event)">
-
-        <!--<div #cardElement>-->
-          <!--&lt;!&ndash; A Stripe Element will be inserted here. &ndash;&gt;-->
-        <!--</div>-->
-
-
+        <div #cardElement>
+          <!-- A Stripe Element will be inserted here. -->
+        </div>
         <!-- Used to display Element errors. -->
         <p>{{ cardErrors }}</p>
-
-
         <ion-button >Buy for {{ paymentAmount / 100 | currency }}</ion-button>
       </form>
     </ion-card-content>
   </ion-card>
+  <app-footer></app-footer>
 </ion-content>

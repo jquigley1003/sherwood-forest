@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../../shared/services/auth.service';
@@ -11,11 +11,11 @@ declare var Stripe;
   templateUrl: './payment.page.html',
   styleUrls: ['./payment.page.scss'],
 })
-export class PaymentPage implements OnInit {
+export class PaymentPage implements OnInit, AfterViewInit {
 
   @Input() paymentAmount: number;
   @Input() description: string;
-  @ViewChild('cardElement', {read: ElementRef}) cardElement: ElementRef;
+  @ViewChild('cardElement', {read: ElementRef, static:false}) cardElement: ElementRef;
 
   stripe;
   card;
@@ -33,12 +33,16 @@ export class PaymentPage implements OnInit {
     const elements = this.stripe.elements();
 
     this.card = elements.create('card');
+  }
+
+  ngAfterViewInit() {
     this.card.mount(this.cardElement.nativeElement);
 
     this.card.addEventListener('change', ({ error }) => {
       this.cardErrors = error && error.message;
     });
   }
+
 
   async handleForm(e) {
     e.preventDefault();
