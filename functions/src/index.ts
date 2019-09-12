@@ -13,6 +13,7 @@ const GENTEMPLATE_ID = functions.config().sendgrid.generaltemplate;
 const EVENTTEMPLATE_ID = functions.config().sendgrid.eventtemplate;
 const SECTEMPLATE_ID = functions.config().sendgrid.securitytemplate;
 const FILMTEMPLATE_ID = functions.config().sendgrid.filmingtemplate;
+const ALLTEMPLATE_ID = functions.config().sendgrid.alltemplate;
 
 sendgridMail.setApiKey(SGAPI_KEY);
 
@@ -220,7 +221,7 @@ export const sendAllResidentsEmail = functions.https.onCall(async (data, context
     const msg = {
       to: emails,
       from: 'sfca@sherwoodforestatl.org',
-      templateId: FILMTEMPLATE_ID,
+      templateId: ALLTEMPLATE_ID,
       dynamic_template_data: {
         subject: data.subject,
         emailmessage: data.emailmessage,
