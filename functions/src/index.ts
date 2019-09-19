@@ -30,26 +30,25 @@ export const sendGeneralEmail = functions.https.onCall(async (data, context) => 
     }
 
     const userSnapshots = await admin.firestore().collection('users').where('roles.approvedMember', '==', true).get();
-    const emails = userSnapshots.docs.map(snap => snap.data().email);
 
-    const msg = {
-      // to: context.auth.token.email,
-      to: emails,
-      from: 'sfca@sherwoodforestatl.org',
-      templateId: GENTEMPLATE_ID,
-      dynamic_template_data: {
-        subject: data.subject,
-        emailmessage: data.emailmessage,
-        sender_name: 'Sherwood Forest Civic Association',
-        sender_address: 'PO Box 77531',
-        sender_city: 'Atlanta',
-        sender_state: 'GA',
-        sender_zip: '30357',
-        sender_email: 'sfca@sherwoodforestatl.org'
-      },
-    };
-
-    await sendgridMail.send(msg);
+    userSnapshots.docs.map(async snap => {
+      const msg = {
+        to: snap.data().email,
+        from: 'sfca@sherwoodforestatl.org',
+        templateId: GENTEMPLATE_ID,
+        dynamic_template_data: {
+          subject: data.subject,
+          emailmessage: data.emailmessage,
+          sender_name: 'Sherwood Forest Civic Association',
+          sender_address: 'PO Box 77531',
+          sender_city: 'Atlanta',
+          sender_state: 'GA',
+          sender_zip: '30357',
+          sender_email: 'sfca@sherwoodforestatl.org'
+        },
+      };
+      await sendgridMail.send(msg);
+    });
 
     // Handle errors here
 
@@ -77,26 +76,25 @@ export const sendEventEmail = functions.https.onCall(async (data, context) => {
     }
 
     const userSnapshots = await admin.firestore().collection('users').where('roles.approvedMember', '==', true).get();
-    const emails = userSnapshots.docs.map(snap => snap.data().email);
 
-    const msg = {
-      // to: context.auth.token.email,
-      to: emails,
-      from: 'sfca@sherwoodforestatl.org',
-      templateId: EVENTTEMPLATE_ID,
-      dynamic_template_data: {
-        subject: data.subject,
-        emailmessage: data.emailmessage,
-        sender_name: 'Sherwood Forest Civic Association',
-        sender_address: 'PO Box 77531',
-        sender_city: 'Atlanta',
-        sender_state: 'GA',
-        sender_zip: '30357',
-        sender_email: 'sfca@sherwoodforestatl.org'
-      },
-    };
-
-    await sendgridMail.send(msg);
+    userSnapshots.docs.map(async snap => {
+      const msg = {
+        to: snap.data().email,
+        from: 'sfca@sherwoodforestatl.org',
+        templateId: EVENTTEMPLATE_ID,
+        dynamic_template_data: {
+          subject: data.subject,
+          emailmessage: data.emailmessage,
+          sender_name: 'Sherwood Forest Civic Association',
+          sender_address: 'PO Box 77531',
+          sender_city: 'Atlanta',
+          sender_state: 'GA',
+          sender_zip: '30357',
+          sender_email: 'sfca@sherwoodforestatl.org'
+        },
+      };
+      await sendgridMail.send(msg);
+    });
 
     // Handle errors here
 
@@ -124,25 +122,25 @@ export const sendSecurityEmail = functions.https.onCall(async (data, context) =>
     }
 
     const userSnapshots = await admin.firestore().collection('users').where('roles.approvedMember', '==', true).get();
-    const emails = userSnapshots.docs.map(snap => snap.data().email);
 
-    const msg = {
-      to: emails,
-      from: 'sfca@sherwoodforestatl.org',
-      templateId: SECTEMPLATE_ID,
-      dynamic_template_data: {
-        subject: data.subject,
-        emailmessage: data.emailmessage,
-        sender_name: 'Sherwood Forest Civic Association',
-        sender_address: 'PO Box 77531',
-        sender_city: 'Atlanta',
-        sender_state: 'GA',
-        sender_zip: '30357',
-        sender_email: 'sfca@sherwoodforestatl.org'
-      },
-    };
-
-    await sendgridMail.send(msg);
+    userSnapshots.docs.map(async snap => {
+      const msg = {
+        to: snap.data().email,
+        from: 'sfca@sherwoodforestatl.org',
+        templateId: SECTEMPLATE_ID,
+        dynamic_template_data: {
+          subject: data.subject,
+          emailmessage: data.emailmessage,
+          sender_name: 'Sherwood Forest Civic Association',
+          sender_address: 'PO Box 77531',
+          sender_city: 'Atlanta',
+          sender_state: 'GA',
+          sender_zip: '30357',
+          sender_email: 'sfca@sherwoodforestatl.org'
+        },
+      };
+      await sendgridMail.send(msg);
+    });
 
     // Handle errors here
 
@@ -170,25 +168,25 @@ export const sendFilmingEmail = functions.https.onCall(async (data, context) => 
     }
 
     const userSnapshots = await admin.firestore().collection('users').where('roles.approvedMember', '==', true).get();
-    const emails = userSnapshots.docs.map(snap => snap.data().email);
 
-    const msg = {
-      to: emails,
-      from: 'sfca@sherwoodforestatl.org',
-      templateId: FILMTEMPLATE_ID,
-      dynamic_template_data: {
-        subject: data.subject,
-        emailmessage: data.emailmessage,
-        sender_name: 'Sherwood Forest Civic Association',
-        sender_address: 'PO Box 77531',
-        sender_city: 'Atlanta',
-        sender_state: 'GA',
-        sender_zip: '30357',
-        sender_email: 'sfca@sherwoodforestatl.org'
-      },
-    };
-
-    await sendgridMail.send(msg);
+    userSnapshots.docs.map(async snap => {
+        const msg = {
+          to: snap.data().email,
+          from: 'sfca@sherwoodforestatl.org',
+          templateId: FILMTEMPLATE_ID,
+          dynamic_template_data: {
+            subject: data.subject,
+            emailmessage: data.emailmessage,
+            sender_name: 'Sherwood Forest Civic Association',
+            sender_address: 'PO Box 77531',
+            sender_city: 'Atlanta',
+            sender_state: 'GA',
+            sender_zip: '30357',
+            sender_email: 'sfca@sherwoodforestatl.org'
+          },
+        };
+        await sendgridMail.send(msg);
+    });
 
     // Handle errors here
 
@@ -216,25 +214,25 @@ export const sendAllResidentsEmail = functions.https.onCall(async (data, context
     }
 
     const userSnapshots = await admin.firestore().collection('users').get();
-    const emails = userSnapshots.docs.map(snap => snap.data().email);
 
-    const msg = {
-      to: emails,
-      from: 'sfca@sherwoodforestatl.org',
-      templateId: ALLTEMPLATE_ID,
-      dynamic_template_data: {
-        subject: data.subject,
-        emailmessage: data.emailmessage,
-        sender_name: 'Sherwood Forest Civic Association',
-        sender_address: 'PO Box 77531',
-        sender_city: 'Atlanta',
-        sender_state: 'GA',
-        sender_zip: '30357',
-        sender_email: 'sfca@sherwoodforestatl.org'
-      },
-    };
-
-    await sendgridMail.send(msg);
+    userSnapshots.docs.map(async snap => {
+      const msg = {
+        to: snap.data().email,
+        from: 'sfca@sherwoodforestatl.org',
+        templateId: ALLTEMPLATE_ID,
+        dynamic_template_data: {
+          subject: data.subject,
+          emailmessage: data.emailmessage,
+          sender_name: 'Sherwood Forest Civic Association',
+          sender_address: 'PO Box 77531',
+          sender_city: 'Atlanta',
+          sender_state: 'GA',
+          sender_zip: '30357',
+          sender_email: 'sfca@sherwoodforestatl.org'
+        },
+      };
+      await sendgridMail.send(msg);
+    });
 
     // Handle errors here
 
