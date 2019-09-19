@@ -45,7 +45,7 @@
     </ion-card-header>
     <ion-card-content>
       <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
-      <form (submit)="handleForm($event)">
+      <form>
         <div #cardElement>
           <!-- A Stripe Element will be inserted here. -->
         </div>
@@ -53,6 +53,7 @@
         <p>{{ cardErrors }}</p>
         <ion-button (click)="handleForm($event)">Buy for {{ paymentAmount / 100 | currency }}</ion-button>
       </form>
+      <ion-progress-bar *ngIf="loading"></ion-progress-bar>
     </ion-card-content>
   </ion-card>
   <app-footer></app-footer>

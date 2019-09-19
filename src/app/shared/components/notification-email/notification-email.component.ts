@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 
 import { UserService } from '../../services/user.service';
 import { ToastService } from '../../services/toast.service';
-import { ContactMessage } from '../../../models/contact-message.model';
 
 @Component({
   selector: 'app-notification-email',

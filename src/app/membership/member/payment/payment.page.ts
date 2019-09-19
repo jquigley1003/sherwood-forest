@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../../shared/services/auth.service';
@@ -11,11 +11,11 @@ declare var Stripe;
   templateUrl: './payment.page.html',
   styleUrls: ['./payment.page.scss'],
 })
-export class PaymentPage implements OnInit {
+export class PaymentPage implements OnInit, AfterViewInit {
 
   @Input() paymentAmount: number;
   @Input() description: string;
-  @ViewChild('cardElement', {static: true}) cardElement: ElementRef;
+  @ViewChild('cardElement', {read: ElementRef, static:false}) cardElement: ElementRef;
 
   stripe;
   card;
@@ -33,12 +33,15 @@ export class PaymentPage implements OnInit {
     const elements = this.stripe.elements();
 
     this.card = elements.create('card');
-    this.card.mount(this.cardElement.nativeElement);
-
     this.card.addEventListener('change', ({ error }) => {
       this.cardErrors = error && error.message;
     });
   }
+
+  ngAfterViewInit() {
+    this.card.mount(this.cardElement.nativeElement);
+  }
+
 
   async handleForm(e) {
     e.preventDefault();
@@ -51,15 +54,13 @@ export class PaymentPage implements OnInit {
     } else {
       // Send the token to your server.
 
-      console.log(source);
-
-      // this.loading = true;
-      // const user = await this.authService.uid();
-      // console.log('User id is: ', user);
+      this.loading = true;
+      const user = await this.authService.uid();
+      console.log('User id is: ', user);
       // const fun = this.afFunctions.httpsCallable('stripeCreateCharge');
       // this.confirmation = await fun({ source: source.id, uid: user, amount: this.paymentAmount }).toPromise();
-      // this.loading = false;
-
+      console.log(source);
+      this.loading = false;
     }
   }
 
