@@ -15,7 +15,7 @@ export class PaymentPage implements OnInit {
 
   @Input() paymentAmount: number;
   @Input() description: string;
-  @ViewChild('cardElement', {read: ElementRef}) cardElement: ElementRef;
+  @ViewChild('cardElement', {static: true}) cardElement: ElementRef;
 
   stripe;
   card;
@@ -50,12 +50,15 @@ export class PaymentPage implements OnInit {
       const cardErrors = error.message;
     } else {
       // Send the token to your server.
-      this.loading = true;
-      const user = await this.authService.uid();
-      console.log('User id is: ', user);
-      const fun = this.afFunctions.httpsCallable('stripeCreateCharge');
-      this.confirmation = await fun({ source: source.id, uid: user, amount: this.paymentAmount }).toPromise();
-      this.loading = false;
+
+      console.log(source);
+
+      // this.loading = true;
+      // const user = await this.authService.uid();
+      // console.log('User id is: ', user);
+      // const fun = this.afFunctions.httpsCallable('stripeCreateCharge');
+      // this.confirmation = await fun({ source: source.id, uid: user, amount: this.paymentAmount }).toPromise();
+      // this.loading = false;
 
     }
   }
