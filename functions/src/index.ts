@@ -1,21 +1,21 @@
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
+// import * as admin from 'firebase-admin';
 
 import * as nodemailer from 'nodemailer';
 
-admin.initializeApp(functions.config().firebase);
+// admin.initializeApp(functions.config().firebase);
 
 // Sendgrid Config
-import * as sendgridMail from '@sendgrid/mail';
+// import * as sendgridMail from '@sendgrid/mail';
 
-const SGAPI_KEY = functions.config().sendgrid.key;
-const GENTEMPLATE_ID = functions.config().sendgrid.generaltemplate;
-const EVENTTEMPLATE_ID = functions.config().sendgrid.eventtemplate;
-const SECTEMPLATE_ID = functions.config().sendgrid.securitytemplate;
-const FILMTEMPLATE_ID = functions.config().sendgrid.filmingtemplate;
-const ALLTEMPLATE_ID = functions.config().sendgrid.alltemplate;
+// const SGAPI_KEY = functions.config().sendgrid.key;
+// const GENTEMPLATE_ID = functions.config().sendgrid.generaltemplate;
+// const EVENTTEMPLATE_ID = functions.config().sendgrid.eventtemplate;
+// const SECTEMPLATE_ID = functions.config().sendgrid.securitytemplate;
+// const FILMTEMPLATE_ID = functions.config().sendgrid.filmingtemplate;
+// const ALLTEMPLATE_ID = functions.config().sendgrid.alltemplate;
 
-sendgridMail.setApiKey(SGAPI_KEY);
+// sendgridMail.setApiKey(SGAPI_KEY);
 
 export const sendGeneralEmail = functions.https.onCall(async (data, context) => {
   // check if context.auth is not null
