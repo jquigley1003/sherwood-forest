@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions';
-import { sendgridMail, db } from './config';
+import { sendgridMail, db, GENTEMPLATE_ID, EVENTTEMPLATE_ID, SECTEMPLATE_ID, FILMTEMPLATE_ID, ALLTEMPLATE_ID } from './config';
 
 export const sendGeneralEmail = functions.https.onCall(async (data, context) => {
   // check if context.auth is not null
