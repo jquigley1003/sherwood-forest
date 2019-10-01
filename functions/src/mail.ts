@@ -1,5 +1,17 @@
 import * as functions from 'firebase-functions';
-import { sendgridMail, db, GENTEMPLATE_ID, EVENTTEMPLATE_ID, SECTEMPLATE_ID, FILMTEMPLATE_ID, ALLTEMPLATE_ID } from './config';
+import { db } from './config';
+
+// Sendgrid Config
+import * as sendgridMail from '@sendgrid/mail';
+
+const SGAPI_KEY = functions.config().sendgrid.key;
+const GENTEMPLATE_ID = functions.config().sendgrid.generaltemplate;
+const EVENTTEMPLATE_ID = functions.config().sendgrid.eventtemplate;
+const SECTEMPLATE_ID = functions.config().sendgrid.securitytemplate;
+const FILMTEMPLATE_ID = functions.config().sendgrid.filmingtemplate;
+const ALLTEMPLATE_ID = functions.config().sendgrid.alltemplate;
+
+sendgridMail.setApiKey(SGAPI_KEY);
 
 export const sendGeneralEmail = functions.https.onCall(async (data, context) => {
   // check if context.auth is not null
