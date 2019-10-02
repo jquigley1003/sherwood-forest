@@ -4,7 +4,13 @@
   max-width: 50vw;
 }
 
-.payment-card img{
+.payment-card img {
   max-height: 35vh;
   overflow: hidden;
+}
+
+.card-error {
+  text-align: center;
+  font-weight: bold;
+  color: var(--ion-color-danger) !important;
 }

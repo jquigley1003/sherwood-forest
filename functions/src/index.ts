@@ -18,6 +18,7 @@ admin.initializeApp();
 // sendgridMail.setApiKey(SGAPI_KEY);
 
 export { sendGeneralEmail, sendEventEmail, sendSecurityEmail, sendFilmingEmail, sendAllResidentsEmail } from './mail';
+export { stripeAttachSource } from './sources';
 
 // export const sendGeneralEmail = functions.https.onCall(async (data, context) => {
 //   // check if context.auth is not null

@@ -50,7 +50,7 @@
           <!-- A Stripe Element will be inserted here. -->
         </div>
         <!-- Used to display Element errors. -->
-        <p>{{ cardErrors }}</p>
+        <p class="card-error">{{ cardErrors }}</p>
         <ion-button (click)="handleForm($event)">Buy for {{ paymentAmount / 100 | currency }}</ion-button>
       </form>
       <ion-progress-bar *ngIf="loading"></ion-progress-bar>
