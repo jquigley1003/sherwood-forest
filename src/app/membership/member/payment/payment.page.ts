@@ -57,9 +57,10 @@ export class PaymentPage implements OnInit, AfterViewInit {
       this.loading = true;
       const user = await this.authService.uid();
       console.log('User id is: ', user);
-      // const fun = this.afFunctions.httpsCallable('stripeCreateCharge');
-      // this.confirmation = await fun({ source: source.id, uid: user, amount: this.paymentAmount }).toPromise();
       console.log(source);
+      const fun = this.afFunctions.httpsCallable('stripeCreateCharge');
+      this.confirmation = await fun({ source: source.id, uid: user, amount: this.paymentAmount }).toPromise();
+      console.log('Confirmation Charge: ', this.confirmation);
       this.loading = false;
     }
   }
