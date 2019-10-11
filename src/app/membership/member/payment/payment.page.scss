@@ -1,7 +1,7 @@
 .payment-card {
   margin: 0px auto;
-  width: 50vw;
-  max-width: 50vw;
+  width: 100%;
+  max-width: 100%;
 }
 
 .payment-card img {
@@ -13,4 +13,10 @@
   text-align: center;
   font-weight: bold;
   color: var(--ion-color-danger) !important;
+}
+
+.charge-success {
+  text-align: center;
+  font-weight: bold;
+  color: var(--ion-color-success) !important;
 }

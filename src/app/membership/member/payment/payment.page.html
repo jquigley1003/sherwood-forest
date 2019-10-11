@@ -23,38 +23,63 @@
       <ion-col size="12" text-center>
         <h1>Member Payments</h1>
       </ion-col>
+      <ion-col size="12">
+        <ion-list (ion-change)="checkValue($event)">
+          <ion-list-header>
+            <ion-label>Choose Your Total Payment</ion-label>
+          </ion-list-header>
+          <ion-item>
+            <ion-label>Biff</ion-label>
+            <ion-radio slot="start" value="1000"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Griff</ion-label>
+            <ion-radio slot="start" value="1000"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Buford</ion-label>
+            <ion-radio slot="start" value="1000"></ion-radio>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-xl="4" offset-xl="4" size-lg="8" offset-lg="2" size-md="12" size-sm="12" size-xs="12">
+        <ion-card class="payment-card">
+          <img src="/assets/stripe-logo.png">
+          <ion-card-header text-center>
+            <ion-card-subtitle>
+              Start Here
+            </ion-card-subtitle>
+            <ion-card-title>
+              Payments to SFCA
+            </ion-card-title>
+            <ion-row text-center>
+              <ion-col>
+                Total Payment
+              </ion-col>
+              <ion-col>
+                {{ paymentAmount / 100 | currency }}
+              </ion-col>
+            </ion-row>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
+            <form>
+              <div #cardElement>
+                <!-- A Stripe Element will be inserted here. -->
+              </div>
+              <!-- Used to display Element errors. -->
+              <p class="card-error">{{ cardErrors }}</p>
+              <p class="charge-success" *ngIf="chargeSuccess">You're card has been charged . A receipt has been sent to {{ confirmation.receipt_email }}.<br>
+                <a [attr.href]="confirmation.receipt_url" target="_blank">View your receipt here.</a></p>
+              <ion-button *ngIf="!chargeSuccess" (click)="handleForm($event)">Buy for {{ paymentAmount / 100 | currency }}</ion-button>
+            </form>
+            <ion-progress-bar *ngIf="loading"></ion-progress-bar>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-card class="payment-card">
-    <img src="/assets/stripe-logo.png">
-    <ion-card-header text-center>
-      <ion-card-subtitle>
-        Start Here
-      </ion-card-subtitle>
-      <ion-card-title>
-        Payments to SFCA
-      </ion-card-title>
-      <ion-row text-center>
-        <ion-col>
-          Total Payment
-        </ion-col>
-        <ion-col>
-          {{ paymentAmount / 100 | currency }}
-        </ion-col>
-      </ion-row>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
-      <form>
-        <div #cardElement>
-          <!-- A Stripe Element will be inserted here. -->
-        </div>
-        <!-- Used to display Element errors. -->
-        <p class="card-error">{{ cardErrors }}</p>
-        <ion-button (click)="handleForm($event)">Buy for {{ paymentAmount / 100 | currency }}</ion-button>
-      </form>
-      <ion-progress-bar *ngIf="loading"></ion-progress-bar>
-    </ion-card-content>
-  </ion-card>
   <app-footer></app-footer>
 </ion-content>

@@ -19,6 +19,7 @@ admin.initializeApp();
 
 export { sendGeneralEmail, sendEventEmail, sendSecurityEmail, sendFilmingEmail, sendAllResidentsEmail } from './mail';
 export { stripeAttachSource } from './sources';
+export { stripeCreateCharge, stripeGetCharges } from './charges';
 
 // export const sendGeneralEmail = functions.https.onCall(async (data, context) => {
 //   // check if context.auth is not null

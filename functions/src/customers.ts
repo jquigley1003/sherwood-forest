@@ -11,7 +11,7 @@ export const getUser = async(uid: string) => {
 }
 
 /**
- Gets a customer from Strip
+ Gets a customer from Stripe
  */
 export const getCustomer = async(uid: string) => {
     const user = await getUser(uid);
