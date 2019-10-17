@@ -21,6 +21,7 @@ import { LoginModalModule } from './shared/modals/login-modal/login-modal.module
 import { LogoutModalModule } from './shared/modals/logout-modal/logout-modal.module';
 import { RegisterModalModule } from './shared/modals/register-modal/register-modal.module';
 import { DropzoneModule } from './shared/directives/dropzone/dropzone.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { DropzoneModule } from './shared/directives/dropzone/dropzone.module';
     LoginModalModule,
     LogoutModalModule,
     RegisterModalModule,
-    DropzoneModule
+    DropzoneModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     StatusBar,
