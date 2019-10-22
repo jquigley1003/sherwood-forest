@@ -55,10 +55,9 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe(adminStatus => {
         this.isAdmin = adminStatus;
       });
-    
     if (this.swUpdate.isEnabled) {
       this.swUpdate.available.subscribe(() => {
-          if(confirm("New version available. Load New Version?")) {
+          if (confirm('New version available. Load New Version?')) {
               window.location.reload();
           }
       });
