@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { SwUpdate } from '@angular/service-worker';
 
 import { ModalController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -28,7 +29,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private statusBar: StatusBar,
     private afAuth: AngularFireAuth,
     public authService: AuthService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private swUpdate: SwUpdate
   ) {
     this.initializeApp();
   }
@@ -53,6 +55,14 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe(adminStatus => {
         this.isAdmin = adminStatus;
       });
+    
+    if (this.swUpdate.isEnabled) {
+      this.swUpdate.available.subscribe(() => {
+          if(confirm("New version available. Load New Version?")) {
+              window.location.reload();
+          }
+      });
+    }
   }
 
   async presentLoginModal() {
