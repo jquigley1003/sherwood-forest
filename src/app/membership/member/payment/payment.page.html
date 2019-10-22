@@ -22,8 +22,9 @@
     <ion-row>
       <ion-col size="12" text-center>
         <h1>Member Payments</h1>
+        <p>Payment options coming soon. This is a work in progress</p>
       </ion-col>
-      <ion-col size="12">
+      <!-- <ion-col size="12">
         <ion-list (ion-change)="checkValue($event)">
           <ion-list-header>
             <ion-label>Choose Your Total Payment</ion-label>
@@ -41,7 +42,7 @@
             <ion-radio slot="start" value="1000"></ion-radio>
           </ion-item>
         </ion-list>
-      </ion-col>
+      </ion-col> -->
     </ion-row>
     <ion-row>
       <ion-col size-xl="4" offset-xl="4" size-lg="8" offset-lg="2" size-md="12" size-sm="12" size-xs="12">
@@ -49,7 +50,7 @@
           <img src="/assets/stripe-logo.png">
           <ion-card-header text-center>
             <ion-card-subtitle>
-              Start Here
+              <a href="https://stripe.com/" target="_blank">Click here to explore Stripe Payments</a>
             </ion-card-subtitle>
             <ion-card-title>
               Payments to SFCA
@@ -73,7 +74,7 @@
               <p class="card-error">{{ cardErrors }}</p>
               <p class="charge-success" *ngIf="chargeSuccess">You're card has been charged . A receipt has been sent to {{ confirmation.receipt_email }}.<br>
                 <a [attr.href]="confirmation.receipt_url" target="_blank">View your receipt here.</a></p>
-              <ion-button *ngIf="!chargeSuccess" (click)="handleForm($event)">Buy for {{ paymentAmount / 100 | currency }}</ion-button>
+              <ion-button *ngIf="totalPayment > 0 && !chargeSuccess" (click)="handleForm($event)">Buy for {{ paymentAmount / 100 | currency }}</ion-button>
             </form>
             <ion-progress-bar *ngIf="loading"></ion-progress-bar>
           </ion-card-content>

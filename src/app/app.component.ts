@@ -57,7 +57,7 @@ export class AppComponent implements OnInit, OnDestroy {
       });
     if (this.swUpdate.isEnabled) {
       this.swUpdate.available.subscribe(() => {
-          if (confirm('New version available. Load New Version?')) {
+          if (confirm('Updated version of SFCA app available. Load New Version?')) {
               window.location.reload();
           }
       });
