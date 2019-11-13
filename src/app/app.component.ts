@@ -10,6 +10,7 @@ import { Observable, Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { AuthService } from './shared/services/auth.service';
+import { AlertService } from './shared/services/alert.service';
 import { LoginModalComponent } from './shared/modals/login-modal/login-modal.component';
 import { LogoutModalComponent } from './shared/modals/logout-modal/logout-modal.component';
 import { RegisterModalComponent } from './shared/modals/register-modal/register-modal.component';
@@ -30,7 +31,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private afAuth: AngularFireAuth,
     public authService: AuthService,
     private modalCtrl: ModalController,
-    private swUpdate: SwUpdate
+    private swUpdate: SwUpdate,
+    private alertService: AlertService
   ) {
     this.initializeApp();
   }
@@ -56,10 +58,29 @@ export class AppComponent implements OnInit, OnDestroy {
         this.isAdmin = adminStatus;
       });
     if (this.swUpdate.isEnabled) {
-      this.swUpdate.available.subscribe(() => {
-          if (confirm('Updated version of SFCA app available. Load New Version?')) {
-              window.location.reload();
-          }
+      this.swUpdate.available.subscribe(data => {
+        console.log(data.current.appData);
+        this.alertService.presentAlert(
+          'App Update!',
+          'Updated version of SFCA app available.',
+          'Load New Version?',
+          [
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              cssClass: 'secondary',
+            },
+            {
+              text: 'Yes',
+              handler: () => {
+                window.location.reload();
+              }
+            }
+          ]
+        );
+          // if (confirm('Updated version of SFCA app available. Load New Version?')) {
+          //     window.location.reload();
+          // }
       });
     }
   }

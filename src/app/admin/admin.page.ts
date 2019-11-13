@@ -9,12 +9,12 @@ import { UserService } from '../shared/services/user.service';
 import { ToastService } from '../shared/services/toast.service';
 import { AlertService } from '../shared/services/alert.service';
 import { LoadingService } from '../shared/services/loading.service';
-import { UserModalComponent } from '../shared/modals/user-modal/user-modal.component';
 import { JrResidentService } from '../shared/services/jr-resident.service';
 import { PetService } from '../shared/services/pet.service';
+import { ReportService } from '../shared/services/report.service';
+import { UserModalComponent } from '../shared/modals/user-modal/user-modal.component';
 import { JrResidentModalComponent } from '../shared/modals/jr-resident-modal/jr-resident-modal.component';
 import { PetModalComponent } from '../shared/modals/pet-modal/pet-modal.component';
-
 
 @Component({
   selector: 'app-admin',
@@ -31,6 +31,8 @@ export class AdminPage implements OnInit, OnDestroy {
   allPets$: Observable<any>;
   pets: any[];
   userPets = [];
+  allReports$: Observable<any>;
+  reports: any[];
   searchTermValue:string = "";
   filterBy: string = "lastName";
   statusFirst: string = "primary";
@@ -46,11 +48,13 @@ export class AdminPage implements OnInit, OnDestroy {
               private toastService: ToastService,
               private alertService: AlertService,
               private loadingService: LoadingService,
+              private reportService: ReportService,
               private modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.getAllJrRes();
     this.getAllPets();
+    this.getAllReports();
   }
 
   async getAllUsers() {
@@ -90,7 +94,7 @@ export class AdminPage implements OnInit, OnDestroy {
   async getUserJrRes(userID) {
     this.userJrRes = [];
     for (let jrRes of this.jrResidents) {
-      if(jrRes.parentIDs.includes(userID)) {
+      if (jrRes.parentIDs.includes(userID)) {
         this.userJrRes.push(jrRes);
       }
     }
@@ -108,10 +112,22 @@ export class AdminPage implements OnInit, OnDestroy {
   async getUserPets(userID) {
     this.userPets = [];
     for (let pet of this.pets) {
-      if(pet.petParentIDs.includes(userID)) {
+      if (pet.petParentIDs.includes(userID)) {
         this.userPets.push(pet);
       }
     }
+  }
+
+  async getAllReports() {
+    this.allReports$ = await this.reportService.fetchAllReports();
+  }
+
+  requestReport() {
+    const data = {
+      status: 'processing',
+      createdAt: new Date()
+    }
+    this.reportService.updateReport('reports', data);
   }
 
   initializeList():void {
@@ -146,7 +162,7 @@ export class AdminPage implements OnInit, OnDestroy {
     this.initializeList();
     const searchTerm = event.srcElement.value;
 
-    if(!searchTerm) {
+    if (!searchTerm) {
       return;
     }
     this.users = this.users.filter(member => {
@@ -164,7 +180,7 @@ export class AdminPage implements OnInit, OnDestroy {
     this.initializeList();
     const searchTerm = event.srcElement.value;
 
-    if(!searchTerm) {
+    if ( !searchTerm) {
       return;
     }
     this.users = this.users.filter(member => {
@@ -182,7 +198,7 @@ export class AdminPage implements OnInit, OnDestroy {
     this.initializeList();
     const searchTerm = event.srcElement.value;
 
-    if(!searchTerm) {
+    if (!searchTerm) {
       return;
     }
     this.users = this.users.filter(member => {

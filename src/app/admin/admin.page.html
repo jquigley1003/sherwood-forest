@@ -37,6 +37,10 @@
   <!--<ion-button color="danger">-->
     <!--Add Data to Users-->
   <!--</ion-button>-->
+  <ion-button (click)="requestReport()">Generate CSV Report</ion-button>  
+  <div *ngFor="let report of allReports$ | async">
+    <app-report-link [report]="report"></app-report-link>
+  </div>
   <ion-button color="success" (click)="getAllUsers()">
     Get All Users
   </ion-button>
