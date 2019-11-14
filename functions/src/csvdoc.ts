@@ -26,7 +26,7 @@ export const createCSV = functions.firestore
         const storage = adminStorage.bucket(GCS_BUCKET)
 
         // Step 2. Query collection
-        return db.collection('users')
+        return db.collection('users').orderBy('displayName.lastName')
                  .get() 
                  .then(querySnapshot => {
                     
@@ -39,13 +39,24 @@ export const createCSV = functions.firestore
                     });
 
                     const fields = [
-                        'displayName.lastName', 
-                        'displayName.firstName', 
-                        'phone',
-                        'address.streetNumber',
-                        'address.streetName',
-                        'duesPaid',
-                        'email'
+                        {label: 'LastName',
+                        value: 'displayName.lastName'},
+                        {label: 'FirstName',
+                        value: 'displayName.firstName'},
+                        {label: 'Phone',
+                        value: 'phone'},
+                        {label: 'StreetNumber',
+                        value: 'address.streetNumber'},
+                        {label: 'StreetName',
+                        value: 'address.streetName'},
+                        {label: 'PaidDues',
+                        value: 'duesPaid'},
+                        {label: 'Email',
+                        value: 'email'},
+                        {label: 'S/P FirstName',
+                        value: 'spousePartner.firstName'},
+                        {label: 'S/P LastName',
+                        value: 'spousePartner.lastName'}
                     ];
                     const opts = { fields };
                     return json2csv.parse(allUsers, opts);

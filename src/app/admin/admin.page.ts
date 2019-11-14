@@ -32,7 +32,8 @@ export class AdminPage implements OnInit, OnDestroy {
   pets: any[];
   userPets = [];
   allReports$: Observable<any>;
-  reports: any[];
+  recentReport$: Observable<any>;
+  recentReport: any[];
   searchTermValue:string = "";
   filterBy: string = "lastName";
   statusFirst: string = "primary";
@@ -54,7 +55,7 @@ export class AdminPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.getAllJrRes();
     this.getAllPets();
-    this.getAllReports();
+    this.getRecentReport();
   }
 
   async getAllUsers() {
@@ -122,12 +123,22 @@ export class AdminPage implements OnInit, OnDestroy {
     this.allReports$ = await this.reportService.fetchAllReports();
   }
 
-  requestReport() {
+  async getRecentReport() {
+    this.recentReport$ = await this.reportService.fetchRecentReport();
+    this.recentReport$
+    .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(data => {
+        this.recentReport = data;
+      });
+  }
+
+  async requestReport() {
     const data = {
       status: 'processing',
-      createdAt: new Date()
+      createdAt: new Date().toISOString()
     }
     this.reportService.updateReport('reports', data);
+    return this.getRecentReport();
   }
 
   initializeList():void {

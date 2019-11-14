@@ -1,5 +1,11 @@
 <ion-button
+  fill="outline"
+  *ngIf="report.status === 'complete'"
   [href]="downloadURL$ | async" download="SFResidents"
   target="_blank">
-  Download Report {{ report.id }}
+  Download Report {{ report.createdAt | date:'medium' }}
 </ion-button>
+<ion-spinner *ngIf="report.status === 'processing'"></ion-spinner>
+<ion-label>
+  <div *ngIf="report.status === 'processing'">Report is processing</div>
+</ion-label>

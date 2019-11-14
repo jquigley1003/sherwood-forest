@@ -24,6 +24,10 @@ export class ReportService {
     return this.dbService.collection$('reports', ref => ref.orderBy('createdAt'));
   }
 
+  fetchRecentReport() {
+    return this.dbService.collection$('reports', ref => ref.orderBy('createdAt', 'desc').limit(1));
+  }
+
   updateReport(path, data) {
     this.dbService.updateAt(path, data);
   }
