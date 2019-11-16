@@ -8,14 +8,14 @@
     </ion-title>
   </ion-toolbar>
   <ion-toolbar text-center>
-    <ion-searchbar showCancelButton="always" (ionChange)="filterByFirstName($event)"
+    <ion-searchbar showCancelButton="always" (ionInput)="filterByFirstName($event)"
                    *ngIf="filterBy == 'firstName'" placeholder="Search by First Name">
     </ion-searchbar>
-    <ion-searchbar showCancelButton="focus" (ionChange)="filterByLastName($event)" (keyup.enter)="filterByLastName($event)"
+    <ion-searchbar showCancelButton="always" (ionInput)="filterByLastName($event)"
                    [value]="searchTermValue"
                    *ngIf="filterBy == 'lastName'" placeholder="Search by Last Name">
     </ion-searchbar>
-    <ion-searchbar showCancelButton="always" (ionChange)="filterByAddress($event)"
+    <ion-searchbar showCancelButton="always" (ionInput)="filterByAddress($event)"
                    *ngIf="filterBy == 'address'"placeholder="Search by Address">
     </ion-searchbar>
   </ion-toolbar>
@@ -52,7 +52,7 @@
         Get All Users
       </ion-button>
       <ion-list>
-        <ion-item-sliding *ngFor="let user of users" lines="full">
+        <ion-item-sliding *ngFor="let user of users" value="user.uid" lines="full">
           <ion-item-options side="start">
             <ion-item-option *ngIf="!user.duesPaid" color="warning" (click)="markDuesPaid( user )">
               Dues<br>Unpaid
@@ -110,50 +110,50 @@
           </ion-item-options>
         </ion-item-sliding>
     
-        <!--<ion-item *ngFor="let user of users" lines="full">-->
-          <!--<ion-thumbnail slot="start" (click)="presentUserModal(user)">-->
-            <!--<img src="{{ user.photoURL }}">-->
-          <!--</ion-thumbnail>-->
-          <!--<ion-icon slot="end" *ngIf="user.roles.admin" name="medal">Admin</ion-icon>-->
-          <!--<ion-icon slot="end" *ngIf="user.duesPaid" name="cash">Paid</ion-icon>-->
-          <!--<ion-avatar slot="end" *ngIf="user.roles.pendingMember">-->
-            <!--<img src="/assets/non-member.png">-->
-          <!--</ion-avatar>-->
-          <!--<ion-label text-wrap>-->
-            <!--<ion-text>-->
-              <!--<h1>{{ user.displayName.firstName + ' ' + user.displayName.lastName }}</h1>-->
-            <!--</ion-text>-->
-            <!--<ion-text>-->
-              <!--<h1>{{ user.address.streetNumber + ' ' + user.address.streetName }}</h1>-->
-            <!--</ion-text>-->
-            <!--<ion-text>-->
-              <!--<h2>{{ user.email }}</h2>-->
-            <!--</ion-text>-->
-            <!--<ion-button *ngIf="!user.roles.admin" color="secondary" (click)="makeAdmin( user )">-->
-              <!--Add Admin Role-->
-            <!--</ion-button>-->
-            <!--<ion-button *ngIf="user.roles.admin" color="tertiary" (click)="removeAdmin( user )">-->
-              <!--Remove Admin Role-->
-            <!--</ion-button>-->
+        <!-- <ion-item *ngFor="let user of users" lines="full">
+          <ion-thumbnail slot="start" (click)="presentUserModal(user)">
+            <img src="{{ user.photoURL }}">
+          </ion-thumbnail>
+          <ion-icon slot="end" *ngIf="user.roles.admin" name="medal">Admin</ion-icon>
+          <ion-icon slot="end" *ngIf="user.duesPaid" name="cash">Paid</ion-icon>
+          <ion-avatar slot="end" *ngIf="user.roles.pendingMember">
+            <img src="/assets/non-member.png">
+          </ion-avatar>
+          <ion-label text-wrap>
+            <ion-text>
+              <h1>{{ user.displayName.firstName + ' ' + user.displayName.lastName }}</h1>
+            </ion-text>
+            <ion-text>
+              <h1>{{ user.address.streetNumber + ' ' + user.address.streetName }}</h1>
+            </ion-text>
+            <ion-text>
+              <h2>{{ user.email }}</h2>
+            </ion-text>
+            <ion-button *ngIf="!user.roles.admin" color="secondary" (click)="makeAdmin( user )">
+              Add Admin Role
+            </ion-button>
+            <ion-button *ngIf="user.roles.admin" color="tertiary" (click)="removeAdmin( user )">
+              Remove Admin Role
+            </ion-button>
     
-            <!--<ion-button *ngIf="user.roles.pendingMember" color="dark" (click)="makeApproved( user )">-->
-              <!--Pending Member-->
-            <!--</ion-button>-->
-            <!--<ion-button *ngIf="user.roles.approvedMember" color="light" (click)="makePending( user )">-->
-              <!--Approved Member-->
-            <!--</ion-button>-->
+            <ion-button *ngIf="user.roles.pendingMember" color="dark" (click)="makeApproved( user )">
+              Pending Member
+            </ion-button>
+            <ion-button *ngIf="user.roles.approvedMember" color="light" (click)="makePending( user )">
+              Approved Member
+            </ion-button>
     
-            <!--<ion-button *ngIf="!user.duesPaid" color="warning" (click)="markDuesPaid( user )">-->
-              <!--Dues are Unpaid-->
-            <!--</ion-button>-->
-            <!--<ion-button *ngIf="user.duesPaid" color="success" (click)="markDuesUnpaid( user )">-->
-              <!--Dues are Paid-->
-            <!--</ion-button>-->
-            <!--<ion-button color="danger" (click)="deleteUser( user.displayName.firstName, user.uid, user.spousePartner.spID )">-->
-              <!--Delete User-->
-            <!--</ion-button>-->
-          <!--</ion-label>-->
-        <!--</ion-item>-->
+            <ion-button *ngIf="!user.duesPaid" color="warning" (click)="markDuesPaid( user )">
+              Dues are Unpaid
+            </ion-button>
+            <ion-button *ngIf="user.duesPaid" color="success" (click)="markDuesUnpaid( user )">
+              Dues are Paid
+            </ion-button>
+            <ion-button color="danger" (click)="deleteUser( user.displayName.firstName, user.uid, user.spousePartner.spID )">
+              Delete User
+            </ion-button>
+          </ion-label>
+        </ion-item> -->
       </ion-list>
   </ion-grid>
   

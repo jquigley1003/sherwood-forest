@@ -34,7 +34,7 @@ export class AdminPage implements OnInit, OnDestroy {
   allReports$: Observable<any>;
   recentReport$: Observable<any>;
   recentReport: any[];
-  searchTermValue:string = "";
+  searchTermValue: string = "";
   filterBy: string = "lastName";
   statusFirst: string = "primary";
   statusLast: string = "secondary";
@@ -53,21 +53,20 @@ export class AdminPage implements OnInit, OnDestroy {
               private modalCtrl: ModalController) { }
 
   ngOnInit() {
+    this.getAllUsers();
     this.getAllJrRes();
     this.getAllPets();
     this.getRecentReport();
   }
 
   async getAllUsers() {
-    await this.loadingService.presentLoading();
     this.allUsers$ = await this.userService.fetchUsers();
-    await this.allUsers$
+    this.allUsers$
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(data => {
-      this.loadedUsers = data;
-      this.users = this.loadedUsers;
-    });
-    this.loadingService.dismissLoading();
+        this.users = data;
+        this.loadedUsers = this.users;
+      });
   }
 
   async getSpousePartner(userID) {
@@ -146,7 +145,6 @@ export class AdminPage implements OnInit, OnDestroy {
   }
 
   queryFirstName() {
-    this.initializeList();
     this.filterBy = 'firstName';
     this.statusFirst = "secondary";
     this.statusLast = "primary";
@@ -154,7 +152,6 @@ export class AdminPage implements OnInit, OnDestroy {
   }
 
   queryLastName() {
-    this.initializeList();
     this.filterBy = 'lastName';
     this.statusFirst = "primary";
     this.statusLast = "secondary";
@@ -162,7 +159,6 @@ export class AdminPage implements OnInit, OnDestroy {
   }
 
   queryAddress() {
-    this.initializeList();
     this.filterBy = 'address';
     this.statusFirst = "primary";
     this.statusLast = "primary";
@@ -173,11 +169,11 @@ export class AdminPage implements OnInit, OnDestroy {
     this.initializeList();
     const searchTerm = event.srcElement.value;
 
-    if (!searchTerm) {
+    if(!searchTerm) {
       return;
     }
     this.users = this.users.filter(member => {
-      if (member.displayName.firstName && searchTerm) {
+      if(member.displayName.firstName && searchTerm) {
         if (member.displayName.firstName.toLowerCase()
           .indexOf(searchTerm.toLowerCase()) > -1) {
           return true;
