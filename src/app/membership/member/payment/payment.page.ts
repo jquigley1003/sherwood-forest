@@ -30,6 +30,45 @@ export class PaymentPage implements OnInit, AfterViewInit {
   currentUser = null;
   ngUnsubscribe = new Subject<void>();
   totalPayment: number = 0;
+  isChecked: boolean = false;
+  duesChecked: boolean = false;
+  securityChecked: boolean = false;
+  islandsChecked: boolean = false;
+
+  optionList: Array<any> = [
+    {
+      id: '1',
+      name: 'option_list',
+      value: 25000,
+      text: 'Annual Dues - $250',
+      disabled: false,
+      color: 'primary'
+    },
+    {
+      id: '2',
+      name: 'option_list',
+      value: 5000,
+      text: 'Additional Security - $50',
+      disabled: false,
+
+      color: 'primary'
+    },
+    {
+      id: '3',
+      name: 'option_list',
+      value: 5000,
+      text: 'SFCA Beautification - $50',
+      disabled: false,
+
+      color: 'primary'
+    }
+  ]
+
+  customAlertOptions: any = {
+    header: 'Payment Options',
+    subHeader: 'Select payment options',
+    cssClass:'custom-alert'
+  };
 
   constructor(private router: Router,
               private authService: AuthService,
@@ -51,11 +90,25 @@ export class PaymentPage implements OnInit, AfterViewInit {
     this.card.mount(this.cardElement.nativeElement);
   }
 
-  async checkValue(value) {
-    this.totalPayment = await this.paymentAmount + value;
+  async checkValue(event: any) {
+    this.totalPayment = 0;
+    // this.totalPayment += event.target.value;
+    // this.paymentAmount = this.totalPayment;
+    // console.log('total payment: ', this.paymentAmount, event);
+    await event.detail.value.forEach(element => {
+      this.totalPayment += element;
+    });
     this.paymentAmount = this.totalPayment;
+    console.log('event detail: ', event);
   }
 
+  async selectAll() {
+    this.paymentAmount = 36050;
+  }
+
+  async clearAll() {
+    this.paymentAmount = 0;
+  }
 
   async handleForm(e) {
     e.preventDefault();

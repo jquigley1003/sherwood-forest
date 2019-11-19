@@ -26,6 +26,13 @@ ion-alert {
   --max-width: 80vw;
 }
 
+.custom-alert {
+  --height: 50vh !important;
+  --width: 80vw !important;
+  --min-width: 80vw;
+  --max-width: 80vw;
+}
+
 .alertDanger{
   color: var(--ion-color-danger) !important;
   border: 2px solid var(--ion-color-danger) !important;

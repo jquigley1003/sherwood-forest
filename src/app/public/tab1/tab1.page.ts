@@ -51,7 +51,7 @@ export class Tab1Page implements OnInit, OnDestroy {
 
   async getKeyContacts() {
     this.allKeyContacts$ = await this.userService.fetchKeyContacts();
-    await this.allKeyContacts$
+    this.allKeyContacts$
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(key => {
       this.keyContacts = key;
