@@ -88,7 +88,7 @@
               <p class="card-error">{{ cardErrors }}</p>
               <p class="charge-success" *ngIf="chargeSuccess">You're card has been charged . A receipt has been sent to {{ confirmation.receipt_email }}.<br>
                 <a [attr.href]="confirmation.receipt_url" target="_blank">View your receipt here.</a></p>
-              <ion-button *ngIf="totalPayment > 0 && !chargeSuccess" (click)="handleForm($event)">Buy for {{ paymentAmount / 100 | currency }}</ion-button>
+              <ion-button *ngIf="totalPayment > 0 && !chargeSuccess" (click)="handleForm($event)">Send {{ paymentAmount / 100 | currency }} to SFCA</ion-button>
             </form>
             <ion-progress-bar *ngIf="loading"></ion-progress-bar>
           </ion-card-content>
