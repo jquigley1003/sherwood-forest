@@ -31,7 +31,7 @@ export class PaymentPage implements OnInit, AfterViewInit {
   ngUnsubscribe = new Subject<void>();
   totalPayment: number = 0;
   isChecked: boolean = false;
-  duesChecked: boolean = false;
+  showCheck: boolean = false;
   securityChecked: boolean = false;
   islandsChecked: boolean = false;
 
@@ -102,12 +102,8 @@ export class PaymentPage implements OnInit, AfterViewInit {
     console.log('event detail: ', event);
   }
 
-  async selectAll() {
-    this.paymentAmount = 36050;
-  }
-
-  async clearAll() {
-    this.paymentAmount = 0;
+  checkOption() {
+    this.showCheck = !this.showCheck;
   }
 
   async handleForm(e) {
