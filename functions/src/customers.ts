@@ -28,9 +28,13 @@ export const updateUser = async(uid: string, data: Object) => {
 /**
  Takes a Firebase user and creates a Stripe customer account
  */
-export const createCustomer = async(uid: any) => {
+export const createCustomer = async(uid: any, customerName: any, customerEmail:any) => {
     const customer = await stripe.customers.create({
-       metadata: { firebaseUID: uid } 
+      name: customerName,  
+      email: customerEmail,
+      metadata: { 
+        firebaseUID: uid, 
+      }, 
     });
 
     await updateUser(uid, { stripeCustomerId: customer.id })
@@ -43,10 +47,12 @@ Read the Stripe customer ID from Firestore, or create a new one if missing
 export const getOrCreateCustomer = async(uid: string) => {
     const user = await getUser(uid);
     const customerId = user && user.stripeCustomerId;
+    const customerName = user === undefined ? null : user.displayName.firstName + ' ' + user.displayName.lastName;
+    const customerEmail = user === undefined ? null : user.email;
 
     // If missing customer ID, create it
     if(!customerId) {
-        return createCustomer(uid);
+        return createCustomer(uid, customerName, customerEmail);
     } else {
         return stripe.customers.retrieve(customerId);
     }

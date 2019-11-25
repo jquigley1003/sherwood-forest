@@ -22,72 +22,118 @@
     <ion-row>
       <ion-col size="12" text-center>
         <h1>Member Payments</h1>
-        <p>Payment options coming soon. This is a work in progress</p>
+        <h3>Choose Your Payment Option Below</h3>
       </ion-col>
-      <ion-col size="12">
-        <ion-list>
-          <ion-list-header><ion-label>Choose Your Payment Option</ion-label></ion-list-header>
+      <ion-col size-xl="6" offset-xl="3" size-lg="12" size-md="12" size-sm="12" size-xs="12">
           <ion-item (click)="checkOption()" detail>
             <ion-label>
               Pay by Check
             </ion-label>
-              <ion-card *ngIf="showCheck">
-                <ion-card-title>
-                  Drop off Check:
-                </ion-card-title>
-                <ion-card-content>
-                  Steven Rudisail (mailbox is mounted to right of garage)<br>
-                  1630 Nottingham Way<br>
-                  Atlanta GA 30309
-                </ion-card-content>
-              </ion-card>
           </ion-item>
-          <ion-item (click)="billPayOption()" detail>
-            <ion-label>
-              BillPay Via Your Bank
-            </ion-label>
-          </ion-item>
-          <ion-item (click)="venmoOption()" detail>
-            <ion-label>
-              Pay by Venmo
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>
-              Pay by Credit Card
-            </ion-label>
-            <ion-select 
-            [interfaceOptions]="customAlertOptions" 
-            interface="alert" 
-            multiple="true" 
-            (ionChange)=checkValue($event)
-            no padding>
-              <ion-select-option
-              *ngFor="let option of optionList"
-              [value]="option.value">
-              {{ option.text }}
-            </ion-select-option>
-            </ion-select>
-          </ion-item>
-
-          <!-- <ion-item 
-          *ngFor="let item of radioList" 
-          (ionSelect)=checkValue($event)>
-            <ion-label>{{ item.text }}</ion-label>
-            <ion-radio 
-            slot="start" 
-            name="{{ item.name }}"
-            [value]="item.value"
-            [checked]=isChecked
-            color="{{ item.color }}"
-            disabled="{{ item.disabled }}"
-            ></ion-radio>
-          </ion-item> -->
-        </ion-list>
+          <ion-card *ngIf="showCheck">
+            <ion-card-title>
+              Drop off Check:
+            </ion-card-title>
+            <ion-card-content>
+              Steven Rudisail (mailbox is mounted to right of garage)<br>
+              1630 Nottingham Way<br>
+              Atlanta GA 30309
+            </ion-card-content>
+          </ion-card>
+          <ion-card *ngIf="showCheck">
+              <ion-card-title>
+                Mail Check:
+              </ion-card-title>
+              <ion-card-content>
+                Sherwood Forest Civic Association<br>
+                PO Box 77531<br>
+                Atlanta GA 30357
+              </ion-card-content>
+            </ion-card>
       </ion-col>
+      <ion-col size-xl="6" offset-xl="3" size-lg="12" size-md="12" size-sm="12" size-xs="12">
+        <ion-item (click)="billPayOption()" detail>
+          <ion-label>
+            BillPay Via Your Bank
+          </ion-label>
+        </ion-item>
+        <ion-card *ngIf="showBillPay">
+            <ion-card-title>
+              BillPay Via Your Bank:
+            </ion-card-title>
+            <ion-card-content>
+              Sherwood Forest Civic Association<br>
+              PO Box 77531<br>
+              Atlanta GA 30357<br>
+              <hr>
+              Include your address and street name for the account number<br>
+              <i>Ex: 1630 Nottingham Way</i><br>
+              <hr>
+              If phone number needed, use 404-606-0396
+            </ion-card-content>
+          </ion-card>
+      </ion-col>
+      <ion-col size-xl="6" offset-xl="3" size-lg="12" size-md="12" size-sm="12" size-xs="12">
+        <ion-item (click)="venmoOption()" detail>
+          <ion-label>
+            Pay by Venmo
+          </ion-label>
+        </ion-item>
+        <ion-card *ngIf="showVenmo">
+          <ion-card-title>
+            Pay by Venmo:
+          </ion-card-title>
+          <ion-card-content>
+            Open your Venmo app on your mobile device
+            <hr>
+            In the search field, enter @SFCivicAssoc
+            <hr>
+            Click, "Pay" on the top left corner
+            <hr>
+            Enter the amount you're submitting
+            <hr>
+            Please be sure to indicate the address you are paying for
+            <hr>
+            Edit if you want to keep your payment "private" or "public"
+            <hr>
+            Click "pay" to submit your secure payment
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <!-- <ion-col size-xl="6" offset-xl="3" size-lg="12" size-md="12" size-sm="12" size-xs="12">
+        <ion-item (click)="creditCardOption()" detail>
+          <ion-label>
+            Pay by Credit Card
+          </ion-label>
+        </ion-item>
+        <ion-card *ngIf="showCreditCard">
+          <ion-card-title>
+            Pay by Credit Card
+          </ion-card-title>
+          <ion-card-content>
+            <ion-item>
+              <ion-label>
+                Choose Options
+              </ion-label>
+                <ion-select
+                [interfaceOptions]="customAlertOptions"
+                interface="alert" 
+                multiple="true" 
+                (ionChange)=checkValue($event)
+                no padding>
+                  <ion-select-option
+                  *ngFor="let option of optionList"
+                  [value]="option">
+                  {{ option.text }}
+                </ion-select-option>
+                </ion-select>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col> -->
     </ion-row>
-    <ion-row>
-      <ion-col size-xl="4" offset-xl="4" size-lg="8" offset-lg="2" size-md="12" size-sm="12" size-xs="12">
+    <!-- <ion-row>
+      <ion-col size-xl="6" offset-xl="3" size-lg="12" size-md="12" size-sm="12" size-xs="12">
         <ion-card class="payment-card">
           <img src="/assets/stripe-logo.png">
           <ion-card-header text-center>
@@ -98,11 +144,14 @@
               Payments to SFCA
             </ion-card-title>
             <ion-row text-center>
-              <ion-col>
-                Total Payment
+              <ion-col
+              *ngFor="let optText of payOptionText"
+              class="pay-options"
+              size="12">
+                {{ optText }}
               </ion-col>
-              <ion-col>
-                {{ paymentAmount / 100 | currency }}
+              <ion-col size="12">
+                Total: {{ paymentAmount / 100 | currency }}
               </ion-col>
             </ion-row>
           </ion-card-header>
@@ -110,19 +159,19 @@
             <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
             <form>
               <div #cardElement>
-                <!-- A Stripe Element will be inserted here. -->
+                
               </div>
-              <!-- Used to display Element errors. -->
+              
               <p class="card-error">{{ cardErrors }}</p>
               <p class="charge-success" *ngIf="chargeSuccess">You're card has been charged . A receipt has been sent to {{ confirmation.receipt_email }}.<br>
                 <a [attr.href]="confirmation.receipt_url" target="_blank">View your receipt here.</a></p>
-              <ion-button *ngIf="totalPayment > 0 && !chargeSuccess" (click)="handleForm($event)">Send {{ paymentAmount / 100 | currency }} to SFCA</ion-button>
+              <ion-button expand="block" *ngIf="totalPayment > 0 && !chargeSuccess" (click)="handleForm($event)">Send {{ paymentAmount / 100 | currency }} to SFCA Now</ion-button>
             </form>
             <ion-progress-bar *ngIf="loading"></ion-progress-bar>
           </ion-card-content>
         </ion-card>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
   </ion-grid>
   <app-footer></app-footer>
 </ion-content>

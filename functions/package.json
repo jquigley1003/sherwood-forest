@@ -22,6 +22,7 @@
     "fs-extra": "^8.1.0",
     "json2csv": "^4.5.4",
     "nodemailer": "^6.0.0",
+    "save": "^2.4.0",
     "stripe": "^7.8.0"
   },
   "devDependencies": {

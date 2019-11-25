@@ -16,9 +16,9 @@ declare var Stripe;
 })
 export class PaymentPage implements OnInit, AfterViewInit {
 
-  @Input() paymentAmount: number;
-  @Input() description: string;
-  @ViewChild('cardElement', {read: ElementRef, static:false}) cardElement: ElementRef;
+  // @Input() paymentAmount: number;
+  // @Input() description: string;
+  // @ViewChild('cardElement', {read: ElementRef, static:false}) cardElement: ElementRef;
 
   stripe;
   card;
@@ -30,10 +30,11 @@ export class PaymentPage implements OnInit, AfterViewInit {
   currentUser = null;
   ngUnsubscribe = new Subject<void>();
   totalPayment: number = 0;
-  isChecked: boolean = false;
   showCheck: boolean = false;
-  securityChecked: boolean = false;
-  islandsChecked: boolean = false;
+  showBillPay: boolean = false;
+  showVenmo: boolean = false;
+  showCreditCard: boolean = false;
+  payOptionText: Array<any> = [];
 
   optionList: Array<any> = [
     {
@@ -50,7 +51,6 @@ export class PaymentPage implements OnInit, AfterViewInit {
       value: 5000,
       text: 'Additional Security - $50',
       disabled: false,
-
       color: 'primary'
     },
     {
@@ -59,7 +59,6 @@ export class PaymentPage implements OnInit, AfterViewInit {
       value: 5000,
       text: 'SFCA Beautification - $50',
       disabled: false,
-
       color: 'primary'
     }
   ]
@@ -76,70 +75,81 @@ export class PaymentPage implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getCurrentUser();
-    this.paymentAmount = this.totalPayment;
-    this.stripe = Stripe('pk_test_hjQIkpqwizWBdDsTfcsAdKAJ00KoXDvDNu');
-    const elements = this.stripe.elements();
+    // this.paymentAmount = this.totalPayment;
+    // this.stripe = Stripe('pk_test_tmTO0Fa6CBYTehnwfjNxpp7l00JUD1YmVj');
+    // const elements = this.stripe.elements();
 
-    this.card = elements.create('card');
-    this.card.addEventListener('change', ({ error }) => {
-      this.cardErrors = error && error.message;
-    });
+    // this.card = elements.create('card');
+    // this.card.addEventListener('change', ({ error }) => {
+    //   this.cardErrors = error && error.message;
+    // });
   }
 
   ngAfterViewInit() {
-    this.card.mount(this.cardElement.nativeElement);
+    // this.card.mount(this.cardElement.nativeElement);
   }
 
-  async checkValue(event: any) {
-    this.totalPayment = 0;
-    // this.totalPayment += event.target.value;
-    // this.paymentAmount = this.totalPayment;
-    // console.log('total payment: ', this.paymentAmount, event);
-    await event.detail.value.forEach(element => {
-      this.totalPayment += element;
-    });
-    this.paymentAmount = this.totalPayment;
-    console.log('event detail: ', event);
-  }
+  // async checkValue(event: any) {
+  //   this.payOptionText = [];
+  //   this.totalPayment = 0;
+  //   await event.detail.value.forEach(element => {
+  //     this.totalPayment += element.value;
+  //     this.payOptionText.push(element.text + '  ');
+  //   });
+  //   this.paymentAmount = this.totalPayment;
+  //   console.log('event detail: ', this.payOptionText);
+  // }
 
   checkOption() {
     this.showCheck = !this.showCheck;
   }
 
-  async handleForm(e) {
-    e.preventDefault();
-
-    const { source, error } = await this.stripe.createSource(this.card);
-
-    if (error) {
-      // Inform the customer that there was an error.
-      this.cardErrors = error.message;
-    } else {
-      // Send the token to your server.
-
-      this.loading = true;
-      const user = this.currentUser;
-      console.log('Current User is: ', user);
-      console.log(source);
-      const charge = this.afFunctions.httpsCallable('stripeCreateCharge');
-      this.confirmation = await charge({ source: source.id, uid: user.id, amount: this.paymentAmount, email: user.email }).toPromise()
-        .catch(err => {
-          console.log('This is the error:',err);
-          this.chargeSuccess = false;
-          this.loading = false;
-          this.cardErrors = err;
-        })
-      if(this.confirmation) {
-        this.card.clear();
-        this.chargeSuccess = true;
-        console.log('Confirmation Charge: ', this.confirmation, 'Email Receipt to: ', this.confirmation.receipt_email);
-        this.loading = false;
-      } else {
-        this.chargeSuccess = false;
-        this.loading = false;
-      }
-    }
+  billPayOption() {
+    this.showBillPay = !this.showBillPay;
   }
+
+  venmoOption() {
+    this.showVenmo = !this.showVenmo;
+  }
+
+  creditCardOption() {
+    this.showCreditCard = !this.showCreditCard
+  }
+
+  // async handleForm(e) {
+  //   e.preventDefault();
+
+  //   const { source, error } = await this.stripe.createSource(this.card);
+
+  //   if (error) {
+  //     // Inform the customer that there was an error.
+  //     this.cardErrors = error.message;
+  //   } else {
+  //     // Send the token to your server.
+
+  //     this.loading = true;
+  //     const user = this.currentUser;
+  //     console.log('Current User is: ', user);
+  //     console.log(source);
+  //     const charge = this.afFunctions.httpsCallable('stripeCreateCharge');
+  //     this.confirmation = await charge({ source: source.id, uid: user.id, amount: this.paymentAmount, email: user.email }).toPromise()
+  //       .catch(err => {
+  //         console.log('This is the error:',err);
+  //         this.chargeSuccess = false;
+  //         this.loading = false;
+  //         this.cardErrors = err;
+  //       })
+  //     if(this.confirmation) {
+  //       this.card.clear();
+  //       this.chargeSuccess = true;
+  //       console.log('Confirmation Charge: ', this.confirmation, 'Email Receipt to: ', this.confirmation.receipt_email);
+  //       this.loading = false;
+  //     } else {
+  //       this.chargeSuccess = false;
+  //       this.loading = false;
+  //     }
+  //   }
+  // }
 
   async getCurrentUser() {
     this.currentMember$ = await this.authService.user$;
