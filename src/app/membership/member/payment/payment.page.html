@@ -23,7 +23,7 @@
       <ion-col size="12" text-center>
         <h1>Member Payments</h1>
         <p>There are multiple ways to submit your dues and voluntary contributions!</p>
-        <p>{{ currentYear | date:'yyyy' }} Dues and Contributions</p>
+        <p>{{ currentYear }} Dues and Contributions</p>
           <ul class="payments">
               <li class="payments-color">Annual Dues - $250</li>
               <li class="payments-color">Contribution for Additional Security - $50</li>
@@ -128,7 +128,8 @@
                 no padding>
                   <ion-select-option
                   *ngFor="let option of optionList"
-                  [value]="option">
+                  [value]="option"
+                  [disabled]="option.disabled">
                   {{ option.text }}
                 </ion-select-option>
                 </ion-select>

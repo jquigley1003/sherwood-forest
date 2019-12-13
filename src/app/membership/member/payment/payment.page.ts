@@ -6,6 +6,8 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { AuthService } from '../../../shared/services/auth.service';
+import { UserService } from 'src/app/shared/services/user.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 declare var Stripe;
 
@@ -35,7 +37,9 @@ export class PaymentPage implements OnInit, AfterViewInit {
   showVenmo: boolean = false;
   showCreditCard: boolean = false;
   payOptionText: Array<any> = [];
-  currentYear: number;
+  currentDate: Date = new Date();
+  currentYear;
+  foundDuesOption;
 
   optionList: Array<any> = [
     {
@@ -71,8 +75,10 @@ export class PaymentPage implements OnInit, AfterViewInit {
   };
 
   constructor(private router: Router,
+              private afFunctions: AngularFireFunctions,
               private authService: AuthService,
-              private afFunctions: AngularFireFunctions) { }
+              private userService: UserService,
+              private toastService: ToastService) { }
 
   ngOnInit() {
     this.getCurrentUser();
@@ -84,7 +90,7 @@ export class PaymentPage implements OnInit, AfterViewInit {
     this.card.addEventListener('change', ({ error }) => {
       this.cardErrors = error && error.message;
     });
-    this.currentYear = Date.now();
+    this.currentYear = this.currentDate.getFullYear();
   }
 
   ngAfterViewInit() {
@@ -96,7 +102,7 @@ export class PaymentPage implements OnInit, AfterViewInit {
     this.totalPayment = 0;
     await event.detail.value.forEach(element => {
       this.totalPayment += element.value;
-      this.payOptionText.push(element.text + '  ');
+      this.payOptionText.push('  '+ element.text);
     });
     this.paymentAmount = this.totalPayment;
     console.log('event detail: ', this.payOptionText);
@@ -153,6 +159,12 @@ export class PaymentPage implements OnInit, AfterViewInit {
         this.chargeSuccess = true;
         console.log('Confirmation Charge: ', this.confirmation, 'Email Receipt to: ', this.confirmation.receipt_email);
         this.loading = false;
+        if (this.confirmation.description.includes('Annual Dues - $250')) {
+          this.markDuesPaid(user, this.confirmation.description);
+        } else {
+          this.toastService.presentToast(user.displayName.firstName + ', thanks for your extra contributions!',
+          true, 'top', 'Ok', 10000 );
+        }
       } else {
         this.chargeSuccess = false;
         this.loading = false;
@@ -167,10 +179,25 @@ export class PaymentPage implements OnInit, AfterViewInit {
       .subscribe(data => {
       if(data) {
         this.currentUser = data;
+        if(this.currentUser.duesPaid == true) {
+          this.optionList[0].disabled = true;
+          this.optionList[0].text = 'Your ' + this.currentYear + ' annual dues of $250 have been paid!';
+        }
       } else {
         this.currentUser = null;
       }
     });
+  }
+
+  async markDuesPaid(user, description) {
+    const data = {
+      uid: user.uid,
+      duesPaid: true
+    };
+    await this.userService.updateUser('users/'+ user.uid, data);
+    this.toastService.presentToast(
+      user.displayName.firstName + ', your dues have been marked paid! Thank your for the following payments: ' + description,
+      true, 'top', 'Ok', 10000 );
   }
 
   goToMember() {

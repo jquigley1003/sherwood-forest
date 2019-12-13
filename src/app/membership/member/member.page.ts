@@ -47,6 +47,7 @@ export class MemberPage implements OnInit, OnDestroy {
   jrResidents = [];
   memPets$: Observable<any>;
   pets = [];
+  currentYear: number;
   ngUnsubscribe = new Subject<void>();
 
   constructor(private authService: AuthService,
@@ -62,6 +63,7 @@ export class MemberPage implements OnInit, OnDestroy {
     this.getCurrentUser();
     this.getEventsForMember();
     this.getBoardMembers();
+    this.currentYear = Date.now();
   }
 
 
