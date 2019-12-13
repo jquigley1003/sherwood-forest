@@ -34,8 +34,6 @@ export class MemberPage implements OnInit, OnDestroy {
   currentUser;
   spousePartner$: Observable<any>;
   spousePartner = null;
-  currentYear: Date;
-  currentDate: Date = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
   duesPaid: boolean;
   allBoard$: Observable<any>;
   board = [];
@@ -47,7 +45,8 @@ export class MemberPage implements OnInit, OnDestroy {
   jrResidents = [];
   memPets$: Observable<any>;
   pets = [];
-  currentYear: number;
+  currentDate: Date = new Date();
+  currentYear;
   ngUnsubscribe = new Subject<void>();
 
   constructor(private authService: AuthService,
@@ -59,11 +58,10 @@ export class MemberPage implements OnInit, OnDestroy {
               private modalCtrl: ModalController) { }
 
   ngOnInit() {
-    this.currentYear = new Date();
     this.getCurrentUser();
     this.getEventsForMember();
     this.getBoardMembers();
-    this.currentYear = Date.now();
+    this.currentYear = this.currentDate.getFullYear();
   }
 
 
