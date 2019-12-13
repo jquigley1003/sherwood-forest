@@ -181,7 +181,7 @@ export class PaymentPage implements OnInit, AfterViewInit {
         this.currentUser = data;
         if(this.currentUser.duesPaid == true) {
           this.optionList[0].disabled = true;
-          this.optionList[0].text = 'Your ' + this.currentYear + ' annual dues of $250 have been paid!';
+          this.optionList[0].text = this.currentYear + ' dues paid!';
         }
       } else {
         this.currentUser = null;
