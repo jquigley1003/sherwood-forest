@@ -35,6 +35,7 @@ export class PaymentPage implements OnInit, AfterViewInit {
   showVenmo: boolean = false;
   showCreditCard: boolean = false;
   payOptionText: Array<any> = [];
+  currentYear: number;
 
   optionList: Array<any> = [
     {
@@ -65,7 +66,7 @@ export class PaymentPage implements OnInit, AfterViewInit {
 
   customAlertOptions: any = {
     header: 'Payment Options',
-    subHeader: 'Select payment options',
+    subHeader: '(1) Select payment amounts  (2) Click "OK"  (3) Enter credit card information',
     cssClass:'custom-alert'
   };
 
@@ -83,6 +84,7 @@ export class PaymentPage implements OnInit, AfterViewInit {
     this.card.addEventListener('change', ({ error }) => {
       this.cardErrors = error && error.message;
     });
+    this.currentYear = Date.now();
   }
 
   ngAfterViewInit() {

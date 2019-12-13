@@ -22,18 +22,25 @@
     <ion-row>
       <ion-col size="12" text-center>
         <h1>Member Payments</h1>
-        <h3>Choose Your Payment Option Below</h3>
+        <p>There are multiple ways to submit your dues and voluntary contributions!</p>
+        <p>{{ currentYear | date:'yyyy' }} Dues and Contributions</p>
+          <ul class="payments">
+              <li class="payments-color">Annual Dues - $250</li>
+              <li class="payments-color">Contribution for Additional Security - $50</li>
+              <li class="payments-color">Contribution for SFCA Beautification - $50</li>
+            </ul>
+        <h3>Choose From 4 Payment Options Below</h3>
       </ion-col>
       <ion-col size-xl="6" offset-xl="3" size-lg="12" size-md="12" size-sm="12" size-xs="12">
-          <ion-item (click)="checkOption()" detail>
-            <ion-label>
-              Pay by Check
-            </ion-label>
+          <ion-item (click)="checkOption()" lines="full" color="primary">
+            <ion-icon name="wallet" slot="start"></ion-icon>
+            <ion-label>Pay by Check</ion-label>
           </ion-item>
           <ion-card *ngIf="showCheck">
             <ion-card-title>
               Drop off Check:
             </ion-card-title>
+            <ion-card-subtitle>Sign Check to: Sherwood Forest Civic Associaton</ion-card-subtitle>
             <ion-card-content>
               Steven Rudisail (mailbox is mounted to right of garage)<br>
               1630 Nottingham Way<br>
@@ -44,6 +51,7 @@
               <ion-card-title>
                 Mail Check:
               </ion-card-title>
+              <ion-card-subtitle>Sign Check to: Sherwood Forest Civic Associaton</ion-card-subtitle>
               <ion-card-content>
                 Sherwood Forest Civic Association<br>
                 PO Box 77531<br>
@@ -52,10 +60,9 @@
             </ion-card>
       </ion-col>
       <ion-col size-xl="6" offset-xl="3" size-lg="12" size-md="12" size-sm="12" size-xs="12">
-        <ion-item (click)="billPayOption()" detail>
-          <ion-label>
-            BillPay Via Your Bank
-          </ion-label>
+        <ion-item (click)="billPayOption()" lines="full" color="primary">
+            <ion-icon name="cash" slot="start"></ion-icon>
+            <ion-label>BillPay Via Your Bank</ion-label>
         </ion-item>
         <ion-card *ngIf="showBillPay">
             <ion-card-title>
@@ -74,10 +81,9 @@
           </ion-card>
       </ion-col>
       <ion-col size-xl="6" offset-xl="3" size-lg="12" size-md="12" size-sm="12" size-xs="12">
-        <ion-item (click)="venmoOption()" detail>
-          <ion-label>
-            Pay by Venmo
-          </ion-label>
+        <ion-item (click)="venmoOption()" lines="full" color="primary">
+            <ion-icon name="phone-portrait" slot="start"></ion-icon>
+            <ion-label>Pay by Venmo</ion-label>
         </ion-item>
         <ion-card *ngIf="showVenmo">
           <ion-card-title>
@@ -101,19 +107,18 @@
         </ion-card>
       </ion-col>
       <ion-col size-xl="6" offset-xl="3" size-lg="12" size-md="12" size-sm="12" size-xs="12">
-        <ion-item (click)="creditCardOption()" detail>
-          <ion-label>
-            Pay by Credit Card
-          </ion-label>
+        <ion-item (click)="creditCardOption()" lines="full" color="primary">
+            <ion-icon name="card" slot="start"></ion-icon>
+            <ion-label>Pay by Credit Card</ion-label>
         </ion-item>
         <ion-card *ngIf="showCreditCard">
           <ion-card-title>
             Pay by Credit Card
           </ion-card-title>
           <ion-card-content>
-            <ion-item>
+            <ion-item color="light">
               <ion-label>
-                Choose Options
+                Start Here to Pay Online
               </ion-label>
                 <ion-select
                 [interfaceOptions]="customAlertOptions"
@@ -136,13 +141,10 @@
       <ion-col size-xl="6" offset-xl="3" size-lg="12" size-md="12" size-sm="12" size-xs="12">
         <ion-card 
         [ngClass]="{ 'payment-card': showCreditCard, 'hide-payment-card': !showCreditCard }">
-          <img src="/assets/stripe-logo.png">
+          <img src="/assets/pay-sfca-card.jpg">
           <ion-card-header text-center>
-            <ion-card-subtitle>
-              <a href="https://stripe.com/" target="_blank">Click here to explore Stripe Payments</a>
-            </ion-card-subtitle>
             <ion-card-title>
-              Payments to SFCA
+              Your Payments to SFCA
             </ion-card-title>
             <ion-row text-center>
               <ion-col
@@ -156,6 +158,7 @@
               </ion-col>
             </ion-row>
           </ion-card-header>
+          <hr>
           <ion-card-content>
             <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
             <form>
@@ -166,9 +169,23 @@
               <p class="card-error">{{ cardErrors }}</p>
               <p class="charge-success" *ngIf="chargeSuccess">You're card has been charged . A receipt has been sent to {{ confirmation.receipt_email }}.<br>
                 <a [attr.href]="confirmation.receipt_url" target="_blank">View your receipt here.</a></p>
-              <ion-button expand="block" *ngIf="totalPayment > 0 && !chargeSuccess" (click)="handleForm($event)">Send {{ paymentAmount / 100 | currency }} to SFCA Now</ion-button>
+              <div text-center>
+                  <ion-button *ngIf="totalPayment > 0 && !chargeSuccess" (click)="handleForm($event)">Send {{ paymentAmount / 100 | currency }} to SFCA Now</ion-button>
+              </div>
             </form>
             <ion-progress-bar *ngIf="loading"></ion-progress-bar>
+            <hr>
+            <ion-row>
+              <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size-xs="6">
+                <a href="https://stripe.com/customers" target="_blank">
+                <img src="/assets/powered-by-stripe-small.png" alt="powered by stripe"></a>
+              </ion-col>
+              <ion-col size-xl="10" size-lg="10" size-md="10" size-sm="10" size-xs="6">
+                <a href="https://stripe.com/docs/security/stripe" target="_blank">
+                  <i>Secure & PCI Compliant</i>
+                </a>  
+              </ion-col>      
+            </ion-row>
           </ion-card-content>
         </ion-card>
       </ion-col>

@@ -2,6 +2,19 @@ hr {
   border-top: 1px solid var(--ion-color-secondary);
 }
 
+.payments {
+  font-size: 1.1em;
+  text-align: center;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.payments-color {
+  color: var(--ion-color-primary);
+  text-shadow: 1px 1px 1px var(--ion-color-secondary);
+}
+
 .pay-options {
   font-weight: bold;
   font-size: 1.3em;
@@ -16,7 +29,7 @@ hr {
 .hide-payment-card {
   margin: 0px auto;
   width: 100%;
-  height: 1px;
+  height: 0px;
   max-width: 100%;
   overflow: hidden;
 }
