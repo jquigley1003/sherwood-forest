@@ -157,9 +157,9 @@ export class PaymentPage implements OnInit, AfterViewInit {
       if (this.confirmation) {
         this.card.clear();
         this.chargeSuccess = true;
-        console.log('Confirmation Charge: ', this.confirmation, 'Email Receipt to: ', this.confirmation.receipt_email);
         this.loading = false;
         if (this.confirmation.description.includes('Annual Dues - $250')) {
+          this.checkPayOptions(this.confirmation.description);
           this.markDuesPaid(user, this.confirmation.description);
         } else {
           this.toastService.presentToast(user.displayName.firstName + ', thanks for your extra contributions!',
@@ -198,6 +198,20 @@ export class PaymentPage implements OnInit, AfterViewInit {
     this.toastService.presentToast(
       user.displayName.firstName + ', your dues have been marked paid! Thank your for the following payments: ' + description,
       true, 'top', 'Ok', 10000 );
+  }
+
+  checkPayOptions(payOpts) {
+    switch(payOpts) {
+      case payOpts.includes('Annual Dues - $250' + 'Additional Security - $50' + 'SFCA Beautification - $50'):
+        console.log("Paid Dues, Paid Security, Paid Beauty");
+        break;
+      case payOpts.includes('Annual Dues - $250' + 'Additional Security - $50'):
+        console.log("Paid Dues, Paid Security");
+        break;
+      case payOpts.includes('Annual Dues - $250' + 'SFCA Beautification - $50'):
+        console.log("Paid Dues, Paid Beauty");
+        break;
+    } 
   }
 
   goToMember() {

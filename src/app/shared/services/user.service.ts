@@ -1,25 +1,39 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
 
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
 
 import { DbService } from './db.service';
 import { ToastService } from './toast.service';
 import { AuthService } from './auth.service';
+import { takeUntil } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService implements OnDestroy{
   msg;
   retrieveUsers;
-  allUsers$: Observable<any>;
+  _allUsers: BehaviorSubject<any[]> = new BehaviorSubject<any>([]);
+  allUsers: Observable<any>;
+  ngUnsubscribe = new Subject<void>();
 
   constructor(private authService: AuthService,
               private dbService: DbService,
               private afFunctions: AngularFireFunctions,
-              private toastService: ToastService) {}
+              private toastService: ToastService) {
+                this.initializeUserService();
+              }
 
+  initializeUserService() {
+    this.fetchUsers();
+  }
+
+
+  getAllUsers() {
+    return this._allUsers.asObservable();
+  }
 
   sendNotificationEmail(emailType, data) {
     const callable = this.afFunctions.httpsCallable(emailType);
@@ -71,7 +85,14 @@ export class UserService {
   }
 
   fetchUsers() {
-    return this.dbService.collection$('users', ref => ref.orderBy('displayName.lastName'));
+    this.dbService.collection$('users', ref => ref.orderBy('displayName.lastName'))
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(
+        res => {
+        this._allUsers.next(res);
+      },
+    err => console.log("Error retrieving Users: ",err)
+    );
   }
 
   fetchBoardMembers() {
@@ -178,5 +199,10 @@ export class UserService {
           true, 'middle', 'OK', 3000);
         console.log(err);
       });
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

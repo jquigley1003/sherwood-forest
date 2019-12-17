@@ -38,6 +38,8 @@ export interface User {
   showBirthDate?: boolean;
   occupation?: string;
   duesPaid?: boolean;
+  securityPaid?: boolean;
+  beautyPaid?: boolean;
   roles?: Roles;
   residentSince?: Date;
   spousePartner?: SpousePartner;

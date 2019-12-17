@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ModalController } from '@ionic/angular';
 
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
 import { UserService } from '../shared/services/user.service';
@@ -42,6 +42,7 @@ export class AdminPage implements OnInit, OnDestroy {
   ngUnsubscribe = new Subject<void>();
   spousePartner$: Observable<any>;
   spousePartner: any[];
+  showSpinner: boolean = false;
 
   constructor(private userService: UserService,
               private jrResService: JrResidentService,
@@ -59,9 +60,26 @@ export class AdminPage implements OnInit, OnDestroy {
     this.getRecentReport();
   }
 
-  async getAllUsers() {
-    this.allUsers$ = await this.userService.fetchUsers();
-    this.allUsers$
+  separateLetter(record, recordIndex, records) {
+    if (recordIndex == 0) {
+      return record.displayName.lastName[0].toUpperCase();
+    }
+ 
+    if (!records[recordIndex + 1] || !records[recordIndex + 2]) {
+      return null;
+    }
+ 
+    let first_prev = records[recordIndex - 1].displayName.lastName[0];
+    let first_current = record.displayName.lastName[0];
+ 
+    if (first_prev != first_current) {
+      return first_current.toUpperCase();
+    }
+    return null;
+  }
+
+  getAllUsers() {
+    this.userService.getAllUsers()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(data => {
         this.users = data;
@@ -289,9 +307,8 @@ export class AdminPage implements OnInit, OnDestroy {
     for(var sfUser of this.users) {
       const data = {
         uid: sfUser.uid,
-        spousePartner: {
-          photoURL: ''
-        }
+        securityPaid: false,
+        beautyPaid: false
       };
       this.userService.updateUser('users/'+ sfUser.uid, data);
     }

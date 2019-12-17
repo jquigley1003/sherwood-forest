@@ -48,8 +48,7 @@ export class DirectoryPage implements OnInit, OnDestroy {
   }
 
   async getAllUsers() {
-    this.allUsers$ = await this.userService.fetchUsers();
-    this.allUsers$
+    this.userService.getAllUsers()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(data => {
         this.users = data;
