@@ -23,6 +23,8 @@ export class RegisterModalComponent implements OnInit {
               private modalCtrl: ModalController,
               private router: Router) {
     this.registerForm = this.formBuilder.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       email: ['', (Validators.required, Validators.pattern(".+\@.+\..+"))],
       password: ['', Validators.required]
     });
@@ -31,7 +33,7 @@ export class RegisterModalComponent implements OnInit {
   ngOnInit() {}
 
   async onRegisterForm() {
-    const { email, password } = this.registerForm.value;
+    const { firstName, lastName, email, password } = this.registerForm.value;
     await this.authService.emailCreateUser(email, password);
     await this.registerForm.reset();
     await this.modalCtrl.dismiss();
@@ -40,9 +42,14 @@ export class RegisterModalComponent implements OnInit {
   }
 
   async onAdminRegisterForm() {
+    const firstName = this.registerForm.value.firstName.trim();
+    const lastName = this.registerForm.value.lastName.trim();
+    const email = this.registerForm.value.email.trim();
+    const password = this.registerForm.value.password.trim();
 
-    const { email, password } = this.registerForm.value;
     const data = {
+      firstName,
+      lastName,
       email,
       password
     };

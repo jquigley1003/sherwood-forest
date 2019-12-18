@@ -50,7 +50,7 @@ export class UserService implements OnDestroy{
     },
       err => {
         this.toastService.presentToast(err.error, true, 'middle', 'OK', 3000);
-        console.log({err});
+        // console.log({err});
       });
   }
 
@@ -65,11 +65,11 @@ export class UserService implements OnDestroy{
           this.msg = resp.result;
         }
         this.toastService.presentToast(this.msg, true, 'top', 'OK', 3000);
-        console.log({resp});
+        // console.log({resp});
       })
       .catch(err => {
         this.toastService.presentToast(err.error, true, 'top', 'OK', 3000);
-        console.log({err});
+        // console.log({err});
       });
   }
 
@@ -91,7 +91,7 @@ export class UserService implements OnDestroy{
         res => {
         this._allUsers.next(res);
       },
-    err => console.log("Error retrieving Users: ",err)
+    err => console.log("Error retrieving Users")
     );
   }
 
@@ -114,11 +114,11 @@ export class UserService implements OnDestroy{
           this.msg = resp.result;
         }
         this.toastService.presentToast(this.msg, true, 'top', 'OK', 3000);
-        console.log({resp});
+        // console.log({resp});
       })
       .catch(err => {
         this.toastService.presentToast(err.error, true, 'top', 'OK', 3000);
-        console.log({err});
+        // console.log({err});
       });
   }
 
@@ -133,11 +133,11 @@ export class UserService implements OnDestroy{
           this.msg = resp.result;
         }
         this.toastService.presentToast(this.msg, true, 'top', 'OK', 3000);
-        console.log({resp});
+        // console.log({resp});
       })
       .catch(err => {
         this.toastService.presentToast(err.error, true, 'top', 'OK', 3000);
-        console.log({err});
+        // console.log({err});
       });
   }
 
@@ -152,11 +152,11 @@ export class UserService implements OnDestroy{
           this.msg = resp.result;
         }
         this.toastService.presentToast(this.msg, true, 'top', 'OK', 3000);
-        console.log({resp});
+        // console.log({resp});
       })
       .catch(err => {
         this.toastService.presentToast(err.error, true, 'top', 'OK', 3000);
-        console.log({err});
+        // console.log({err});
       });
   }
 
@@ -171,11 +171,11 @@ export class UserService implements OnDestroy{
           this.msg = resp.result;
         }
         this.toastService.presentToast(this.msg, true, 'top', 'OK', 3000);
-        console.log({resp});
+        // console.log({resp});
       })
       .catch(err => {
         this.toastService.presentToast(err.error, true, 'top', 'OK', 3000);
-        console.log({err});
+        // console.log({err});
       });
   }
 
@@ -197,7 +197,7 @@ export class UserService implements OnDestroy{
       .catch(err => {
         this.toastService.presentToast('You do not have the credentials to delete users!',
           true, 'middle', 'OK', 3000);
-        console.log(err);
+        // console.log(err);
       });
   }
 

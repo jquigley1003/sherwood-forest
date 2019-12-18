@@ -149,7 +149,7 @@ export class PaymentPage implements OnInit, AfterViewInit {
         { source: source.id, uid: user.id, amount: this.paymentAmount, email: user.email, description: this.payOptionText.toString()
         }).toPromise()
         .catch(err => {
-          console.log('This is the error:',err);
+          // console.log('This is the error:',err);
           this.chargeSuccess = false;
           this.loading = false;
           this.cardErrors = err;

@@ -23,53 +23,62 @@ export const adminCreateUser = functions.https.onCall((data, context) => {
     }
     const newUserEmail = data.email;
     const newUserPassword = data.password;
+    const firstName = data.firstName;
+    const lastName = data.lastName;
 
     return admin.auth().createUser({
       email: newUserEmail,
       password: newUserPassword,
       emailVerified: true
     })
-      .then((userRecord) => {
-        const users = admin.firestore().collection('users');
+    .then((userRecord) => {
+      const users = admin.firestore().collection('users');
 
-        return users.doc(userRecord.uid).set({
-          uid: userRecord.uid,
-          email: newUserEmail,
-          displayName: {
-            firstName: 'New',
-            lastName: 'Member'
-          },
-          address: {
-            streetNumber: '123',
-            streetName: 'Sherwood Forest',
-            subAddress: null,
-            city: 'Atlanta',
-            state: 'GA',
-            zipCode: '30309',
-          },
-          photoURL: 'https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/FrogBotanicalGarden.jpg?alt=media&token=0a0d35fd-7404-45c4-8032-8ec0f2eb92a9',
-          birthDate: null,
-          occupation: null,
-          residentSince: null,
-          duesPaid: false,
-          roles: {
-            pendingMember: true,
-            approvedMember: false,
-            admin: false
-          },
-          spousePartner: {
-            firstName: '',
-            lastName: '',
-            spID: '',
-            photoURL: ''
-          }
-        })
+      return users.doc(userRecord.uid).set({
+        uid: userRecord.uid,
+        email: newUserEmail,
+        displayName: {
+          firstName: firstName,
+          lastName: lastName
+        },
+        address: {
+          streetNumber: '123',
+          streetName: 'Sherwood Forest',
+          subAddress: null,
+          city: 'Atlanta',
+          state: 'GA',
+          zipCode: '30309',
+        },
+        photoURL: 'https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/FrogBotanicalGarden.jpg?alt=media&token=0a0d35fd-7404-45c4-8032-8ec0f2eb92a9',
+        birthDate: null,
+        occupation: null,
+        residentSince: null,
+        duesPaid: false,
+        securityPaid: false,
+        beautyPaid: false,
+        roles: {
+          pendingMember: true,
+          approvedMember: false,
+          admin: false
+        },
+        spousePartner: {
+          firstName: '',
+          lastName: '',
+          spID: '',
+          photoURL: ''
+        }
       })
-        .then(() => {
-              return {
-                result: `${newUserEmail} is now a pending member. Firebase collection updated!`
-              }
-            })
+    })
+    .then(() => {
+      return {
+        result: `${newUserEmail} is now a pending member. Firebase collection updated!`
+      }
+    })
+    .catch(() => {
+      return {
+        error: `There was an error adding ${newUserEmail} as a new member.`
+      };
+    })
   } else {
     return null;
   }

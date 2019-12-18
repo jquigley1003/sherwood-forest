@@ -109,14 +109,15 @@ export class UserModalComponent implements OnInit {
 
   async onUpdateUser() {
     this.otherHalf$ = await this.userService.getSpousePartner(
-      this.userForm.value.spFirstName,
-      this.userForm.value.spLastName,
-      this.userForm.controls['address'].value.streetNumber
+      this.userForm.value.spFirstName.trim(),
+      this.userForm.value.spLastName.trim(),
+      this.userForm.controls['address'].value.streetNumber.trim()
     );
     this.otherHalf$
       .pipe(take(1))
       .subscribe(data => {
         if(data && data.length > 0) {
+          console.log('the spouse partner is: ', data);
           this.otherHalf = data;
           if(this.spID === this.otherHalf[0].uid) {
             this.addInfoSpousePartner(this.otherHalf[0].uid);
@@ -127,6 +128,7 @@ export class UserModalComponent implements OnInit {
           }
         } else {
           this.otherHalf = null;
+          console.log('no spouse partner detected: ', data);
           if(this.spID !== '') {
             this.removeInfoSpousePartner(this.spID);
             this.updateCurrentUser();

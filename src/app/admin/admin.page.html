@@ -48,35 +48,10 @@
           </div>
         </ion-col>
       </ion-row>
-      <!-- <ion-button color="success" (click)="getAllUsers()">
-        Get All Users
-      </ion-button> -->
-      <ion-virtual-scroll [items]="users" apporItemHeight="70px" [headerFn]="separateLetter">
+      <ion-virtual-scroll [items]="users" approxItemHeight="70px" [headerFn]="separateLetter">
         <ion-item-divider *virtualHeader="let header">
           <b>{{ header }}</b>
         </ion-item-divider>
-        <!-- <ion-item-sliding>
-          <ion-item-options side="start">
-            <ion-item-option *ngIf="!user.duesPaid" color="warning" (click)="markDuesPaid( user )">
-              Dues<br>Unpaid
-            </ion-item-option>
-            <ion-item-option *ngIf="user.duesPaid" color="success" (click)="markDuesUnpaid( user )">
-              Dues<br>Paid
-            </ion-item-option>
-            <ion-item-option *ngIf="user.roles.pendingMember" color="dark" (click)="makeApproved( user )">
-              Pending<br>Member
-            </ion-item-option>
-            <ion-item-option *ngIf="user.roles.approvedMember" color="light" (click)="makePending( user )">
-              Approved<br>Member
-            </ion-item-option>
-            <ion-item-option *ngIf="!user.roles.admin" color="secondary" (click)="makeAdmin( user )">
-              Add<br>Admin
-            </ion-item-option>
-            <ion-item-option *ngIf="user.roles.admin" color="tertiary" (click)="removeAdmin( user )">
-              Remove<br>Admin
-            </ion-item-option>
-          </ion-item-options> -->
-    
           <ion-item *virtualItem="let user;">
             <ion-thumbnail slot="start" (click)="presentUserModal(user)">
               <ion-img [src]="user.photoURL"></ion-img>
@@ -102,14 +77,12 @@
                 <ion-button *ngIf="user.roles.admin" color="tertiary" (click)="removeAdmin( user )">
                   Remove Admin
                 </ion-button>
-        
                 <ion-button *ngIf="user.roles.pendingMember" color="dark" (click)="makeApproved( user )">
                   Pending Member
                 </ion-button>
                 <ion-button *ngIf="user.roles.approvedMember" color="light" (click)="makePending( user )">
                   Approved Member
                 </ion-button>
-        
                 <ion-button *ngIf="!user.duesPaid" color="warning" (click)="markDuesPaid( user )">
                   Dues are Unpaid
                 </ion-button>
@@ -129,58 +102,6 @@
               </ion-buttons>
             </ion-label>
           </ion-item>
-          <!-- <ion-item-options side="end">
-            <ion-item-option color="danger" (click)="deleteUser( user.displayName.firstName, user.uid, user.spousePartner.spID )">
-              Delete
-            </ion-item-option>
-          </ion-item-options>
-        </ion-item-sliding> -->
-    
-        <!-- <ion-item *ngFor="let user of users" lines="full">
-          <ion-thumbnail slot="start" (click)="presentUserModal(user)">
-            <img src="{{ user.photoURL }}">
-          </ion-thumbnail>
-          <ion-icon slot="end" *ngIf="user.roles.admin" name="medal">Admin</ion-icon>
-          <ion-icon slot="end" *ngIf="user.duesPaid" name="cash">Paid</ion-icon>
-          <ion-avatar slot="end" *ngIf="user.roles.pendingMember">
-            <img src="/assets/non-member.png">
-          </ion-avatar>
-          <ion-label text-wrap>
-            <ion-text>
-              <h1>{{ user.displayName.firstName + ' ' + user.displayName.lastName }}</h1>
-            </ion-text>
-            <ion-text>
-              <h1>{{ user.address.streetNumber + ' ' + user.address.streetName }}</h1>
-            </ion-text>
-            <ion-text>
-              <h2>{{ user.email }}</h2>
-            </ion-text>
-            <ion-button *ngIf="!user.roles.admin" color="secondary" (click)="makeAdmin( user )">
-              Add Admin Role
-            </ion-button>
-            <ion-button *ngIf="user.roles.admin" color="tertiary" (click)="removeAdmin( user )">
-              Remove Admin Role
-            </ion-button>
-    
-            <ion-button *ngIf="user.roles.pendingMember" color="dark" (click)="makeApproved( user )">
-              Pending Member
-            </ion-button>
-            <ion-button *ngIf="user.roles.approvedMember" color="light" (click)="makePending( user )">
-              Approved Member
-            </ion-button>
-    
-            <ion-button *ngIf="!user.duesPaid" color="warning" (click)="markDuesPaid( user )">
-              Dues are Unpaid
-            </ion-button>
-            <ion-button *ngIf="user.duesPaid" color="success" (click)="markDuesUnpaid( user )">
-              Dues are Paid
-            </ion-button>
-            <ion-button color="danger" (click)="deleteUser( user.displayName.firstName, user.uid, user.spousePartner.spID )">
-              Delete User
-            </ion-button>
-          </ion-label>
-        </ion-item> -->
       </ion-virtual-scroll>
-  </ion-grid>
-  
+  </ion-grid> 
 </ion-content>
