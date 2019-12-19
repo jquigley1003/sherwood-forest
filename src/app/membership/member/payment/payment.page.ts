@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '
 import { Router } from '@angular/router';
 import { AngularFireFunctions } from '@angular/fire/functions';
 
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, TimeoutError } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { AuthService } from '../../../shared/services/auth.service';
@@ -40,6 +40,8 @@ export class PaymentPage implements OnInit, AfterViewInit {
   currentDate: Date = new Date();
   currentYear;
   foundDuesOption;
+  payOptData = {};
+
 
   optionList: Array<any> = [
     {
@@ -63,6 +65,14 @@ export class PaymentPage implements OnInit, AfterViewInit {
       name: 'option_list',
       value: 5000,
       text: 'SFCA Beautification - $50',
+      disabled: false,
+      color: 'primary'
+    },
+    {
+      id: '4',
+      name: 'option_list',
+      value: 100,
+      text: 'Donation to SFCA - $1',
       disabled: false,
       color: 'primary'
     }
@@ -97,12 +107,30 @@ export class PaymentPage implements OnInit, AfterViewInit {
     this.card.mount(this.cardElement.nativeElement);
   }
 
+  async getCurrentUser() {
+    this.currentMember$ = await this.authService.user$;
+    this.currentMember$
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(data => {
+      if(data) {
+        this.currentUser = data;
+        if(this.currentUser.paidDues == true) {
+          this.optionList[0].disabled = true;
+          this.optionList[0].text = this.currentYear + ' dues paid!';
+        }
+      } else {
+        this.currentUser = null;
+      }
+    });
+  }
+
+
   async checkValue(event: any) {
     this.payOptionText = [];
     this.totalPayment = 0;
     await event.detail.value.forEach(element => {
       this.totalPayment += element.value;
-      this.payOptionText.push('  '+ element.text);
+      this.payOptionText.push(' '+ element.text);
     });
     this.paymentAmount = this.totalPayment;
     console.log('event detail: ', this.payOptionText);
@@ -142,8 +170,8 @@ export class PaymentPage implements OnInit, AfterViewInit {
 
       this.loading = true;
       const user = this.currentUser;
-      console.log('Current User is: ', user);
-      console.log(source);
+      // console.log('Current User is: ', user);
+      // console.log(source);
       const charge = this.afFunctions.httpsCallable('stripeCreateCharge');
       this.confirmation = await charge(
         { source: source.id, uid: user.id, amount: this.paymentAmount, email: user.email, description: this.payOptionText.toString()
@@ -159,11 +187,11 @@ export class PaymentPage implements OnInit, AfterViewInit {
         this.chargeSuccess = true;
         this.loading = false;
         if (this.confirmation.description.includes('Annual Dues - $250')) {
-          this.checkPayOptions(this.confirmation.description);
+          await this.checkPayOptions(this.confirmation.description);
           this.markDuesPaid(user, this.confirmation.description);
         } else {
           this.toastService.presentToast(user.displayName.firstName + ', thanks for your extra contributions!',
-          true, 'top', 'Ok', 10000 );
+          true, 'bottom', 'Ok', 10000 );
         }
       } else {
         this.chargeSuccess = false;
@@ -172,46 +200,45 @@ export class PaymentPage implements OnInit, AfterViewInit {
     }
   }
 
-  async getCurrentUser() {
-    this.currentMember$ = await this.authService.user$;
-    this.currentMember$
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(data => {
-      if(data) {
-        this.currentUser = data;
-        if(this.currentUser.duesPaid == true) {
-          this.optionList[0].disabled = true;
-          this.optionList[0].text = this.currentYear + ' dues paid!';
-        }
-      } else {
-        this.currentUser = null;
-      }
-    });
+  checkPayOptions(payOpts) {
+    if(payOpts.includes('Annual Dues - $250, Additional Security - $50, SFCA Beautification - $50')) {
+      console.log("Paid Dues, Paid Security, Paid Beauty");
+      return this.payOptData = {
+        paidDues: true,
+        paidSecurity: true,
+        paidBeauty: true
+      };
+      // this.didPayDues = true;
+      // this.didPaySecurity = true;
+      // this.didPayBeauty = true;
+    } else if(payOpts.includes('Annual Dues - $250, Additional Security - $50')) {
+      console.log("Paid Dues, Paid Security");
+      return this.payOptData = {
+        paidDues: true,
+        paidSecurity: true
+      };
+      // this.didPayDues = true;
+      // this.didPaySecurity = true;
+      // this.didPayBeauty = false;
+    } else if(payOpts.includes('Annual Dues - $250, SFCA Beautification - $50')) {
+      console.log("Paid Dues, Paid Beauty");
+        return this.payOptData = {
+          paidDues: true,
+          paidBeauty: true
+        };
+        // this.didPayDues = true;
+        // this.didPaySecurity = false;
+        // this.didPayBeauty = true;
+    }
   }
 
   async markDuesPaid(user, description) {
-    const data = {
-      uid: user.uid,
-      duesPaid: true
-    };
+    this.payOptData["uid"] = user.uid;
+    const data = this.payOptData;
     await this.userService.updateUser('users/'+ user.uid, data);
     this.toastService.presentToast(
       user.displayName.firstName + ', your dues have been marked paid! Thank your for the following payments: ' + description,
-      true, 'top', 'Ok', 10000 );
-  }
-
-  checkPayOptions(payOpts) {
-    switch(payOpts) {
-      case payOpts.includes('Annual Dues - $250' + 'Additional Security - $50' + 'SFCA Beautification - $50'):
-        console.log("Paid Dues, Paid Security, Paid Beauty");
-        break;
-      case payOpts.includes('Annual Dues - $250' + 'Additional Security - $50'):
-        console.log("Paid Dues, Paid Security");
-        break;
-      case payOpts.includes('Annual Dues - $250' + 'SFCA Beautification - $50'):
-        console.log("Paid Dues, Paid Beauty");
-        break;
-    } 
+      true, 'bottom', 'Ok', 10000 );
   }
 
   goToMember() {

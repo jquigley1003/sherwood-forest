@@ -73,7 +73,7 @@ export class MemberPage implements OnInit, OnDestroy {
       if(data) {
         this.user = data;
         this.currentUser = this.user.displayName.firstName + ' ' + this.user.displayName.lastName;
-        this.duesPaid = this.user.duesPaid;
+        this.duesPaid = this.user.paidDues;
         this.getJrResidents(this.user.uid);
         this.getPets(this.user.uid);
         if (this.user.spousePartner.spID !== '') {

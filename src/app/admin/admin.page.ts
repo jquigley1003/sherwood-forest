@@ -12,6 +12,7 @@ import { LoadingService } from '../shared/services/loading.service';
 import { JrResidentService } from '../shared/services/jr-resident.service';
 import { PetService } from '../shared/services/pet.service';
 import { ReportService } from '../shared/services/report.service';
+import { FireBaseService } from '../shared/services/firebase.service';
 import { UserModalComponent } from '../shared/modals/user-modal/user-modal.component';
 import { JrResidentModalComponent } from '../shared/modals/jr-resident-modal/jr-resident-modal.component';
 import { PetModalComponent } from '../shared/modals/pet-modal/pet-modal.component';
@@ -44,7 +45,8 @@ export class AdminPage implements OnInit, OnDestroy {
   spousePartner: any[];
   showSpinner: boolean = false;
 
-  constructor(private userService: UserService,
+  constructor(private firebaseService: FireBaseService,
+              private userService: UserService,
               private jrResService: JrResidentService,
               private petService: PetService,
               private toastService: ToastService,
@@ -304,14 +306,29 @@ export class AdminPage implements OnInit, OnDestroy {
   }
 
   addDataToUsers() {
-    for(var sfUser of this.users) {
-      const data = {
-        uid: sfUser.uid,
-        securityPaid: false,
-        beautyPaid: false
-      };
-      this.userService.updateUser('users/'+ sfUser.uid, data);
-    }
+    // for(var sfUser of this.users) {
+    //   const data = {
+    //     uid: sfUser.uid,
+    //     paidDues: false
+    //   };
+    //   this.userService.updateUser('users/'+ sfUser.uid, data);
+    // }
+
+    // for(var sfUser of this.users) {
+    //   if(sfUser.duesPaid) {
+    //     const data = {
+    //       uid: sfUser.uid,
+    //       paidDues: true
+    //     };
+    //     this.userService.updateUser('users/'+ sfUser.uid, data);
+    //   }
+    // }
+  }
+
+  deleteUserFields() {
+    // for(var sfUser of this.users) {
+    //     this.firebaseService.deleteFields('users/'+ sfUser.uid);
+    // }
   }
 
   makeAdmin(user) {
@@ -335,7 +352,7 @@ export class AdminPage implements OnInit, OnDestroy {
   async markDuesPaid(user) {
     const data = {
       uid: user.uid,
-      duesPaid: true
+      paidDues: true
     };
     await this.userService.updateUser('users/'+ user.uid, data);
     this.toastService.presentToast(user.displayName.firstName + ' has been marked paid!',
@@ -345,7 +362,7 @@ export class AdminPage implements OnInit, OnDestroy {
   async markDuesUnpaid(user) {
     const data = {
       uid: user.uid,
-      duesPaid: false
+      paidDues: false
     };
     await this.userService.updateUser('users/'+ user.uid, data);
     this.toastService.presentToast(user.displayName.firstName + ' dues are now marked unpaid',

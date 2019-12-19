@@ -35,6 +35,7 @@
 <ion-content padding>
   <p text-center>All SFCA Users</p>
   <!-- <ion-button color="danger">
+    Delete PaidDues User Field
     Add Data to Users
   </ion-button> -->
   <ion-grid>
@@ -83,10 +84,10 @@
                 <ion-button *ngIf="user.roles.approvedMember" color="light" (click)="makePending( user )">
                   Approved Member
                 </ion-button>
-                <ion-button *ngIf="!user.duesPaid" color="warning" (click)="markDuesPaid( user )">
+                <ion-button *ngIf="!user.paidDues" color="warning" (click)="markDuesPaid( user )">
                   Dues are Unpaid
                 </ion-button>
-                <ion-button *ngIf="user.duesPaid" color="success" (click)="markDuesUnpaid( user )">
+                <ion-button *ngIf="user.paidDues" color="success" (click)="markDuesUnpaid( user )">
                   Dues are Paid
                 </ion-button>
                 <ion-button color="danger" (click)="deleteUser( user.displayName.firstName, user.uid, user.spousePartner.spID )">

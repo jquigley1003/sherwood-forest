@@ -59,7 +59,7 @@
                     <ion-item>
                         <ion-label position="floating" text-wrap>Phone *
                             <span class="formInfo">(ex: 404-444-4444)</span></ion-label>
-                        <ion-input type="tel" formControlName="phone" required></ion-input>
+                        <ion-input type="tel" formControlName="phone" required (keyup)="addHyphens($event)" placeholder="type #s only - hyphens added automatically"></ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label position="floating" text-wrap>Email

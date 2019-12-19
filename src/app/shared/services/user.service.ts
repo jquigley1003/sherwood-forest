@@ -16,7 +16,6 @@ export class UserService implements OnDestroy{
   msg;
   retrieveUsers;
   _allUsers: BehaviorSubject<any[]> = new BehaviorSubject<any>([]);
-  allUsers: Observable<any>;
   ngUnsubscribe = new Subject<void>();
 
   constructor(private authService: AuthService,

@@ -102,6 +102,18 @@ export const deleteUser = functions.firestore
       .catch((error) => console.error('There was an error while deleting user:', error));
   });
 
+export const deleteDocField = functions.https.onCall((data, context) => {
+  if (context.auth) {
+    if(context.auth.token.admin !== true) {
+      return {
+        error: `Request not authorized. You must be an admin to grant request for ${data.email}.`
+      };
+    }
+  const users = admin.firestore().collection('users');
+  
+
+});
+
 export const sendContactMessage = functions.firestore
   .document('contactMessages/{messageId}')
   .onCreate(async (snapshot, context) => {

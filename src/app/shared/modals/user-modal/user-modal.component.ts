@@ -33,6 +33,7 @@ export class UserModalComponent implements OnInit {
   state: string = this.navParams.get('state');
   zipCode: string = this.navParams.get('zipCode');
   phone: string = this.navParams.get('phone');
+  phoneHyphen: string;
   email: string = this.navParams.get('email');
   birthDate: string = this.navParams.get('birthDate');
   showBirthDate: boolean = this.navParams.get('showBirthDate');
@@ -91,7 +92,7 @@ export class UserModalComponent implements OnInit {
         state: [this.state, Validators.required],
         zipCode: [this.zipCode, Validators.required]
       }),
-      phone: [this.phone, Validators.required],
+      phone: [this.phone, (Validators.required, Validators.pattern("^((\([0-9]{3}\))|[0-9]{3})[\s\-]?[\0-9]{3}[\s\-]?[0-9]{4}$"))],
       email: [this.email, (Validators.required, Validators.pattern(".+\@.+\..+"))],
       birthDate: [this.birthDate],
       showBirthDate: [this.showBirthDate],
@@ -117,7 +118,6 @@ export class UserModalComponent implements OnInit {
       .pipe(take(1))
       .subscribe(data => {
         if(data && data.length > 0) {
-          console.log('the spouse partner is: ', data);
           this.otherHalf = data;
           if(this.spID === this.otherHalf[0].uid) {
             this.addInfoSpousePartner(this.otherHalf[0].uid);
@@ -128,7 +128,6 @@ export class UserModalComponent implements OnInit {
           }
         } else {
           this.otherHalf = null;
-          console.log('no spouse partner detected: ', data);
           if(this.spID !== '') {
             this.removeInfoSpousePartner(this.spID);
             this.updateCurrentUser();
@@ -225,9 +224,8 @@ export class UserModalComponent implements OnInit {
       }
     }
     this.toastService.presentToast(
-      'Spouse/Partner info changed for ' +
-      this.userForm.value.spFirstName + ' ' + this.userForm.value.spLastName +', too!',
-      true, 'middle', 'Ok', 5000 );
+      this.userForm.value.spFirstName + ' ' + this.userForm.value.spLastName +', was updated with any Spouse/Partner, Jr Residents, & Pet informtation, too!',
+      true, 'middle', 'Ok', 7000 );
   }
 
   removeInfoSpousePartner(otherHalfID) {
@@ -265,6 +263,19 @@ export class UserModalComponent implements OnInit {
       this.spFirstName + ' ' + this.spLastName +', too!',
       true, 'middle', 'Ok', 5000
     );
+  }
+
+  addHyphens(e) {
+    const key = e.charCode || e.keyCode || 0;
+       if (key !== 8 && key !== 9) {
+           if (e.target.value.length === 3) {
+               e.target.value = e.target.value + '-';
+           }
+           if (e.target.value.length === 7) {
+            e.target.value = e.target.value + '-';
+           }
+       }
+       return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
   }
 
 
