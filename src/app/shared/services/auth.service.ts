@@ -283,7 +283,9 @@ export class AuthService {
       birthDate: null,
       occupation: null,
       residentSince: null,
-      duesPaid: false,
+      paidDues: false,
+      paidSecurity: false,
+      paidBeauty: false,
       roles: {
         admin: false,
         pendingMember: true,

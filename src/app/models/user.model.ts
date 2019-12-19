@@ -37,9 +37,9 @@ export interface User {
   birthDate?: Date;
   showBirthDate?: boolean;
   occupation?: string;
-  duesPaid?: boolean;
-  securityPaid?: boolean;
-  beautyPaid?: boolean;
+  paidDues?: boolean;
+  paidSecurity?: boolean;
+  paidBeauty?: boolean;
   roles?: Roles;
   residentSince?: Date;
   spousePartner?: SpousePartner;

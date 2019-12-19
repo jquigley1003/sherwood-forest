@@ -53,9 +53,9 @@ export const adminCreateUser = functions.https.onCall((data, context) => {
         birthDate: null,
         occupation: null,
         residentSince: null,
-        duesPaid: false,
-        securityPaid: false,
-        beautyPaid: false,
+        paidDues: false,
+        paidSecurity: false,
+        paidBeauty: false,
         roles: {
           pendingMember: true,
           approvedMember: false,
@@ -101,18 +101,6 @@ export const deleteUser = functions.firestore
       .then(() => console.log('Deleted user with ID:' + snap.id))
       .catch((error) => console.error('There was an error while deleting user:', error));
   });
-
-export const deleteDocField = functions.https.onCall((data, context) => {
-  if (context.auth) {
-    if(context.auth.token.admin !== true) {
-      return {
-        error: `Request not authorized. You must be an admin to grant request for ${data.email}.`
-      };
-    }
-  const users = admin.firestore().collection('users');
-  
-
-});
 
 export const sendContactMessage = functions.firestore
   .document('contactMessages/{messageId}')
