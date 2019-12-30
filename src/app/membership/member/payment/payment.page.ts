@@ -93,7 +93,7 @@ export class PaymentPage implements OnInit, AfterViewInit {
   ngOnInit() {
     this.getCurrentUser();
     this.paymentAmount = this.totalPayment;
-    this.stripe = Stripe('pk_test_tmTO0Fa6CBYTehnwfjNxpp7l00JUD1YmVj');
+    this.stripe = Stripe('pk_live_wMHR49b6z5ImcUTYkywzrMPS00zhRRLY8W');
     const elements = this.stripe.elements();
 
     this.card = elements.create('card');
