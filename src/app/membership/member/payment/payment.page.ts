@@ -93,6 +93,7 @@ export class PaymentPage implements OnInit, AfterViewInit {
   ngOnInit() {
     this.getCurrentUser();
     this.paymentAmount = this.totalPayment;
+    // this.stripe = Stripe('pk_test_tmTO0Fa6CBYTehnwfjNxpp7l00JUD1YmVj');
     this.stripe = Stripe('pk_live_wMHR49b6z5ImcUTYkywzrMPS00zhRRLY8W');
     const elements = this.stripe.elements();
 
@@ -133,7 +134,7 @@ export class PaymentPage implements OnInit, AfterViewInit {
       this.payOptionText.push(' '+ element.text);
     });
     this.paymentAmount = this.totalPayment;
-    console.log('event detail: ', this.payOptionText);
+    console.log('Pay option detail: ', this.payOptionText);
   }
 
   checkOption() {
@@ -190,8 +191,8 @@ export class PaymentPage implements OnInit, AfterViewInit {
           await this.checkPayOptions(this.confirmation.description);
           this.markDuesPaid(user, this.confirmation.description);
         } else {
-          this.toastService.presentToast(user.displayName.firstName + ', thanks for your extra contributions!',
-          true, 'bottom', 'Ok', 10000 );
+          await this.checkContributions(this.confirmation.description);
+          this.markContributionPaid(user, this.confirmation.description);
         }
       } else {
         this.chargeSuccess = false;
@@ -208,27 +209,43 @@ export class PaymentPage implements OnInit, AfterViewInit {
         paidSecurity: true,
         paidBeauty: true
       };
-      // this.didPayDues = true;
-      // this.didPaySecurity = true;
-      // this.didPayBeauty = true;
     } else if(payOpts.includes('Annual Dues - $250, Additional Security - $50')) {
       console.log("Paid Dues, Paid Security");
       return this.payOptData = {
         paidDues: true,
         paidSecurity: true
       };
-      // this.didPayDues = true;
-      // this.didPaySecurity = true;
-      // this.didPayBeauty = false;
     } else if(payOpts.includes('Annual Dues - $250, SFCA Beautification - $50')) {
       console.log("Paid Dues, Paid Beauty");
         return this.payOptData = {
           paidDues: true,
           paidBeauty: true
         };
-        // this.didPayDues = true;
-        // this.didPaySecurity = false;
-        // this.didPayBeauty = true;
+    } else {
+      console.log("Paid Dues Only");
+        return this.payOptData = {
+          paidDues: true
+        };
+    }
+  }
+
+  checkContributions(extraOpts) {
+    if(extraOpts.includes('Additional Security - $50, SFCA Beautification - $50')) {
+      console.log("Paid Security, Paid Beauty");
+        return this.payOptData = {
+          paidSecurity: true,
+          paidBeauty: true
+        };
+    } else if(extraOpts.includes('Additional Security - $50')) {
+      console.log("Paid Security Only");
+        return this.payOptData = {
+          paidSecurity: true
+        };
+    } else {
+      console.log("Paid Beauty Only");
+        return this.payOptData = {
+          paidBeauty: true
+        };
     }
   }
 
@@ -237,8 +254,23 @@ export class PaymentPage implements OnInit, AfterViewInit {
     const data = this.payOptData;
     await this.userService.updateUser('users/'+ user.uid, data);
     this.toastService.presentToast(
-      user.displayName.firstName + ', your dues have been marked paid! Thank your for the following payments: ' + description,
+      user.displayName.firstName + ', your dues have been marked paid! Thank you for the following payments: ' + description,
       true, 'bottom', 'Ok', 10000 );
+    if(user.spousePartner.spID !== '') {
+      this.userService.updateUser('users/'+ user.spousePartner.spID, data);
+    }
+  }
+
+  async markContributionPaid(user, description) {
+    this.payOptData["uid"] = user.uid;
+    const data = this.payOptData;
+    await this.userService.updateUser('users/'+ user.uid, data);
+    this.toastService.presentToast(
+      user.displayName.firstName + ', thank you for the following contribution: ' + description + ' !',
+      true, 'bottom', 'Ok', 10000 );
+    if(user.spousePartner.spID !== '') {
+      this.userService.updateUser('users/'+ user.spousePartner.spID, data);
+    }
   }
 
   goToMember() {

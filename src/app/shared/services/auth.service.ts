@@ -98,12 +98,13 @@ export class AuthService {
                   'You Are Currently a Pending Member',
                   'You must be an Approved Member to gain full access to this web app',
                   [{
-                    text: 'OK',
-                    role: 'cancel',
-                    handler: () => {
-                      console.log('Confirm Ok');
+                      text: 'OK',
+                      role: 'cancel',
+                      handler: () => {
+                        console.log('Confirm Ok');
+                      }
                     }
-                  }]
+                  ]
                 );
                 this.signOut();
               } else {
@@ -121,12 +122,12 @@ export class AuthService {
             'Please Check Your Mailbox',
             'Click the link on the email we sent you for verification',
             [{
-              text: 'OK',
-              role: 'cancel',
-              handler: () => {
-                this.signOut();
-              }
-            },
+                text: 'OK',
+                role: 'cancel',
+                handler: () => {
+                  this.signOut();
+                }
+              },
               {
                 text: 'Resend Email',
                 cssClass: 'secondary',
@@ -134,7 +135,8 @@ export class AuthService {
                   this.sendEmailVerification();
                   console.log('Resent verification email');
                 }
-              }]
+              }
+            ]
           );
         }
       })
@@ -153,21 +155,26 @@ export class AuthService {
     });
   }
 
-  // Reset Forggot password
+  // Reset Forgot password
   resetPassword(passwordResetEmail) {
     return this.afAuth.auth.sendPasswordResetEmail(passwordResetEmail)
       .then(() => {
         this.alertService.presentAlert(
           'Password Reset Email Sent',
-          'Please Check Your Inbox or ',
+          'Please Check Your Inbox',
           'Follow the email instructions to reset your password',
           [{
-            text: 'OK',
-            role: 'cancel',
-            handler: () => {
-              this.signOut();
+              text: 'OK',
+              role: 'cancel',
+            },
+            {
+              text: 'Sign Out Now',
+              cssClass: 'primary',
+              handler: () => {
+                this.signOut();
+              }
             }
-          }]
+          ]
         );
       }).catch(error => this.handleError(error))
   }
