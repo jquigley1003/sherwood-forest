@@ -144,15 +144,18 @@ export class AuthService {
   }
 
   sendEmailVerification() {
-    this.emailVerifySubscription = this.afAuth.authState.subscribe(user => {
-      user.sendEmailVerification()
-        .then(() => {
-          this.signOut();
-        })
-        .then(() => {
-          this.emailVerifySubscription.unsubscribe();
-        });
-    });
+    this.afAuth.auth.currentUser.sendEmailVerification();
+
+
+    // this.emailVerifySubscription = this.afAuth.authState.subscribe(user => {
+    //   user.sendEmailVerification()
+    //     .then(() => {
+    //       this.signOut();
+    //     })
+    //     .then(() => {
+    //       this.emailVerifySubscription.unsubscribe();
+    //     });
+    // });
   }
 
   // Reset Forgot password
@@ -177,6 +180,34 @@ export class AuthService {
           ]
         );
       }).catch(error => this.handleError(error))
+  }
+
+  // change existing email address
+  changeEmail(newEmail) {
+    return this.afAuth.auth.currentUser.updateEmail(newEmail)
+      .then(() => {
+        this.afAuth.auth.currentUser.sendEmailVerification();
+      })
+      .then(() => {
+        this.alertService.presentAlert(
+          'Your Email Address Has Been Updated',
+          'Please Check Your Inbox',
+          '1) Click the link to verify your new email. 2) For security, an email was sent to your original email address so you can review the change',
+          [{
+              text: 'OK',
+              role: 'cancel',
+            },
+            {
+              text: 'Sign Out Now',
+              cssClass: 'primary',
+              handler: () => {
+                this.signOut();
+              }
+            }
+          ]
+        )
+      })
+      .catch(error => this.handleError(error))
   }
 
   uid() {

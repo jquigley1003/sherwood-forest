@@ -67,15 +67,15 @@ export class PaymentPage implements OnInit, AfterViewInit {
       text: 'SFCA Beautification - $50',
       disabled: false,
       color: 'primary'
-    },
-    {
-      id: '4',
-      name: 'option_list',
-      value: 100,
-      text: 'Donation to SFCA - $1',
-      disabled: false,
-      color: 'primary'
     }
+    // {
+    //   id: '4',
+    //   name: 'option_list',
+    //   value: 100,
+    //   text: 'Donation to SFCA - $1',
+    //   disabled: false,
+    //   color: 'primary'
+    // }
   ];
 
   customAlertOptions: any = {
