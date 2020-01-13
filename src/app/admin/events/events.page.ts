@@ -6,6 +6,7 @@ import { AuthService } from '../../shared/services/auth.service';
 import { EventService } from '../../shared/services/event.service';
 import { AlertService } from '../../shared/services/alert.service';
 import { EventModalComponent } from '../../shared/modals/event-modal/event-modal.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-events',
@@ -16,7 +17,7 @@ export class EventsPage implements OnInit, OnDestroy {
   showEventForm: boolean = false;
   allEvents;
   events: any[];
-  eventSubscription;
+  eventSubscription: Subscription;
 
 
   constructor(private router: Router,

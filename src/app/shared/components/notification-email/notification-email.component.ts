@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
+import { Observable } from 'rxjs';
+import { finalize, tap } from 'rxjs/operators';
 
 import { UserService } from '../../services/user.service';
 import { ToastService } from '../../services/toast.service';
@@ -11,13 +14,22 @@ import { ToastService } from '../../services/toast.service';
   styleUrls: ['./notification-email.component.scss'],
 })
 export class NotificationEmailComponent implements OnInit {
-
+  @ViewChild('quillFile', {static: false}) quillFileRef: ElementRef;
+  quillFile: any;
+  myQuillRef: any;
+  task: AngularFireUploadTask;
+  percentage: Observable<number>;
+  snapshot: Observable<any>;
+  downloadURL: string;
+  pastePhotoURL: any;
+  emailType: string = '';
   emailForm: FormGroup;
   editorStyle = {
     height: '50vh'
   };
   editorConfig = {
-    toolbar: [
+    toolbar: {
+      container: [
       ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
       [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
       ['blockquote', 'code-block'],
@@ -31,13 +43,18 @@ export class NotificationEmailComponent implements OnInit {
       [{ 'font': [] }],
       [{ 'align': [] }],
       ['clean'],                                         // remove formatting button
-      ['link']                                           // link
-    ]
+      ['link','image']                                   // link and image
+      ],
+      handlers: {
+        image: (image) => {
+          this.imageHandler(image);
+        }
+      }
+    }
   };
 
-  emailType: string = '';
-
   constructor(private formBuilder: FormBuilder,
+              private afStorage: AngularFireStorage,
               private userService: UserService,
               private toastService: ToastService,
               private router: Router) {
@@ -53,6 +70,51 @@ export class NotificationEmailComponent implements OnInit {
     this.emailType = template;
   }
 
+  getEditorInstance(editorInstance: any) {
+    this.myQuillRef = editorInstance;
+  }
+
+  imageHandler(image: any) {
+    /* Here we trigger a click action on the file input field, this will open a file chooser on a client computer */
+    this.quillFileRef.nativeElement.click();
+  }
+
+  async quillFileSelected(ev: any) {
+    /* After the file is selected from the file chooser, we handle the upload process */
+    this.quillFile = await ev.target.files[0];
+    this.uploadPhoto();
+   
+
+  }
+
+  async uploadPhoto() {
+    // The storage path
+    const path = `notifications/${Date.now()}_${this.quillFile.name}`
+    // Reference to storage bucket
+    const ref = this.afStorage.ref(path);
+    // The main task
+    this.task = this.afStorage.upload(path, this.quillFile);
+    // Progress monitoring
+    this.percentage = this.task.percentageChanges();
+    this.snapshot = this.task.snapshotChanges().pipe(
+      tap(console.log),
+      // The file's download URL
+      finalize( async() => {
+        this.downloadURL = await ref.getDownloadURL().toPromise();
+      }),
+    );
+  }
+
+  async getPhotoURL() {
+    const img = '<img src="' + this.downloadURL + '"></img>';
+    const range = await this.myQuillRef.getSelection();
+    await this.myQuillRef.clipboard.dangerouslyPasteHTML(range.index, img);
+
+    this.percentage = null;
+    this.snapshot = null;
+    this.downloadURL = "";
+  }
+
   async onSubmitForm(emailType) {
 
     const {subject, emailmessage} = this.emailForm.value;
@@ -66,6 +128,10 @@ export class NotificationEmailComponent implements OnInit {
     await this.toastService.presentToast('Thank you, your ' + emailType + ' is in process!',
       true, 'middle', 'Ok', 3000 );
     await this.emailForm.reset();
+  }
+
+  isActive(snapshot) {
+    return snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
   }
 
 }

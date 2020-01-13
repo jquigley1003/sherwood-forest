@@ -60,8 +60,35 @@
         <ion-item>
           <ion-label><b>Message to Members</b></ion-label>
         </ion-item>
+        <div *ngIf="percentage | async as pct">
+          <progress [value]="pct" max="100"></progress>
+          {{ pct | number }}%   
+        </div>
+        <ion-item *ngIf="snapshot | async as snap">
+          {{ snap.bytesTransferred }} of {{ snap.totalBytes }}
+          <button (click)="task.pause()" [disabled]="!isActive(snap)">Pause</button>
+          <button (click)="task.cancel()" [disabled]="!isActive(snap)">Cancel</button>
+          <button (click)="task.resume()" [disabled]="!(snap?.state === 'paused')">Resume</button>
+        </ion-item>
+        <ion-item *ngIf="downloadURL as url">
+          <ion-row>
+            <ion-col size="12">
+              <h2>Please Click the Confirm Button Below to Add Image to Your Notification Email</h2>
+            </ion-col>
+            <ion-col size="12">
+              <img [src]="url">
+            </ion-col>
+            <ion-col size="12">
+              <ion-button expand="block" (click)="getPhotoURL()">Confirm</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-item>
         <ion-item>
+          <div class="invisible-input-cont">
+            <input #quillFile type="file" (change)="quillFileSelected($event)">
+          </div>
           <quill-editor
+                  (onEditorCreated)="getEditorInstance($event)"
                   class="ql-editor" [styles]="editorStyle" [modules]="editorConfig"
                   formControlName="emailmessage">
           </quill-editor>

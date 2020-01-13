@@ -3,6 +3,11 @@
   user-select: text;
 }
 
+.invisible-input-cont input {
+  width: 0px;
+  height: 0px;
+}
+
 .group-buttons {
   margin-top: 1em;
   border: 2px solid var(--ion-color-primary);
