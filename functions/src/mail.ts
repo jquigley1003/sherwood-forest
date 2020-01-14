@@ -177,8 +177,8 @@ export const sendFilmingEmail = functions.https.onCall(async (data, context) => 
       dynamic_template_data: {
         subject: data.subject,
         emailmessage: data.emailmessage,
+        sender_name: 'Test SFCA Email',
         // sender_name: 'Sherwood Forest Civic Association',
-        sender_name: 'TESTING SFCA EMAIL NOTIFICATIONS',
         sender_address: 'PO Box 77531',
         sender_city: 'Atlanta',
         sender_state: 'GA',
