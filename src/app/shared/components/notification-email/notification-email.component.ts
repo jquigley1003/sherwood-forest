@@ -117,6 +117,9 @@ export class NotificationEmailComponent implements OnInit {
 
     this.percentage = null;
     this.snapshot = null;
+    setTimeout(() =>{
+      this.downloadURL = "";
+    },10000)
   }
 
   async onSubmitForm(emailType) {

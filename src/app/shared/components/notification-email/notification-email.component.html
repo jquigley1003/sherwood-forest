@@ -70,12 +70,8 @@
           <button (click)="task.cancel()" [disabled]="!isActive(snap)">Cancel</button>
           <button (click)="task.resume()" [disabled]="!(snap?.state === 'paused')">Resume</button>
         </ion-item>
-        <ion-item *ngIf="downloadURL as url">
-          <ion-row>
-            <ion-col size="12">
-              <p>REMEMBER: Press Enter/Return on your keyboard to confirm each image addition.</p>
-            </ion-col>
-          </ion-row>
+        <ion-item *ngIf="downloadURL">
+          <p class="warning-color">REMEMBER: Press Enter/Return on your keyboard to confirm each image addition, which moves your cursor to the next line. </p>
         </ion-item>
         <ion-item>
           <div class="invisible-input-cont">
