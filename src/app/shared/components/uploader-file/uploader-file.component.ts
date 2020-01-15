@@ -40,8 +40,8 @@ export class UploaderFileComponent implements AfterViewInit {
   async onDrop(files: FileList) {
     for (let i = 0; i < files.length; i++) {
         console.log(files.item(i).size);
-        if(files.item(i).size > 1000000) {
-          await this.toastService.presentToast('Your file size should be no more than 999 KB',
+        if(files.item(i).size > 5100000) {
+          await this.toastService.presentToast('Your file size should be no more than 5MB',
             true, 'middle', 'Ok', 3000 );
         }else {
           this.files.push(files.item(i));
