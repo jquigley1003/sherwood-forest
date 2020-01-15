@@ -52,6 +52,7 @@ export class NotificationEmailComponent implements OnInit {
       }
     }
   };
+  information = 'Insert text here. NOTE: When adding images, press "enter/return" on keyboard after image is inserted.';
 
   constructor(private formBuilder: FormBuilder,
               private afStorage: AngularFireStorage,
@@ -97,10 +98,11 @@ export class NotificationEmailComponent implements OnInit {
     // Progress monitoring
     this.percentage = this.task.percentageChanges();
     this.snapshot = this.task.snapshotChanges().pipe(
-      tap(console.log),
+      tap(),
       // The file's download URL
       finalize( async() => {
         this.downloadURL = await ref.getDownloadURL().toPromise();
+        this.getPhotoURL();
       }),
     );
   }
@@ -108,26 +110,28 @@ export class NotificationEmailComponent implements OnInit {
   async getPhotoURL() {
     const img = '<img src="' + this.downloadURL + '"></img>';
     const range = await this.myQuillRef.getSelection();
+    // await this.myQuillRef.insertEmbed(range.index, 'image', this.downloadURL);
+    // await this.myQuillRef.setSelection(range.index + 1);
     await this.myQuillRef.clipboard.dangerouslyPasteHTML(range.index, img);
+
 
     this.percentage = null;
     this.snapshot = null;
-    this.downloadURL = "";
   }
 
   async onSubmitForm(emailType) {
-
     const {subject, emailmessage} = this.emailForm.value;
-
     const data = {
       subject: subject,
       emailmessage: emailmessage
     };
 
+    console.log('email message: ',data.emailmessage);
+
     await this.userService.sendNotificationEmail(emailType, data);
     await this.toastService.presentToast('Thank you, your ' + emailType + ' is in process!',
       true, 'middle', 'Ok', 3000 );
-    await this.emailForm.reset();
+    this.emailForm.reset();
   }
 
   isActive(snapshot) {
