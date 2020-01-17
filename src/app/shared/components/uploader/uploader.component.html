@@ -1,24 +1,38 @@
 <ion-row>
-  <ion-col size="12" text-center>
-    <div class="dropzone" appDropzone
-         (hovered)="toggleHover($event)"
-         (dropped)="onDrop($event)"
-         [class.hovering]="isHovering">
+  <ion-col size="12" text-center class="dropzone" appDropzone
+  (hovered)="toggleHover($event)"
+  (dropped)="onDrop($event)"
+  [class.hovering]="isHovering">
+   
       <h3>Drag and Drop a File</h3>
       <p>jpeg or png image should be less than 5 MB</p>
       <ion-item>
-        <ion-label>
+        <ion-label text-center>
           or choose a file…
         </ion-label>
       </ion-item>
-      <ion-item>
+      <ion-item text-center>
         <input class="file-input" type="file" (change)="onDrop($event.target.files)">
       </ion-item>
-    </div>
-    <h3>Uploads</h3>
-    <div *ngFor="let file of files">
-      <app-upload-task [file]="file" [userId]="memberId"></app-upload-task>
-    </div>
+ 
+  </ion-col>
+  <ion-col size="12">
+    <app-upload-task [file]="newProfile" [userId]="memberId" [userName]="memberName"></app-upload-task>
+  </ion-col>
+  <ion-col size="12" *ngIf="showCropper">
+    <ion-row>
+      <ion-col size="12" text-center>
+        <img-cropper #cropper [image]="imageCropData" [settings]="cropperSettings"></img-cropper>
+      </ion-col>
+      <ion-col size="12" text-center>
+        <span class="result rounded" *ngIf="imageCropData.image" >
+          <img [src]="imageCropData.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+        </span>
+      </ion-col>
+      <ion-col size="12">
+        <ion-button expand="block" (click)="getImageData()">Select New Image</ion-button>
+      </ion-col>
+    </ion-row>
   </ion-col>
 </ion-row>
 

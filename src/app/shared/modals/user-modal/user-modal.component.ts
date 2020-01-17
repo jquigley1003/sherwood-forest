@@ -46,6 +46,8 @@ export class UserModalComponent implements OnInit {
   jrResidents: any = this.navParams.get('jrResidents');
   pets: any = this.navParams.get('pets');
 
+  imgFullName: string;
+
   radioList = [
     {
       id: '1',
@@ -79,6 +81,7 @@ export class UserModalComponent implements OnInit {
               private toastService: ToastService) { }
 
   ngOnInit() {
+    this.imgFullName = this.firstName + this.lastName;
     this.userForm = this.formBuilder.group({
       displayName: this.formBuilder.group({
         firstName: [this.firstName, Validators.required],

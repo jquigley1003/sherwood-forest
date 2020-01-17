@@ -84,8 +84,6 @@ export class NotificationEmailComponent implements OnInit {
     /* After the file is selected from the file chooser, we handle the upload process */
     this.quillFile = await ev.target.files[0];
     this.uploadPhoto();
-   
-
   }
 
   async uploadPhoto() {

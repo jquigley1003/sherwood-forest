@@ -13,6 +13,7 @@ import { DbService } from '../../services/db.service';
 export class UploadTaskComponent implements OnInit {
   @Input() file: File;
   @Input() userId: string;
+  @Input() userName: string;
 
   task: AngularFireUploadTask;
 
@@ -24,19 +25,24 @@ export class UploadTaskComponent implements OnInit {
               private dbService: DbService) { }
 
   ngOnInit() {
-    this.startUpload();
+    
   }
 
-  startUpload() {
+  async startUpload(image, oldPhotoURL, spMemberId) {
+    // Delete the image being replaced from firebase storage
+    const oldPhotoRef = this.afStorage.storage.refFromURL(oldPhotoURL).delete();
+    console.log('oldPhoto storage reference: ', oldPhotoRef);
 
+    console.log('upload task file: ', image);
     // The storage path
-    const path = `profile/${Date.now()}_${this.file.name}`;
+    const path = `profile/${Date.now()}_${this.userName}`;
 
     // Reference to storage bucket
     const ref = this.afStorage.ref(path);
 
     // The main task
-    this.task = this.afStorage.upload(path, this.file);
+    // this.task = this.afStorage.upload(path, this.file);
+    this.task = this.afStorage.ref(path).putString(image, 'data_url');
 
     // Progress monitoring
     this.percentage = this.task.percentageChanges();
@@ -50,6 +56,14 @@ export class UploadTaskComponent implements OnInit {
           photoURL: this.downloadURL
         };
         this.dbService.updateAt(`users/${this.userId}`, data);
+        if(spMemberId != "") {
+          const spData = {
+            spousePartner: {
+              photoURL: this.downloadURL
+            } 
+          };
+          this.dbService.updateAt(`users/${spMemberId}`, spData);
+        }
       }),
     );
   }
