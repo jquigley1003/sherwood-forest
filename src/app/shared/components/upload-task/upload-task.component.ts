@@ -30,9 +30,13 @@ export class UploadTaskComponent implements OnInit {
 
   async startUpload(image, oldPhotoURL, spMemberId) {
     // Delete the image being replaced from firebase storage
-    const oldPhotoRef = this.afStorage.storage.refFromURL(oldPhotoURL).delete();
-    console.log('oldPhoto storage reference: ', oldPhotoRef);
-
+    if(oldPhotoURL != "https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/FrogBotanicalGarden.jpg?alt=media&token=11f3ff3f-c3e9-4cbe-a525-2dcb033bec79") {
+      const oldPhotoRef = this.afStorage.storage.refFromURL(oldPhotoURL).delete();
+      console.log('old profile pic deleted: ', oldPhotoRef);
+    } else {
+      console.log('did not delete the frog: ', oldPhotoURL);
+    }
+    
     console.log('upload task file: ', image);
     // The storage path
     const path = `profile/${Date.now()}_${this.userName}`;
