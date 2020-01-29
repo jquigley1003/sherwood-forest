@@ -257,7 +257,9 @@ export class PaymentPage implements OnInit, AfterViewInit {
       user.displayName.firstName + ', your dues have been marked paid! Thank you for the following payments: ' + description,
       true, 'bottom', 'Ok', 10000 );
     if(user.spousePartner.spID !== '') {
-      this.userService.updateUser('users/'+ user.spousePartner.spID, data);
+      this.payOptData["uid"] = user.spousePartner.spID
+      const spData = this.payOptData;
+      this.userService.updateUser('users/'+ user.spousePartner.spID, spData);
     }
   }
 
@@ -269,7 +271,9 @@ export class PaymentPage implements OnInit, AfterViewInit {
       user.displayName.firstName + ', thank you for the following contribution: ' + description + ' !',
       true, 'bottom', 'Ok', 10000 );
     if(user.spousePartner.spID !== '') {
-      this.userService.updateUser('users/'+ user.spousePartner.spID, data);
+      this.payOptData["uid"] = user.spousePartner.spID;
+      const spData = this.payOptData;
+      this.userService.updateUser('users/'+ user.spousePartner.spID, spData);
     }
   }
 

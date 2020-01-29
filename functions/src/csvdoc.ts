@@ -18,46 +18,97 @@ export const createCSV = functions.firestore
         const reportId = context.params.reportId;
         const fileName = `reports/${reportId}.csv`;
         const tempFilePath = path.join(os.tmpdir(), fileName);
+        
+        // Children and Pets
+        const memChildren:Array<any> = [];
+        const memPets:Array<any> = [];
 
         // Reference report in Firestore
-        const reportRef = db.collection('reports').doc(reportId)
+        const reportRef = db.collection('reports').doc(reportId);
 
         // Reference Storage Bucket
-        const storage = adminStorage.bucket(GCS_BUCKET)
+        const storage = adminStorage.bucket(GCS_BUCKET);
 
         // Step 2. Query collection
+
+        // Children and Pets
+        await db.collection('jrResidents').orderBy('displayName.lastName').get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+                    memChildren.push( doc.data() )
+                });
+                // console.log(children);
+            });
+
+        await db.collection('pets').orderBy('petName').get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+                    memPets.push( doc.data() )
+                });
+        });
+
         return db.collection('users').orderBy('displayName.lastName')
-                 .get() 
+                 .get()
                  .then(querySnapshot => {
-                    
                     /// Step 3. Creates CSV file from with users collection
                     const allUsers:Array<any> = []
 
-                    // create array of order data
+                    // create array of member data
                     querySnapshot.forEach(doc => {
-                        allUsers.push( doc.data() )
+                        let member = doc.data();
+                        member.id = doc.data().uid;
+                        member.lastName = doc.data().displayName.lastName;
+                        member.firstName = doc.data().displayName.firstName;
+                        member.phone = doc.data().phone;
+                        member.streetNumber = doc.data().address.streetNumber;
+                        member.streetName = doc.data().address.streetName;
+                        member.paidDues = doc.data().paidDues;
+                        member.email = doc.data().email;
+                        member.spFirstName = doc.data().spousePartner.firstName;
+                        member.spLastName = doc.data().spousePartner.lastName;
+                        member.allChildren = [];
+                        member.allPets = [];
+
+                        for(let i = 0; i < memChildren.length; i++) {
+                            if (memChildren[i].parentIDs.includes(member.id)) {
+                                member.allChildren.push(memChildren[i].displayName.firstName + ' ' + memChildren[i].displayName.lastName);
+                            }
+                        }
+
+                        memPets.forEach(petDoc => {
+                            if (petDoc.petParentIDs.includes(member.id) ) {
+                                member.allPets.push(petDoc.petName + ' | Color: ' + petDoc.color + ', Breed: ' + petDoc.breed);
+                            }
+                        })
+                        
+                        allUsers.push( member )
                     });
 
                     const fields = [
                         {label: 'LastName',
-                        value: 'displayName.lastName'},
+                        value: 'lastName'},
                         {label: 'FirstName',
-                        value: 'displayName.firstName'},
+                        value: 'firstName'},
                         {label: 'Phone',
                         value: 'phone'},
                         {label: 'StreetNumber',
-                        value: 'address.streetNumber'},
+                        value: 'streetNumber'},
                         {label: 'StreetName',
-                        value: 'address.streetName'},
+                        value: 'streetName'},
                         {label: 'PaidDues',
-                        value: 'duesPaid'},
+                        value: 'paidDues'},
                         {label: 'Email',
                         value: 'email'},
                         {label: 'S/P FirstName',
-                        value: 'spousePartner.firstName'},
+                        value: 'spFirstName'},
                         {label: 'S/P LastName',
-                        value: 'spousePartner.lastName'}
+                        value: 'spLastName'},
+                        {label: 'Children',
+                        value: 'allChildren'},
+                        {label: 'Pets',
+                        value: 'allPets'}
                     ];
+                    // console.log(allUsers);
                     const opts = { fields };
                     return json2csv.parse(allUsers, opts);
                  })

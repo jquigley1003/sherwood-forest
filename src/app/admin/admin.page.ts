@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ModalController } from '@ionic/angular';
 
-import { Observable, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { Observable, Subject, of, defer, combineLatest } from 'rxjs';
+import { take, takeUntil, map, tap, switchMap } from 'rxjs/operators';
 
 import { UserService } from '../shared/services/user.service';
 import { ToastService } from '../shared/services/toast.service';
@@ -16,6 +16,7 @@ import { FireBaseService } from '../shared/services/firebase.service';
 import { UserModalComponent } from '../shared/modals/user-modal/user-modal.component';
 import { JrResidentModalComponent } from '../shared/modals/jr-resident-modal/jr-resident-modal.component';
 import { PetModalComponent } from '../shared/modals/pet-modal/pet-modal.component';
+
 
 @Component({
   selector: 'app-admin',
@@ -44,6 +45,7 @@ export class AdminPage implements OnInit, OnDestroy {
   spousePartner$: Observable<any>;
   spousePartner: any[];
   showSpinner: boolean = false;
+  family$: Observable<any>;
 
   constructor(private firebaseService: FireBaseService,
               private userService: UserService,
@@ -305,7 +307,7 @@ export class AdminPage implements OnInit, OnDestroy {
     return await modal.present();
   }
 
-  addDataToUsers() {
+  async addDataToUsers() {
     // for(var sfUser of this.users) {
     //   const data = {
     //     uid: sfUser.uid,
