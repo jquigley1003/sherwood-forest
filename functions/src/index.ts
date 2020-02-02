@@ -3,6 +3,11 @@ import * as admin from 'firebase-admin';
 
 import * as nodemailer from 'nodemailer';
 
+const EMAIL = functions.config().gmail.email;
+const EMAIL_CLIENT_ID = functions.config().gmail.clientid;
+const EMAIL_CLIENT_SECRET = functions.config().gmail.clientsecret;
+const EMAIL_REFRESH_TOKEN = functions.config().gmail.refreshtoken;
+
 admin.initializeApp();
 
 export { sendGeneralEmail, sendEventEmail, sendSecurityEmail, sendFilmingEmail, sendAllResidentsEmail } from './mail';
@@ -106,31 +111,32 @@ export const sendContactMessage = functions.firestore
   .document('contactMessages/{messageId}')
   .onCreate(async (snapshot, context) => {
 
-    const fromEmail =
-      encodeURIComponent(functions.config().gmail.email);
+    // const fromEmail =
+    //   encodeURIComponent(functions.config().gmail.email);
 
-    const fromPassword =
-      encodeURIComponent(functions.config().gmail.password);
+    // const fromPassword =
+    //   encodeURIComponent(functions.config().gmail.password);
 
     const mailTransport =
-      nodemailer.createTransport('smtps://'+fromEmail+':'+fromPassword+'@smtp.gmail.com');
       // nodemailer.createTransport('smtp://'+fromEmail+':'+fromPassword+'@smtp.office365.com');
-      // nodemailer.createTransport({
-      //   host: 'smtp.office365.com',
-      //   port: 587,
-      //   secure: false,
-      //   auth: {
-      //     user: fromEmail,
-      //     pass: fromPassword
-      //   }
-      // });
+      nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          type: 'OAuth2',
+          user: EMAIL,
+          clientId: EMAIL_CLIENT_ID,
+          clientSecret: EMAIL_CLIENT_SECRET,
+          refreshToken: EMAIL_REFRESH_TOKEN,
+          expires: 1484314697598
+        }
+      });
 
     const newValue = snapshot.data();
 
     if(newValue) {
       const mailOptions = {
         to: 'sfca@sherwoodforestatl.org',
-        subject: 'SFCA Contact Message From '+ newValue.name,
+        subject: 'SFCA Contact Form Message From '+ newValue.name,
         html: newValue.html
       };
 

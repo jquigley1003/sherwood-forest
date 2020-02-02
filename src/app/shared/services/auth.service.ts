@@ -112,7 +112,7 @@ export class AuthService {
                 this.initCheckForAdmin();
                 this.toastService.presentToast(
                   'Welcome back to Sherwood Forest Civic Association!',
-                  true, 'top', 'Close', 3000);
+                  true, 'middle', 'Close', 3000);
                 console.log('no need to update user in cloud firestore');
               }
             });
