@@ -23,7 +23,8 @@ export class FireBaseService {
   deleteFields(path) {
     // this.userRef = this.afs.doc(path);
     // this.userRef.update({
-    //   duesPaid: firebase.firestore.FieldValue.delete()
+    //   beautyPaid: firebase.firestore.FieldValue.delete(),
+    //   securityPaid: firebase.firestore.FieldValue.delete()
     // })
   }
 

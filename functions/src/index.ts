@@ -54,7 +54,7 @@ export const adminCreateUser = functions.https.onCall((data, context) => {
           state: 'GA',
           zipCode: '30309',
         },
-        photoURL: 'https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/FrogBotanicalGarden.jpg?alt=media&token=0a0d35fd-7404-45c4-8032-8ec0f2eb92a9',
+        photoURL: 'https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/FrogBotanicalGarden.jpg?alt=media&token=11f3ff3f-c3e9-4cbe-a525-2dcb033bec79',
         birthDate: null,
         occupation: null,
         residentSince: null,

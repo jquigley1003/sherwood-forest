@@ -63,6 +63,8 @@ export const createCSV = functions.firestore
                         member.streetNumber = doc.data().address.streetNumber;
                         member.streetName = doc.data().address.streetName;
                         member.paidDues = doc.data().paidDues;
+                        member.paidBeauty = doc.data().paidBeauty;
+                        member.paidSecurity = doc.data().paidSecurity;
                         member.email = doc.data().email;
                         member.spFirstName = doc.data().spousePartner.firstName;
                         member.spLastName = doc.data().spousePartner.lastName;
@@ -97,6 +99,10 @@ export const createCSV = functions.firestore
                         value: 'streetName'},
                         {label: 'PaidDues',
                         value: 'paidDues'},
+                        {label: 'PaidBeauty',
+                        value: 'paidBeauty'},
+                        {label: 'PaidSecurity',
+                        value: 'paidSecurity'},
                         {label: 'Email',
                         value: 'email'},
                         {label: 'S/P FirstName',
