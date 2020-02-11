@@ -34,7 +34,7 @@
           <ion-item-sliding #eventItem *ngFor="let event of events" >
             <ion-item (click)="presentEventModal(event)">
               <ion-thumbnail><img src="{{ event.photoURL }}"></ion-thumbnail>
-              <ion-label text-wrap padding>
+              <ion-label text-wrap class="ion-padding">
                 <ion-text>
                   <h3>{{ event.title }}</h3>
                 </ion-text>

@@ -1,12 +1,12 @@
-<ion-grid padding-top>
+<ion-grid class="ion-padding-top">
   <ion-row>
     <ion-col size="2"></ion-col>
     <ion-col size="8">
       <ion-row class="group-buttons">
-        <ion-col size="12" text-center>
+        <ion-col size="12" class="ion-text-center">
           <h2>Templates for Approved Members</h2>
         </ion-col>
-        <ion-col size="12" text-center>
+        <ion-col size="12" class="ion-text-center">
           <ion-button (click)="buildEmailType('sendGeneralEmail')">General Email</ion-button>
           <ion-button (click)="buildEmailType('sendEventEmail')">Events Email</ion-button>
           <ion-button (click)="buildEmailType('sendSecurityEmail')">Security Email</ion-button>
@@ -14,38 +14,38 @@
         </ion-col>
       </ion-row>
       <ion-row class="group-buttons">
-        <ion-col size="12" text-center>
+        <ion-col size="12" class="ion-text-center">
           <h2>Templates for All Residents</h2>
         </ion-col>
-        <ion-col size="12" text-center>
+        <ion-col size="12" class="ion-text-center">
           <ion-button (click)="buildEmailType('sendAllResidentsEmail')">General Email</ion-button>
         </ion-col>
       </ion-row>
-      <ion-header *ngIf="emailType == 'sendGeneralEmail'" text-center padding>
+      <ion-header *ngIf="emailType == 'sendGeneralEmail'" class="ion-text-center ion-padding">
         <h1>
           Your General Message to All Approved Members
         </h1>
         <ion-img src="/assets/SF-general-banner.png"></ion-img>
       </ion-header>
-      <ion-header *ngIf="emailType == 'sendEventEmail'" text-center padding>
+      <ion-header *ngIf="emailType == 'sendEventEmail'" class="ion-text-center ion-padding">
         <h1>
           Your Events Message to All Approved Members
         </h1>
         <ion-img src="/assets/SF-events-banner.png"></ion-img>
       </ion-header>
-      <ion-header *ngIf="emailType == 'sendSecurityEmail'" text-center padding>
+      <ion-header *ngIf="emailType == 'sendSecurityEmail'" class="ion-text-center ion-padding">
         <h1>
           Your Security Message to All Approved Members
         </h1>
         <ion-img src="/assets/SF-security-banner.png"></ion-img>
       </ion-header>
-      <ion-header *ngIf="emailType == 'sendFilmingEmail'" text-center padding>
+      <ion-header *ngIf="emailType == 'sendFilmingEmail'" class="ion-text-center ion-padding">
         <h1>
           Your Filming Message to All Approved Members
         </h1>
         <ion-img src="/assets/SF-filming-banner.jpg"></ion-img>
       </ion-header>
-      <ion-header *ngIf="emailType == 'sendAllResidentsEmail'" text-center padding>
+      <ion-header *ngIf="emailType == 'sendAllResidentsEmail'" class="ion-text-center ion-padding">
         <h1>
           Your Message to All Sherwood Forest Residents
         </h1>
@@ -85,7 +85,7 @@
           </quill-editor>
         </ion-item>
         <ion-row>
-          <ion-col text-center>
+          <ion-col class="ion-text-center">
             <ion-button type="submit" [disabled]="!emailForm.valid" >
               Submit
             </ion-button>

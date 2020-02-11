@@ -8,7 +8,7 @@
 <ion-content>
   <ion-grid>
     <ion-row class="align-items-center">
-      <ion-col text-center>
+      <ion-col class="ion-text-center">
         <ion-card style="height: 80vh;">
           <ion-button *ngIf="!(loggedIn$ | async)" (click)="presentLoginModal()">Login Here</ion-button>
           <ion-button *ngIf="loggedIn$ | async" (click)="presentLogoutModal()">Logout Here</ion-button>

@@ -77,7 +77,7 @@
                     step="30">
             </calendar>
           <ng-template #template let-selectedDate="selectedDate.events" let-noEventsLabel="noEventsLabel">
-            <ion-list *ngIf="selectedDate.length > 0" no-lines class="event-list" padding>
+            <ion-list *ngIf="selectedDate.length > 0" no-lines class="event-list ion-padding">
               <ion-button ion-item detail-push *ngFor="let event of selectedDate"
                        (click)="onEventSelected(event)" class="event-button">
                 <ion-icon name="calendar" item-start></ion-icon>

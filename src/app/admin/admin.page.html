@@ -7,7 +7,7 @@
       Admin
     </ion-title>
   </ion-toolbar>
-  <ion-toolbar text-center>
+  <ion-toolbar class="ion-text-center">
     <ion-searchbar showCancelButton="always" (ionInput)="filterByFirstName($event)"
                    *ngIf="filterBy == 'firstName'" placeholder="Search by First Name">
     </ion-searchbar>
@@ -19,7 +19,7 @@
                    *ngIf="filterBy == 'address'"placeholder="Search by Address">
     </ion-searchbar>
   </ion-toolbar>
-  <ion-toolbar text-center class="toolbar-buttons">
+  <ion-toolbar class="ion-text-center toolbar-buttons">
     <ion-button [color]="statusFirst" (click)="queryFirstName()">
       First Name
     </ion-button>
@@ -32,17 +32,17 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <p text-center>All SFCA Users</p>
+<ion-content class="ion-padding">
+  <p class="ion-text-center">All SFCA Users</p>
   <!-- <ion-button color="danger">
     Combine data test
   </ion-button> -->
   <ion-grid>
       <ion-row>
-        <ion-col text-center size="12">
+        <ion-col class="ion-text-center" size="12">
           <ion-button (click)="requestReport()">Generate New SFCA Users Report</ion-button>
         </ion-col>
-        <ion-col text-center size="12">
+        <ion-col class="ion-text-center" size="12">
           <div *ngFor="let report of recentReport">
             <app-report-link [report]="report"></app-report-link>
           </div>

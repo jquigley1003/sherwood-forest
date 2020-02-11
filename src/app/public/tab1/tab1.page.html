@@ -8,7 +8,7 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col size="12" class="home-image" text-center>
+      <ion-col size="12" class="ion-text-center home-image">
         <ion-img @growImg src="/assets/ForestTannion2019.jpg"></ion-img>
         <h1 class="home-title1" @slideTitleRight>Welcome to Sherwood Forest</h1>
         <h1 class="home-title2" @slideTitleLeft>Civic Association</h1>
@@ -22,19 +22,19 @@
           Association is an active community organization maintaining the essential
           business of the neighborhood and providing fun events to encourage and
           promote social engagement.</p>
-        <p text-center *ngIf="!isLoggedIn">SFCA Members,
+        <p class="ion-text-center" *ngIf="!isLoggedIn">SFCA Members,
           <a (click)="presentLoginModal()">please login</a>
           for full access and information.</p>
       </ion-col>
     </ion-row>
     <ion-card class="welcome-card">
       <ion-img src="/assets/ForestTannion2019More.jpg"></ion-img>
-      <ion-card-header text-center>
+      <ion-card-header class="ion-text-center">
         <ion-card-title>Key Contacts</ion-card-title>
       </ion-card-header>
-      <ion-card-content text-center>
-        <ion-row text-center class="ion-justify-content-center">
-          <ion-col text-center padding *ngFor="let key of keyContacts">
+      <ion-card-content class="ion-text-center">
+        <ion-row class="ion-text-center ion-justify-content-center">
+          <ion-col class="ion-text-center ion-padding" *ngFor="let key of keyContacts">
             <div routerLink="/public/contact" >
               <ion-avatar><ion-img src="{{ key.photoURL }}"></ion-img></ion-avatar>
               <h2>{{ key.displayName.firstName}} {{ key.displayName.lastName}}</h2>
