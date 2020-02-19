@@ -17,7 +17,7 @@
   <div *ngIf="eventState == 'edit'; then editEvent else viewEvent"></div>
   <ng-template #editEvent>
     <app-event-form
-            [eventInfo]="eventForm.value" (eventSubmitted)="doneCloseModal($event)"></app-event-form>
+            [eventInfo]="eventForm.value" (eventSubmitted)="doneCloseModal()"></app-event-form>
   </ng-template>
   <ng-template #viewEvent>
     <ion-grid class="ion-padding-top">

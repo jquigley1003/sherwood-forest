@@ -107,14 +107,30 @@ export class JrResidentModalComponent implements OnInit {
     };
     if(this.currentJrResID == '') {
       await this.jrResService.updateJrRes('jrResidents/', data);
-      await this.toastService.presentToast(firstName +' has been added as Junior Resident',
-        true, 'top', 'Ok', 3000 );
+      await this.toastService.presentToast(
+        firstName +' has been added as Junior Resident',
+        'top',
+        [{
+          text: 'OK',
+          role: 'cancel',
+          handler: () => {
+            console.log('dismiss toast message');
+          }
+        }], 3000 );
       await this.jrResForm.reset();
       await this.modalCtrl.dismiss();
     } else {
       await this.jrResService.updateJrRes('jrResidents/'+ this.currentJrResID, data);
-      await this.toastService.presentToast('The Junior Resident profile for '+ firstName +' has been updated!',
-        true, 'top', 'Ok', 3000 );
+      await this.toastService.presentToast(
+        'The Junior Resident profile for '+ firstName +' has been updated!',
+        'top',
+        [{
+          text: 'OK',
+          role: 'cancel',
+          handler: () => {
+            console.log('dismiss toast message');
+          }
+        }], 3000 );
       await this.jrResForm.reset();
       await this.modalCtrl.dismiss();
     }

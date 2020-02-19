@@ -47,8 +47,16 @@ export class UploaderComponent {
     for (let i = 0; i < files.length; i++) {
       console.log(files.item(i));
       if(files.item(i).size > 5100000) {
-        await this.toastService.presentToast('Your file size should be no more than 5MB',
-          true, 'middle', 'Ok', 3000 );
+        await this.toastService.presentToast(
+          'Your file size should be no more than 5MB',
+          'middle',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000 );
       }else {
         var image:any = new Image();
         var chosenFile:File = files.item(i);

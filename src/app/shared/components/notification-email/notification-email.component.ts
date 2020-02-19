@@ -130,8 +130,16 @@ export class NotificationEmailComponent implements OnInit {
     console.log('email message: ',data.emailmessage);
 
     await this.userService.sendNotificationEmail(emailType, data);
-    await this.toastService.presentToast('Thank you, your ' + emailType + ' is in process!',
-      true, 'middle', 'Ok', 3000 );
+    await this.toastService.presentToast(
+      'Thank you, your ' + emailType + ' is in process!',
+      'middle',
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }], 3000 );
     this.emailForm.reset();
   }
 

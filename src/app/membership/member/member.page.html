@@ -12,7 +12,7 @@
 </ion-header>
 <ion-content>
   <ion-card>
-    <img src="../../assets/LionIsland2.jpg">
+    <ion-img src="../../assets/LionIsland2.jpg"></ion-img>
     <ion-card-title class="ion-text-center card-title">
       Welcome to the Member Page<br>
       {{ currentUser }}
@@ -58,7 +58,7 @@
         </ion-row>
       </ion-col>
     </ion-row>
-    <ion-row margin-top class="ion-margin-top ion-padding-bottom ion-text-center ion-justify-content-center">
+    <ion-row class="ion-margin-top ion-padding-bottom ion-text-center ion-justify-content-center">
       <ion-col class="ion-text-center">
         <h2>Board Members 2019 - 2021</h2>
         <ion-button (click)="showBoardMembers()" *ngIf="!showBoard">Show Board Members</ion-button>

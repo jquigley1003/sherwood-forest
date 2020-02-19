@@ -63,7 +63,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.alertService.presentAlert(
           'App Update!',
           'Updated version of SFCA app available.',
-          'Load New Version?',
+          'Load Improved Version?',
           [
             {
               text: 'Cancel',

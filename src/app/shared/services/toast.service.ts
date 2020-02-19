@@ -9,12 +9,11 @@ export class ToastService {
 
   constructor(private toastController: ToastController) { }
 
-  async presentToast(message, showCloseButton, position, closeButtonText, duration) {
+  async presentToast(message, position, buttons, duration) {
     const toast = await this.toastController.create({
       message: message,
-      showCloseButton: showCloseButton,
       position: position,
-      closeButtonText: closeButtonText,
+      buttons: buttons,
       duration: duration
     });
     toast.present();

@@ -188,8 +188,16 @@ export class UserModalComponent implements OnInit {
     };
 
     await this.userService.updateUser('users/'+ this.uid, data);
-    await this.toastService.presentToast('The member profile for '+ firstName + ' ' + lastName +' has been updated!',
-      true, 'middle', 'Ok', 3000 );
+    await this.toastService.presentToast(
+      'The member profile for '+ firstName + ' ' + lastName +' has been updated!',
+      'middle',
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }], 3000 );
     await this.userForm.reset();
     await this.closeModalWithData();
   }
@@ -228,7 +236,14 @@ export class UserModalComponent implements OnInit {
     }
     this.toastService.presentToast(
       this.userForm.value.spFirstName + ' ' + this.userForm.value.spLastName +', was updated with any Spouse/Partner, Jr Residents, & Pet informtation, too!',
-      true, 'middle', 'Ok', 7000 );
+      'middle',
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }], 7000 );
   }
 
   removeInfoSpousePartner(otherHalfID) {
@@ -264,7 +279,14 @@ export class UserModalComponent implements OnInit {
     this.toastService.presentToast(
       'Spouse/Partner info changed for ' +
       this.spFirstName + ' ' + this.spLastName +', too!',
-      true, 'middle', 'Ok', 5000
+      'middle',
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }], 5000
     );
   }
 

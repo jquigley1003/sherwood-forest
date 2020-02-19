@@ -30,15 +30,40 @@ export class PetService {
   }
 
   deletePet(petPath) {
-    this.toastService.presentToast('Please wait while we remove this Pet.', true, 'middle', 'OK', 3000);
+    this.toastService.presentToast(
+      'Please wait while we remove this Pet.',
+      'middle',
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }], 3000);
     this.dbService.delete(petPath)
       .then(() => {
-        this.toastService.presentToast('The Pet has been removed!',
-          true, 'middle', 'Ok', 3000 );
+        this.toastService.presentToast(
+          'The Pet has been removed!',
+          'middle',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000 );
       })
       .catch(err => {
-        this.toastService.presentToast(err,
-          true, 'middle', 'OK', 3000);
+        this.toastService.presentToast(
+          err,
+          'middle',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000);
       });
   }
 }

@@ -82,7 +82,14 @@ export class Tab1Page implements OnInit, OnDestroy {
     if (isIos() && !isInStandaloneMode() && isBannerShown === undefined) {
       this.toastService.presentToast(
         'To install the app: 1. Use the Safari Browser | 2. tap "Share" icon below | 3. select "Add to Home Screen".',
-        true, 'bottom', 'OK', 10000);
+        'bottom',
+        [{
+          text: 'OK',
+          role: 'cancel',
+          handler: () => {
+            console.log('dismiss toast message');
+          }
+        }], 10000);
       set('isBannerShown', true);
     }
   }

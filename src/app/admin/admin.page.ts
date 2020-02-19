@@ -359,8 +359,17 @@ export class AdminPage implements OnInit, OnDestroy {
       paidDues: true
     };
     await this.userService.updateUser('users/'+ user.uid, data);
-    this.toastService.presentToast(user.displayName.firstName + ' has been marked paid!',
-      true, 'top', 'Ok', 3000 );
+    this.toastService.presentToast(
+      user.displayName.firstName + ' has been marked paid!',
+      'top',
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }]
+      , 3000 );
   }
 
   async markDuesUnpaid(user) {
@@ -369,8 +378,16 @@ export class AdminPage implements OnInit, OnDestroy {
       paidDues: false
     };
     await this.userService.updateUser('users/'+ user.uid, data);
-    this.toastService.presentToast(user.displayName.firstName + ' dues are now marked unpaid',
-      true, 'top', 'Ok', 3000 );
+    this.toastService.presentToast(
+      user.displayName.firstName + ' dues are now marked unpaid',
+      'top',
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }], 3000 );
   }
 
   async deleteUser(firstName, uid, spID) {

@@ -59,12 +59,12 @@
                         </ion-item>
                     </div>
                     <ion-item>
-                        <ion-label position="floating" text-wrap>Phone *
+                        <ion-label position="floating" class="ion-text-wrap">Phone *
                             <span class="formInfo">(ex: 404-444-4444)</span></ion-label>
                         <ion-input type="tel" formControlName="phone" required (keyup)="addHyphens($event)" placeholder="type #s only - hyphens added automatically"></ion-input>
                     </ion-item>
                     <ion-item>
-                        <ion-label position="floating" text-wrap>Email
+                        <ion-label position="floating" class="ion-text-wrap">Email
                             <span class="formInfo">(only admin can change)</span></ion-label>
                         <ion-input type="email" formControlName="email" required readonly></ion-input>
                     </ion-item>
@@ -77,15 +77,23 @@
                         <ion-input type="date" formControlName="birthDate"></ion-input>
                     </ion-item>
                     <ion-item>
-                        <ion-label text-wrap>Show My Birthday in Directory (Month/Day)</ion-label>
+                        <ion-label class="ion-text-wrap">Show My Birthday in Directory (Month/Day)</ion-label>
                         <ion-list slot="end">
-                            <ion-radio-group (ionChange)="radioSelect($event)">
-                                <ion-item *ngFor="let item of radioList">
+                            <ion-radio-group value="{{showBirthDate}}" (ionChange)="radioSelect($event)">
+                                <!-- <ion-item *ngFor="let item of radioList">
                                    <ion-label>{{ item.text }}</ion-label>
                                     <ion-radio
                                     value= "{{ item.value }}"
                                     checked="{{ item.checked }}"
                                     color="{{ item.color }}"></ion-radio>
+                                </ion-item> -->
+                                <ion-item>
+                                    <ion-label>Yes</ion-label>
+                                    <ion-radio value="true" color="primary"></ion-radio>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>No</ion-label>
+                                    <ion-radio value="false" color="primary"></ion-radio>
                                 </ion-item>
                             </ion-radio-group>
                         </ion-list>
@@ -95,7 +103,7 @@
                         <ion-input type="date" formControlName="residentSince"></ion-input>
                     </ion-item>
                     <ion-item>
-                        <ion-label position="floating" text-wrap >Spouse/Partner Name</ion-label>
+                        <ion-label position="floating" class="ion-text-wrap">Spouse/Partner Name</ion-label>
                         <ion-avatar class="spAvatar" *ngIf="spPhotoURL !=''" slot="start">
                             <img src="{{ spPhotoURL }}">
                         </ion-avatar>

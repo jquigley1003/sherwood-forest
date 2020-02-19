@@ -111,8 +111,16 @@ export class UserFormComponent implements OnInit, OnDestroy {
       residentSince: residentSince
     };
     await this.userService.updateUser('users/'+ this.uid, data);
-    await this.toastService.presentToast('Your member profile has been updated!',
-      true, 'top', 'Ok', 3000 );
+    await this.toastService.presentToast(
+      'Your member profile has been updated!',
+      'top',
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }], 3000 );
     await this.userForm.reset();
     await this.modalCtrl.dismiss();
     // this.router.navigate(['/member']);

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ModalController } from '@ionic/angular';
+import { ModalController, IonRouterOutlet } from '@ionic/angular';
 
 import { AuthService } from '../../../shared/services/auth.service';
 import { DinnerCocktailModalComponent } from '../../../shared/modals/dinner-cocktail-modal/dinner-cocktail-modal.component';
@@ -18,7 +18,8 @@ export class ClubsGroupsPage implements OnInit {
 
   constructor(private authService: AuthService,
               private modalCtrl: ModalController,
-              private router: Router) { }
+              private router: Router,
+              private ionRouterOutlet: IonRouterOutlet) { }
 
   ngOnInit() {
   }

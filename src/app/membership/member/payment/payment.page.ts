@@ -255,7 +255,14 @@ export class PaymentPage implements OnInit, AfterViewInit {
     await this.userService.updateUser('users/'+ user.uid, data);
     this.toastService.presentToast(
       user.displayName.firstName + ', your dues have been marked paid! Thank you for the following payments: ' + description,
-      true, 'bottom', 'Ok', 10000 );
+      'bottom',
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }], 10000 );
     if(user.spousePartner.spID !== '') {
       this.payOptData["uid"] = user.spousePartner.spID
       const spData = this.payOptData;
@@ -269,7 +276,14 @@ export class PaymentPage implements OnInit, AfterViewInit {
     await this.userService.updateUser('users/'+ user.uid, data);
     this.toastService.presentToast(
       user.displayName.firstName + ', thank you for the following contribution: ' + description + ' !',
-      true, 'bottom', 'Ok', 10000 );
+      'bottom',
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }], 10000 );
     if(user.spousePartner.spID !== '') {
       this.payOptData["uid"] = user.spousePartner.spID;
       const spData = this.payOptData;

@@ -32,15 +32,40 @@ export class JrResidentService {
   }
 
   deleteJrRes(jrResPath) {
-    this.toastService.presentToast('Please wait while we delete this Junior Resident.', true, 'middle', 'OK', 3000);
+    this.toastService.presentToast(
+      'Please wait while we delete this Junior Resident.',
+      'middle',
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }], 3000);
     this.dbService.delete(jrResPath)
       .then(() => {
-        this.toastService.presentToast('The Junior Resident has been deleted!',
-          true, 'middle', 'Ok', 3000 );
+        this.toastService.presentToast(
+          'The Junior Resident has been deleted!',
+          'middle',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000 );
       })
       .catch(err => {
-        this.toastService.presentToast(err,
-          true, 'middle', 'OK', 3000);
+        this.toastService.presentToast(
+          err,
+          'middle',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000);
       });
   }
 
