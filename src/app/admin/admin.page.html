@@ -7,19 +7,19 @@
       Admin
     </ion-title>
   </ion-toolbar>
-  <ion-toolbar text-center>
-    <ion-searchbar showCancelButton="always" (ionInput)="filterByFirstName($event)"
+  <ion-toolbar class="ion-text-center">
+    <ion-searchbar show-cancel-button="always" (ionInput)="filterByFirstName($event)"
                    *ngIf="filterBy == 'firstName'" placeholder="Search by First Name">
     </ion-searchbar>
-    <ion-searchbar showCancelButton="always" (ionInput)="filterByLastName($event)"
+    <ion-searchbar show-cancel-button="always" (ionInput)="filterByLastName($event)"
                    [value]="searchTermValue"
                    *ngIf="filterBy == 'lastName'" placeholder="Search by Last Name">
     </ion-searchbar>
-    <ion-searchbar showCancelButton="always" (ionInput)="filterByAddress($event)"
+    <ion-searchbar show-cancel-button="always" (ionInput)="filterByAddress($event)"
                    *ngIf="filterBy == 'address'"placeholder="Search by Address">
     </ion-searchbar>
   </ion-toolbar>
-  <ion-toolbar text-center class="toolbar-buttons">
+  <ion-toolbar class="ion-text-center toolbar-buttons">
     <ion-button [color]="statusFirst" (click)="queryFirstName()">
       First Name
     </ion-button>
@@ -32,17 +32,17 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <p text-center>All SFCA Users</p>
+<ion-content class="ion-padding">
+  <p class="ion-text-center">All SFCA Users</p>
   <!-- <ion-button color="danger">
     Combine data test
   </ion-button> -->
   <ion-grid>
       <ion-row>
-        <ion-col text-center size="12">
+        <ion-col class="ion-text-center" size="12">
           <ion-button (click)="requestReport()">Generate New SFCA Users Report</ion-button>
         </ion-col>
-        <ion-col text-center size="12">
+        <ion-col class="ion-text-center" size="12">
           <div *ngFor="let report of recentReport">
             <app-report-link [report]="report"></app-report-link>
           </div>
@@ -56,12 +56,10 @@
             <ion-thumbnail slot="start" (click)="presentUserModal(user)">
               <ion-img [src]="user.photoURL"></ion-img>
             </ion-thumbnail>
-            <!-- <ion-icon slot="end" *ngIf="user.roles.admin" name="medal">Admin</ion-icon>
-            <ion-icon slot="end" *ngIf="user.duesPaid" name="cash">Paid</ion-icon> -->
             <ion-avatar slot="end" *ngIf="user.roles.pendingMember">
               <img src="/assets/non-member.png">
             </ion-avatar>
-            <ion-label text-wrap>
+            <ion-label class="ion-text-wrap">
               <ion-text>
                 <h1>{{ user.displayName.firstName + ' ' + user.displayName.lastName }}</h1>
               </ion-text>

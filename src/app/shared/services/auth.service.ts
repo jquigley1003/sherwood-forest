@@ -112,8 +112,14 @@ export class AuthService {
                 this.initCheckForAdmin();
                 this.toastService.presentToast(
                   'Welcome back to Sherwood Forest Civic Association!',
-                  true, 'middle', 'Close', 3000);
-                console.log('no need to update user in cloud firestore');
+                  'middle',
+                  [{
+                    text: 'OK',
+                    role: 'cancel',
+                    handler: () => {
+                      console.log('dismiss toast message');
+                    }
+                  }], 3000);
               }
             });
         } else {
@@ -273,7 +279,16 @@ export class AuthService {
     await this.afAuth.auth.signOut();
     await this.checkForAdmin.next(false);
     await this.checkLoggedIn.next(false);
-    this.toastService.presentToast('You are signed out!', true, 'top', 'Close', 3000);
+    this.toastService.presentToast(
+      'You are signed out!',
+      'top',
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }], 3000);
     return this.router.navigate(['/']);
   }
 
@@ -281,14 +296,22 @@ export class AuthService {
     return this.afAuth.auth
       .signInWithPopup(provider)
       .then((credential) => {
-        this.toastService.presentToast('Welcome to Sherwood Forest Civic Association!', true, 'top', 'Close', 3000);
+        this.toastService.presentToast(
+          'Welcome to Sherwood Forest Civic Association!',
+          'top',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000);
         credential.user.getIdTokenResult()
           .then((idTokenResult) => {
             if(!idTokenResult.claims.pendingMember) {
               return this.updateUserData(credential.user);
             } else {
               this.initCheckForAdmin();
-              console.log('no need to update user in cloud firestore');
             }
           });
       })
@@ -301,7 +324,6 @@ export class AuthService {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
     );
-    console.log('We are creating your user profile in cloud firestore')
     const data: User = {
       uid: user.uid,
       email: user.email || null,
@@ -342,6 +364,15 @@ export class AuthService {
 
   private handleError(error: Error) {
     console.error(error);
-    this.toastService.presentToast(error.message, true, 'middle', 'Close', 5000);
+    this.toastService.presentToast(
+      error.message,
+      'middle',
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }], 5000);
   }
 }

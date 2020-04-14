@@ -105,14 +105,30 @@ export class PetModalComponent implements OnInit {
     };
     if(this.currentPetID == '') {
       await this.petService.updatePet('pets/', data);
-      await this.toastService.presentToast(petName +' has been added as family pet',
-        true, 'top', 'Ok', 3000 );
+      await this.toastService.presentToast(
+        petName +' has been added as family pet',
+        'top',
+        [{
+          text: 'OK',
+          role: 'cancel',
+          handler: () => {
+            console.log('dismiss toast message');
+          }
+        }], 3000 );
       await this.petForm.reset();
       await this.modalCtrl.dismiss();
     } else {
       await this.petService.updatePet('pets/'+ this.currentPetID, data);
-      await this.toastService.presentToast('The Family Pet profile for '+ petName +' has been updated!',
-        true, 'top', 'Ok', 3000 );
+      await this.toastService.presentToast(
+        'The Family Pet profile for '+ petName +' has been updated!',
+        'top',
+        [{
+          text: 'OK',
+          role: 'cancel',
+          handler: () => {
+            console.log('dismiss toast message');
+          }
+        }], 3000 );
       await this.petForm.reset();
       await this.modalCtrl.dismiss();
     }

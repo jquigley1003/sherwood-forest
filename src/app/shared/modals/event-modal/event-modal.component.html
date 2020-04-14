@@ -1,5 +1,5 @@
 <ion-content>
-  <ion-toolbar text-center>
+  <ion-toolbar class="ion-text-center">
     <ion-buttons slot="end">
       <ion-button *ngIf="eventState == 'edit'; else closeButton"shape="round" size="small"
                   fill="solid"
@@ -17,14 +17,14 @@
   <div *ngIf="eventState == 'edit'; then editEvent else viewEvent"></div>
   <ng-template #editEvent>
     <app-event-form
-            [eventInfo]="eventForm.value" (eventSubmitted)="doneCloseModal($event)"></app-event-form>
+            [eventInfo]="eventForm.value" (eventSubmitted)="doneCloseModal()"></app-event-form>
   </ng-template>
   <ng-template #viewEvent>
-    <ion-grid padding-top>
+    <ion-grid class="ion-padding-top">
       <ion-row>
         <ion-col size="12">
           <form [formGroup]="eventForm">
-            <ion-header text-center>
+            <ion-header class="ion-text-center">
               <img src="{{ photoURL }}">
             </ion-header>
             <ion-item><h1>{{ title }}</h1></ion-item>

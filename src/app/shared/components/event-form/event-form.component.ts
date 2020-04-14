@@ -90,13 +90,28 @@ export class EventFormComponent implements OnInit, AfterViewInit {
     };
     if (this.eid === '') {
       await this.eventService.addUpdateEvent('events/', data);
-      await this.toastService.presentToast('The SFCA event has been created',
-        true, 'top', 'Ok', 3000 );
+      await this.toastService.presentToast(
+        'The SFCA event has been created',
+        'top',
+        [{
+          text: 'OK',
+          role: 'cancel',
+          handler: () => {
+            console.log('dismiss toast message');
+          }
+        }], 3000 );
       await this.eventForm.reset();
     } else {
       await this.eventService.addUpdateEvent('events/' + this.eid, data);
       await this.toastService.presentToast('The SFCA event has been updated',
-        true, 'top', 'Ok', 3000 );
+        'top',
+        [{
+          text: 'OK',
+          role: 'cancel',
+          handler: () => {
+            console.log('dismiss toast message');
+          }
+        }], 3000 );
       await this.eventForm.reset();
     }
     this.eventSubmitted.emit();

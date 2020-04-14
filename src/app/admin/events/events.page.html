@@ -24,7 +24,7 @@
     <ion-row>
       <ion-col size="12" *ngIf="showEventForm">
         <app-event-form
-                [eventInfo]="''" (eventSubmitted)="closeEventForm($event)">
+                [eventInfo]="''" (eventSubmitted)="closeEventForm()">
         </app-event-form>
       </ion-col>
     </ion-row>
@@ -34,13 +34,13 @@
           <ion-item-sliding #eventItem *ngFor="let event of events" >
             <ion-item (click)="presentEventModal(event)">
               <ion-thumbnail><img src="{{ event.photoURL }}"></ion-thumbnail>
-              <ion-label text-wrap padding>
+              <ion-label class="ion-text-wrap ion-padding">
                 <ion-text>
                   <h3>{{ event.title }}</h3>
                 </ion-text>
                 <p>{{ event.subTitle }}</p>
               </ion-label>
-              <ion-label text-wrap>
+              <ion-label class="ion-text-wrap">
                 <ion-text>
                   <p>{{ event.startTime | date:'mediumDate' }}<br>
                     {{ event.startTime | date:'shortTime' }} - {{ event.endTime | date:'shortTime' }}</p>

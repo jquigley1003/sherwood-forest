@@ -14,17 +14,17 @@
 <ion-content>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="goToFilming()">
-      <ion-icon name="arrow-round-back"></ion-icon>
+      <ion-icon name="arrow-back-circle"></ion-icon>
     </ion-fab-button>
     &nbsp;Filming
   </ion-fab>
   <ion-grid>
     <ion-row>
-      <ion-col size="12" class="home-image" text-center>
+      <ion-col size="12" class="home-image ion-text-center">
         <h1 class="islands-title">SFCA Filming Reference Documents</h1>
       </ion-col>
       <ion-col size-xl="6" offset-xl="3" >
-        <ion-card padding>
+        <ion-card class="ion-padding">
           <ion-card-title (click)="downloadFCC()">
             SFCA Good Neighbor Filming Code of Conduct
           </ion-card-title>
@@ -34,7 +34,7 @@
           </ion-card-content>
           <ion-button (click)="downloadFCC()" expand="block" fill="solid">Download</ion-button>
         </ion-card>
-        <ion-card padding>
+        <ion-card class="ion-padding">
             <ion-card-title (click)="downloadPG()">
               SFCA Producer Guidelines
             </ion-card-title>
@@ -45,7 +45,7 @@
           </ion-card-content>
           <ion-button (click)="downloadPG()" expand="block" fill="solid">Download</ion-button>
         </ion-card>
-        <ion-card padding>
+        <ion-card class="ion-padding">
           <!--<a href="https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/documents%2FSFCA%20bylaws.docx?alt=media&token=26594dfc-cdca-4133-994a-47f5b2147b47"-->
              <!--target="_blank">-->
             <ion-card-title>

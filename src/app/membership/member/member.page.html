@@ -12,12 +12,12 @@
 </ion-header>
 <ion-content>
   <ion-card>
-    <img src="../../assets/LionIsland2.jpg">
-    <ion-card-title class="card-title" text-center>
+    <ion-img src="../../assets/LionIsland2.jpg"></ion-img>
+    <ion-card-title class="ion-text-center card-title">
       Welcome to the Member Page<br>
       {{ currentUser }}
     </ion-card-title>
-    <ion-card-content text-center>
+    <ion-card-content class="ion-text-center">
       <ion-button (click)="presentUserModal(user)">
         <ion-icon slot="start" name="person"></ion-icon>
         Update Your Member Profile
@@ -37,11 +37,11 @@
   </ion-card>
   <ion-grid>
     <ion-row class="ion-justify-content-center">
-      <ion-col size-xl="5" size-lg="6" size-md="12" size-sm="12" size-xs="12" class="ion-align-self-center" padding>
+      <ion-col size-xl="5" size-lg="6" size-md="12" size-sm="12" size-xs="12" class="ion-align-self-center ion-padding">
         <p>Thanks for using the new Sherwood Forest Civic Association web app! Quickly access documents, payment options,
            and board members by clicking the green buttons. Also, take a quick glance of upcoming events below.</p>
       </ion-col>
-      <ion-col size-xl="5" size-lg="6" size-md="12" size-sm="12" size-xs="12" text-center class="ion-align-self-center">
+      <ion-col size-xl="5" size-lg="6" size-md="12" size-sm="12" size-xs="12" class="ion-text-center ion-align-self-center">
         <ion-row class="ion-justify-content-center">
           <ion-col>
             <ion-button routerLink="/member/documents">
@@ -58,16 +58,16 @@
         </ion-row>
       </ion-col>
     </ion-row>
-    <ion-row text-center margin-top padding-bottom class="ion-justify-content-center">
-      <ion-col text-center>
+    <ion-row class="ion-margin-top ion-padding-bottom ion-text-center ion-justify-content-center">
+      <ion-col class="ion-text-center">
         <h2>Board Members 2019 - 2021</h2>
         <ion-button (click)="showBoardMembers()" *ngIf="!showBoard">Show Board Members</ion-button>
         <ion-button (click)="showBoardMembers()" *ngIf="showBoard">Hide Board Members</ion-button>
       </ion-col>
     </ion-row>
     <ion-row *ngIf="showBoard" class="board-bkgrnd board-border">
-      <ion-col text-center padding *ngFor="let member of board">
-        <div text-center>
+      <ion-col class="ion-padding ion-text-center" *ngFor="let member of board">
+        <div class="ion-text-center">
           <ion-thumbnail><ion-img src="{{ member.photoURL }}"></ion-img></ion-thumbnail>
           <h2>{{ member.displayName.firstName}} {{ member.displayName.lastName}}</h2>
           <h3>{{ member.boardTitle }}</h3>
@@ -76,14 +76,14 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col text-center>
+      <ion-col class="ion-text-center">
         <h2>Upcoming Events</h2>
       </ion-col>
     </ion-row>
     <ion-row class="events">
       <ion-col size-xl="3" size-lg="3" size-md="6" size-sm="12" size-xs="12"
                *ngFor="let event of upcomingEvents">
-        <ion-card class="eventCard" padding>
+        <ion-card class="ion-padding eventCard">
           <img src="{{ event.photoURL }}">
           <ion-card-header>
             <ion-card-title>

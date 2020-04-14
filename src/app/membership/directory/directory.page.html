@@ -18,12 +18,12 @@
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-center">
-      <ion-col padding size-xl="4" size-lg="6" size-md="6" size-sm="12" size-xs="12" class="ion-align-self-center">
+      <ion-col size-xl="4" size-lg="6" size-md="6" size-sm="12" size-xs="12" class="ion-padding ion-align-self-center">
         <ion-row>
           <ion-col size="6">
             <img  src="../../assets/number9.png">
           </ion-col>
-          <ion-col size="6" text-center>
+          <ion-col size="6" class="ion-text-center">
             <h2 class="h-font">Directory<br>of<br>SFCA Residents</h2>
             <p class="p-font p-background">Click the mailbox buttons to search by firstname, last name, or street name</p>
           </ion-col>
@@ -37,16 +37,16 @@
       <ion-col class="directory" size-xl="4" size-lg="6" size-md="6" size-sm="12" size-xs="12">
         <img class="directory-img" src="../../assets/mailbox.png">
         <div class="directory-search">
-            <ion-searchbar showCancelButton="always" (ionInput)="filterByFirstName($event)"
+            <ion-searchbar show-cancel-button="always" (ionInput)="filterByFirstName($event)"
                        *ngIf="filterBy == 'firstName'" placeholder="Search by First Name">
             </ion-searchbar>
-          <ion-searchbar showCancelButton="always" (ionInput)="filterByLastName($event)"
+          <ion-searchbar show-cancel-button="always" (ionInput)="filterByLastName($event)"
                          *ngIf="filterBy == 'lastName'" placeholder="Search by Last Name">
           </ion-searchbar>
-          <ion-searchbar showCancelButton="always" (ionInput)="filterByAddress($event)"
+          <ion-searchbar show-cancel-button="always" (ionInput)="filterByAddress($event)"
                          *ngIf="filterBy == 'address'" placeholder="Search by Address">
           </ion-searchbar>
-          <ion-toolbar text-center class="toolbar-buttons">
+          <ion-toolbar class="ion-text-center toolbar-buttons">
               <ion-button size="small" [color]="statusFirst" (click)="queryFirstName()">
                   First Name
               </ion-button>
@@ -64,7 +64,7 @@
             <ion-avatar>
               <img src="{{ user.photoURL }}">
             </ion-avatar>
-            <ion-label text-wrap>
+            <ion-label class="ion-text-wrap">
               <ion-text>
                 <h1>{{ user.displayName.firstName + ' ' + user.displayName.lastName }}</h1>
               </ion-text>

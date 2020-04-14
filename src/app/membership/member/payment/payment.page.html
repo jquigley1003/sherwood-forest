@@ -14,13 +14,13 @@
 <ion-content>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="goToMember()">
-      <ion-icon name="arrow-round-back"></ion-icon>
+      <ion-icon name="arrow-back-circle"></ion-icon>
     </ion-fab-button>
     &nbsp;Member
   </ion-fab>
   <ion-grid>
     <ion-row>
-      <ion-col size="12" text-center>
+      <ion-col size="12" class="ion-text-center">
         <h1>Member Payments</h1>
         <p>There are multiple ways to submit your dues and voluntary contributions!</p>
         <p>{{ currentYear }} Dues and Contributions</p>
@@ -143,11 +143,11 @@
         <ion-card 
         [ngClass]="{ 'payment-card': showCreditCard, 'hide-payment-card': !showCreditCard }">
           <img src="/assets/pay-sfca-card.jpg">
-          <ion-card-header text-center>
+          <ion-card-header class="ion-text-center">
             <ion-card-title>
               Your Payments to SFCA
             </ion-card-title>
-            <ion-row text-center>
+            <ion-row class="ion-text-center">
               <ion-col
               *ngFor="let optText of payOptionText"
               class="pay-options"
@@ -170,7 +170,7 @@
               <p class="card-error">{{ cardErrors }}</p>
               <p class="charge-success" *ngIf="chargeSuccess">You're card has been charged . A receipt has been sent to {{ confirmation.receipt_email }}.<br>
                 <a [attr.href]="confirmation.receipt_url" target="_blank">View your receipt here.</a></p>
-              <div text-center>
+              <div class="ion-text-center">
                   <ion-button *ngIf="totalPayment > 0 && !chargeSuccess" (click)="handleForm($event)">Send {{ paymentAmount / 100 | currency }} to SFCA Now</ion-button>
               </div>
             </form>

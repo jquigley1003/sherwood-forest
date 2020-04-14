@@ -49,7 +49,14 @@ export class ContactFormComponent implements OnInit {
 
     await this.contactMessageService.createContactMessage('contactMessages', data);
     await this.toastService.presentToast('Thank you, your message has been sent!',
-      true, top, 'Ok', 3000 );
+      top,
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }], 3000 );
     await this.contactForm.reset();
     this.router.navigate(['/public/home']);
 

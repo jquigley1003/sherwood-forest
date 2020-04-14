@@ -45,16 +45,43 @@ export class UserService implements OnDestroy{
       } else {
         this.msg = resp.result;
       }
-      this.toastService.presentToast(this.msg, true, 'middle', 'OK', 3000);
+      this.toastService.presentToast(
+        this.msg,
+        'middle',
+        [{
+          text: 'OK',
+          role: 'cancel',
+          handler: () => {
+            console.log('dismiss toast message');
+          }
+        }], 3000);
     },
       err => {
-        this.toastService.presentToast(err.error, true, 'middle', 'OK', 3000);
+        this.toastService.presentToast(
+          err.error,
+          'middle',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000);
         // console.log({err});
       });
   }
 
   adminAddUser(data) {
-    this.toastService.presentToast('Please wait while we add a new user.', true, 'top', 'OK', 3000);
+    this.toastService.presentToast(
+      'Please wait while we add a new user.',
+      'top',
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }], 3000);
     this.afFunctions.httpsCallable('adminCreateUser')(data)
       .toPromise()
       .then(resp => {
@@ -63,11 +90,29 @@ export class UserService implements OnDestroy{
         } else {
           this.msg = resp.result;
         }
-        this.toastService.presentToast(this.msg, true, 'top', 'OK', 3000);
+        this.toastService.presentToast
+        (this.msg,
+        'top',
+        [{
+          text: 'OK',
+          role: 'cancel',
+          handler: () => {
+            console.log('dismiss toast message');
+          }
+        }], 3000);
         // console.log({resp});
       })
       .catch(err => {
-        this.toastService.presentToast(err.error, true, 'top', 'OK', 3000);
+        this.toastService.presentToast(
+          err.error,
+          'top',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000);
         // console.log({err});
       });
   }
@@ -103,7 +148,16 @@ export class UserService implements OnDestroy{
   }
 
   makeUserAdmin(user) {
-    this.toastService.presentToast('Please wait while we make this member an admin.', true, 'top', 'OK', 3000);
+    this.toastService.presentToast(
+      'Please wait while we make this member an admin.',
+      'top',
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }], 3000);
     this.afFunctions.httpsCallable('addAdmin')(user)
       .toPromise()
       .then(resp => {
@@ -112,17 +166,44 @@ export class UserService implements OnDestroy{
         } else {
           this.msg = resp.result;
         }
-        this.toastService.presentToast(this.msg, true, 'top', 'OK', 3000);
+        this.toastService.presentToast(
+          this.msg,
+          'top',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000);
         // console.log({resp});
       })
       .catch(err => {
-        this.toastService.presentToast(err.error, true, 'top', 'OK', 3000);
+        this.toastService.presentToast(
+          err.error,
+          'top',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000);
         // console.log({err});
       });
   }
 
   makeUserApproved(user) {
-    this.toastService.presentToast('Please wait while we approve this member.', true, 'top', 'OK', 3000);
+    this.toastService.presentToast(
+      'Please wait while we approve this member.',
+      'top',
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }], 3000);
     this.afFunctions.httpsCallable('markApproved')(user)
       .toPromise()
       .then(resp => {
@@ -131,17 +212,44 @@ export class UserService implements OnDestroy{
         } else {
           this.msg = resp.result;
         }
-        this.toastService.presentToast(this.msg, true, 'top', 'OK', 3000);
+        this.toastService.presentToast(
+          this.msg,
+          'top',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000);
         // console.log({resp});
       })
       .catch(err => {
-        this.toastService.presentToast(err.error, true, 'top', 'OK', 3000);
+        this.toastService.presentToast(
+          err.error,
+          'top',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000);
         // console.log({err});
       });
   }
 
   makeUserPending(user) {
-    this.toastService.presentToast('Please wait while we change user to pending.', true, 'top', 'OK', 3000);
+    this.toastService.presentToast(
+      'Please wait while we change user to pending.',
+      'top',
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }], 3000);
     this.afFunctions.httpsCallable('markPending')(user)
       .toPromise()
       .then(resp => {
@@ -150,17 +258,44 @@ export class UserService implements OnDestroy{
         } else {
           this.msg = resp.result;
         }
-        this.toastService.presentToast(this.msg, true, 'top', 'OK', 3000);
+        this.toastService.presentToast(
+          this.msg,
+          'top',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000);
         // console.log({resp});
       })
       .catch(err => {
-        this.toastService.presentToast(err.error, true, 'top', 'OK', 3000);
+        this.toastService.presentToast(
+          err.error,
+          'top',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000);
         // console.log({err});
       });
   }
 
   async removeAdminRole(user) {
-    await this.toastService.presentToast('Please wait while we remove user as admin.', true, 'top', 'OK', 3000);
+    await this.toastService.presentToast(
+      'Please wait while we remove user as admin.',
+      'top',
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }], 3000);
     this.afFunctions.httpsCallable('removeAdmin')(user)
       .toPromise()
       .then(resp => {
@@ -169,11 +304,29 @@ export class UserService implements OnDestroy{
         } else {
           this.msg = resp.result;
         }
-        this.toastService.presentToast(this.msg, true, 'top', 'OK', 3000);
+        this.toastService.presentToast(
+          this.msg,
+          'top',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000);
         // console.log({resp});
       })
       .catch(err => {
-        this.toastService.presentToast(err.error, true, 'top', 'OK', 3000);
+        this.toastService.presentToast(
+          err.error,
+          'top',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000);
         // console.log({err});
       });
   }
@@ -187,15 +340,40 @@ export class UserService implements OnDestroy{
   }
 
   deleteUser(userPath) {
-    this.toastService.presentToast('Please wait while we delete this user.', true, 'middle', 'OK', 3000);
+    this.toastService.presentToast(
+      'Please wait while we delete this user.',
+      'middle',
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }], 3000);
     this.dbService.delete(userPath)
       .then(() => {
-        this.toastService.presentToast('The user has been deleted!',
-          true, 'middle', 'Ok', 3000 );
+        this.toastService.presentToast(
+          'The user has been deleted!',
+          'middle',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000 );
       })
       .catch(err => {
-        this.toastService.presentToast('You do not have the credentials to delete users!',
-          true, 'middle', 'OK', 3000);
+        this.toastService.presentToast(
+          'You do not have the credentials to delete users!',
+          'middle',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000);
         // console.log(err);
       });
   }

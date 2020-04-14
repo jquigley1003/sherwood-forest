@@ -42,7 +42,14 @@ export class UploaderFileComponent implements AfterViewInit {
         console.log(files.item(i).size);
         if(files.item(i).size > 5100000) {
           await this.toastService.presentToast('Your file size should be no more than 5MB',
-            true, 'middle', 'Ok', 3000 );
+            'middle',
+            [{
+              text: 'OK',
+              role: 'cancel',
+              handler: () => {
+                console.log('dismiss toast message');
+              }
+            }], 3000 );
         }else {
           this.files.push(files.item(i));
           this.getNewPhotoURL = this.uploadFileTaskComponent.downloadURL;
