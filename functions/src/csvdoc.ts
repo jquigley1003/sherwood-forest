@@ -56,6 +56,7 @@ export const createCSV = functions.firestore
                     // create array of member data
                     querySnapshot.forEach(doc => {
                         let member = doc.data();
+                        
                         member.id = doc.data().uid;
                         member.lastName = doc.data().displayName.lastName;
                         member.firstName = doc.data().displayName.firstName;
@@ -67,9 +68,15 @@ export const createCSV = functions.firestore
                         member.paidSecurity = doc.data().paidSecurity;
                         member.email = doc.data().email;
                         member.spFirstName = doc.data().spousePartner.firstName;
-                        member.spLastName = doc.data().spousePartner.lastName;
+                        member.spLastName = doc.data().spousePartner.lastName;       
                         member.allChildren = [];
                         member.allPets = [];
+
+                        if(doc.data().residentSince) {
+                            member.residentSince =  new Date(doc.data().residentSince).getFullYear();
+                        } else {
+                            member.residentSince = null;
+                        }
 
                         for(let i = 0; i < memChildren.length; i++) {
                             if (memChildren[i].parentIDs.includes(member.id)) {
@@ -79,7 +86,7 @@ export const createCSV = functions.firestore
 
                         memPets.forEach(petDoc => {
                             if (petDoc.petParentIDs.includes(member.id) ) {
-                                member.allPets.push(petDoc.petName + ' | Color: ' + petDoc.color + ', Breed: ' + petDoc.breed);
+                                member.allPets.push(petDoc.petName + ': ' + petDoc.color + ' / ' + petDoc.breed);
                             }
                         })
                         
@@ -109,6 +116,8 @@ export const createCSV = functions.firestore
                         value: 'spFirstName'},
                         {label: 'S/P LastName',
                         value: 'spLastName'},
+                        {label: 'ResidentSince',
+                        value: 'residentSince'},
                         {label: 'Children',
                         value: 'allChildren'},
                         {label: 'Pets',
