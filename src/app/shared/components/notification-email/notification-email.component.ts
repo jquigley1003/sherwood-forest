@@ -5,8 +5,10 @@ import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage
 import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 
+import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { ToastService } from '../../services/toast.service';
+import { rejects } from 'assert';
 
 @Component({
   selector: 'app-notification-email',
@@ -14,7 +16,8 @@ import { ToastService } from '../../services/toast.service';
   styleUrls: ['./notification-email.component.scss'],
 })
 export class NotificationEmailComponent implements OnInit {
-  @ViewChild('quillFile', {static: false}) quillFileRef: ElementRef;
+  @ViewChild('quillFile') quillFileRef: ElementRef;
+  currentAdmin: string;
   quillFile: any;
   myQuillRef: any;
   task: AngularFireUploadTask;
@@ -25,7 +28,8 @@ export class NotificationEmailComponent implements OnInit {
   emailType: string = '';
   emailForm: FormGroup;
   editorStyle = {
-    height: '50vh'
+    height: '50vh',
+    width: '100%'
   };
   editorConfig = {
     toolbar: {
@@ -56,6 +60,7 @@ export class NotificationEmailComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private afStorage: AngularFireStorage,
+              private authService: AuthService,
               private userService: UserService,
               private toastService: ToastService,
               private router: Router) {
@@ -65,7 +70,9 @@ export class NotificationEmailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
 
   buildEmailType(template) {
     this.emailType = template;
@@ -87,20 +94,42 @@ export class NotificationEmailComponent implements OnInit {
   }
 
   async uploadPhoto() {
-    // The storage path
-    const path = `notifications/${Date.now()}_${this.quillFile.name}`
+    // The image name for upload
+    const imgForUpload = `${Date.now()}_${this.quillFile.name}`;
+    // Split the image name and its extension
+    const imgName = imgForUpload.replace(/\.[^/.]+$/, "");
+    const imgType = imgForUpload.substr((imgForUpload.lastIndexOf('.')+1));
+    // The storage paths for image upload and resized image
+    // Images are resized using Firebase Resize Images extension - max-size 525x735    
+    const path = `notifications/${imgForUpload}`;
+    const resizePath = `notifications/resized/${imgName}_525x735.${imgType}`;
+    
     // Reference to storage bucket
     const ref = this.afStorage.ref(path);
+    const refResize = this.afStorage.ref(resizePath);
+
     // The main task
     this.task = this.afStorage.upload(path, this.quillFile);
+    
     // Progress monitoring
     this.percentage = this.task.percentageChanges();
     this.snapshot = this.task.snapshotChanges().pipe(
       tap(),
       // The file's download URL
       finalize( async() => {
-        this.downloadURL = await ref.getDownloadURL().toPromise();
-        this.getPhotoURL();
+        await this.toastService.presentToast(
+          'Please wait, your image is being resized',
+          'middle',
+          [{
+            text: 'OK',
+            role: 'cancel'
+          }],7000
+        );
+
+        setTimeout(async() => {
+          this.downloadURL = await refResize.getDownloadURL().toPromise();
+          this.getPhotoURL();
+        }, 10000)
       }),
     );
   }
@@ -108,10 +137,7 @@ export class NotificationEmailComponent implements OnInit {
   async getPhotoURL() {
     const img = '<img src="' + this.downloadURL + '"></img>';
     const range = await this.myQuillRef.getSelection();
-    // await this.myQuillRef.insertEmbed(range.index, 'image', this.downloadURL);
-    // await this.myQuillRef.setSelection(range.index + 1);
     await this.myQuillRef.clipboard.dangerouslyPasteHTML(range.index, img);
-
 
     this.percentage = null;
     this.snapshot = null;
@@ -124,10 +150,8 @@ export class NotificationEmailComponent implements OnInit {
     const {subject, emailmessage} = this.emailForm.value;
     const data = {
       subject: subject,
-      emailmessage: emailmessage
+      emailmessage: emailmessage,
     };
-
-    console.log('email message: ',data.emailmessage);
 
     await this.userService.sendNotificationEmail(emailType, data);
     await this.toastService.presentToast(

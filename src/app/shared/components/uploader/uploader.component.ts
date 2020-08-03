@@ -14,8 +14,8 @@ export class UploaderComponent {
   @Input() memberName: string;
   @Input() currentPhotoURL: string;
   @Input() spMemberId: string;
-  @ViewChild('cropper', undefined) cropper:ImageCropperComponent;
-  @ViewChild(UploadTaskComponent, {static: false}) uploadTaskComponent: UploadTaskComponent;
+  @ViewChild('cropper') cropper:ImageCropperComponent;
+  @ViewChild(UploadTaskComponent) uploadTaskComponent: UploadTaskComponent;
   imageCropData: any;
   cropperSettings: CropperSettings
 

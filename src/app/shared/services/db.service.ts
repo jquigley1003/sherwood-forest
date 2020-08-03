@@ -33,8 +33,12 @@ export class DbService {
       .snapshotChanges()
       .pipe(
         map(doc => {
-          return { id: doc.payload.id, ...doc.payload.data() };
+          const data: Object = doc.payload.data();
+          return { id: doc.payload.id, ...data };
         })
+        // map(doc => {
+        //   return { id: doc.payload.id, ...doc.payload.data() };
+        // })
       );
   }
 

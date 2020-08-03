@@ -10,7 +10,7 @@ import { CalendarComponent } from 'ionic2-calendar/calendar';
   styleUrls: ['./uploader-file.component.scss'],
 })
 export class UploaderFileComponent implements AfterViewInit {
-  @ViewChild(UploadFileTaskComponent, {static: false}) uploadFileTaskComponent: UploadFileTaskComponent;
+  @ViewChild(UploadFileTaskComponent) uploadFileTaskComponent: UploadFileTaskComponent;
   @Input() fileFolder: string;
 
   getNewPhotoURL: string;

@@ -11,6 +11,7 @@
           <ion-button (click)="buildEmailType('sendEventEmail')">Events Email</ion-button>
           <ion-button (click)="buildEmailType('sendSecurityEmail')">Security Email</ion-button>
           <ion-button (click)="buildEmailType('sendFilmingEmail')">Filming Email</ion-button>
+          <ion-button (click)="buildEmailType('sendTestEmail')">Test Email</ion-button>
         </ion-col>
       </ion-row>
       <ion-row class="group-buttons">
@@ -50,6 +51,12 @@
           Your Message to All Sherwood Forest Residents
         </h1>
         <ion-img src="/assets/SF-allresidents-banner.jpg"></ion-img>
+      </ion-header>
+      <ion-header *ngIf="emailType == 'sendTestEmail'" class="ion-text-center ion-padding">
+        <h1>
+          Your Test Email to Yourself
+        </h1>
+        <ion-img src="/assets/SF-test-banner.jpg"></ion-img>
       </ion-header>
       <form *ngIf="emailType != ''" [formGroup]="emailForm" (ngSubmit)="onSubmitForm(emailType)">
         <ion-item>

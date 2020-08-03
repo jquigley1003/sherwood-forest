@@ -20,7 +20,7 @@ export class PaymentPage implements OnInit, AfterViewInit {
 
   @Input() paymentAmount: number;
   @Input() description: string;
-  @ViewChild('cardElement', {read: ElementRef, static:false}) cardElement: ElementRef;
+  @ViewChild('cardElement', { read: ElementRef }) cardElement: ElementRef;
 
   stripe;
   card;

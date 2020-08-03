@@ -54,7 +54,7 @@ export class AuthService {
   }
 
   emailCreateUser(email: string, password: string) {
-    return this.afAuth.auth
+    return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then(credential => {
         this.alertService.presentAlert(
@@ -86,7 +86,7 @@ export class AuthService {
   }
 
   signInUser(email: string, password: string) {
-    return this.afAuth.auth
+    return this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then(credential => {
         if(credential.user.emailVerified) {
@@ -150,7 +150,10 @@ export class AuthService {
   }
 
   sendEmailVerification() {
-    this.afAuth.auth.currentUser.sendEmailVerification();
+    return this.afAuth.currentUser
+      .then((user) => {
+        return user.sendEmailVerification();
+      });
 
 
     // this.emailVerifySubscription = this.afAuth.authState.subscribe(user => {
@@ -166,7 +169,7 @@ export class AuthService {
 
   // Reset Forgot password
   resetPassword(passwordResetEmail) {
-    return this.afAuth.auth.sendPasswordResetEmail(passwordResetEmail)
+    return this.afAuth.sendPasswordResetEmail(passwordResetEmail)
       .then(() => {
         this.alertService.presentAlert(
           'Password Reset Email Sent',
@@ -190,9 +193,10 @@ export class AuthService {
 
   // change existing email address
   changeEmail(newEmail) {
-    return this.afAuth.auth.currentUser.updateEmail(newEmail)
-      .then(() => {
-        this.afAuth.auth.currentUser.sendEmailVerification();
+    return this.afAuth.currentUser
+      .then(async(user) => {
+        await user.updateEmail(newEmail);
+        await user.sendEmailVerification();
       })
       .then(() => {
         this.alertService.presentAlert(
@@ -276,7 +280,7 @@ export class AuthService {
   }
 
   async signOut() {
-    await this.afAuth.auth.signOut();
+    await this.afAuth.signOut();
     await this.checkForAdmin.next(false);
     await this.checkLoggedIn.next(false);
     this.toastService.presentToast(
@@ -293,7 +297,7 @@ export class AuthService {
   }
 
   private oAuthLogin(provider) {
-    return this.afAuth.auth
+    return this.afAuth
       .signInWithPopup(provider)
       .then((credential) => {
         this.toastService.presentToast(
@@ -358,7 +362,7 @@ export class AuthService {
       }
     };
     return userRef.set(data, {merge: true});
-    return this.afAuth.auth.updateCurrentUser(user);
+    return this.afAuth.updateCurrentUser(user);
 
   }
 

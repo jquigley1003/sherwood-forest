@@ -35,14 +35,14 @@
             <ion-label>Resident Since: </ion-label>
           </ion-item-divider>
           <ion-item>
-            {{ residentSince }}
+            {{ residentSince | date:'MMMM yyyy' }}
           </ion-item>
           <div *ngIf="showBirthDate">
             <ion-item-divider>
               <ion-label>Birthday: </ion-label>
             </ion-item-divider>
             <ion-item>
-              {{ birthDate | date:'MMMM d' }}
+              {{ birthDate | date:'MMMM d'}}
             </ion-item>
           </div>
           <div *ngIf="spousePartnerName != ' '">

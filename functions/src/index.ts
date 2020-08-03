@@ -10,7 +10,7 @@ const EMAIL_REFRESH_TOKEN = functions.config().gmail.refreshtoken;
 
 admin.initializeApp();
 
-export { sendGeneralEmail, sendEventEmail, sendSecurityEmail, sendFilmingEmail, sendAllResidentsEmail } from './mail';
+export { sendGeneralEmail, sendEventEmail, sendSecurityEmail, sendFilmingEmail, sendAllResidentsEmail, sendTestEmail } from './mail';
 export { stripeAttachSource } from './sources';
 export { stripeCreateCharge, stripeGetCharges } from './charges';
 export { createCSV } from './csvdoc';

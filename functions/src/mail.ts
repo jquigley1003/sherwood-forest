@@ -45,11 +45,19 @@ export const sendGeneralEmail = functions.https.onCall(async (data, context) => 
       },
     };
 
-    await sendgridMail.sendMultiple(msg);
+    await sendgridMail.sendMultiple(msg, (err, res) => {
+      if(err) {
+        return {
+          error: `Error: The general email was not sent.` + err.message
+        };
+      }
+      else {
+        return {
+          result: `Success!`
+        };
+      }
+    }); 
 
-    // Handle errors here
-
-    // Response must be JSON serializable
     return {
       result: `The general email has been sent to all approved members!`
     };
@@ -92,11 +100,19 @@ export const sendEventEmail = functions.https.onCall(async (data, context) => {
       },
     };
 
-    await sendgridMail.sendMultiple(msg);
+    await sendgridMail.sendMultiple(msg, (err, res) => {
+      if(err) {
+        return {
+          error: `Error: The event email was not sent.` + err.message
+        };
+      }
+      else {
+        return {
+          result: `Success!`
+        };
+      }
+    }); 
 
-    // Handle errors here
-
-    // Response must be JSON serializable
     return {
       result: `The event email has been sent to all approved members!`
     };
@@ -139,11 +155,19 @@ export const sendSecurityEmail = functions.https.onCall(async (data, context) =>
       },
     };
 
-    await sendgridMail.sendMultiple(msg);
+    await sendgridMail.sendMultiple(msg, (err, res) => {
+      if(err) {
+        return {
+          error: `Error: The security email was not sent.` + err.message
+        };
+      }
+      else {
+        return {
+          result: `Success!`
+        };
+      }
+    }); 
 
-    // Handle errors here
-
-    // Response must be JSON serializable
     return {
       result: `The security email has been sent to all approved members!`
     };
@@ -187,9 +211,20 @@ export const sendFilmingEmail = functions.https.onCall(async (data, context) => 
       },
     };
 
-    await sendgridMail.sendMultiple(msg);
-    // Handle errors here
-    // Response must be JSON serializable
+    // await sendgridMail.sendMultiple(msg);
+    await sendgridMail.sendMultiple(msg, (err, res) => {
+      if(err) {
+        return {
+          error: `Error: The filming email was not sent.` + err.message
+        };
+      }
+      else {
+        return {
+          result: `Success!`
+        };
+      }
+    }); 
+    
     return {
       result: `The filming email has been sent to all all approved members!`
     };
@@ -212,9 +247,12 @@ export const sendAllResidentsEmail = functions.https.onCall(async (data, context
       };
     }
 
-    const userSnapshots = await db.collection('users').get();
-
+    // const userSnapshots = await db.collection('users').get();
+    const userSnapshots = await db.collection('users').where('roles.approvedMember', '==', true).get();
+    // const userSnapshots = await db.collection('users').where('displayName.lastName', '==', 'Quigley').get();
     const emails = userSnapshots.docs.map(snap => snap.data().email);
+
+    console.log(emails);
 
     const msg = {
       to: emails,
@@ -232,17 +270,81 @@ export const sendAllResidentsEmail = functions.https.onCall(async (data, context
       },
     };
 
-    await sendgridMail.sendMultiple(msg);
+    await sendgridMail.sendMultiple(msg, (err, res) => {
+      if(err) {
+        return {
+          error: `Error: The all residents email was not sent.` + err.message
+        };
+      }
+      else {
+        return {
+          result: `Success!`
+        };
+      }
+    }); 
 
-    // Handle errors here
-
-    // Response must be JSON serializable
     return {
       result: `The all residents email has been sent to all SF residents!`
     };
   } else {
     return {
       error: `Error: The all residents email was not sent.`
+    };
+  }
+});
+
+export const sendTestEmail = functions.https.onCall(async (data, context) => {
+  // check if context.auth is not null
+  // otherwise on build, error will be "Object is possibly 'undefined'
+  // or add the ! if 100% sure context.auth is always defined
+  // example: const isAdmin = context.auth!.token.admin;
+  if (context.auth) {
+    if (context.auth.token.admin !== true) {
+      return {
+        error: `Request not authorized. You must be an admin to create a new user`
+      };
+    }
+
+    const uid = context.auth.uid;
+
+    const userSnapshots = await db.collection('users').where('uid', '==', uid).get();
+    const emails = userSnapshots.docs.map(snap => snap.data().email);
+
+    const msg = {
+      to: emails,
+      from: 'sfca@sherwoodforestatl.org',
+      templateId: GENTEMPLATE_ID,
+      dynamic_template_data: {
+        subject: data.subject,
+        emailmessage: data.emailmessage,
+        sender_name: 'Test SFCA Email',
+        sender_address: 'PO Box 77531',
+        sender_city: 'Atlanta',
+        sender_state: 'GA',
+        sender_zip: '30357',
+        sender_email: 'sfca@sherwoodforestatl.org'
+      },
+    };
+
+    await sendgridMail.sendMultiple(msg, (err, res) => {
+      if(err) {
+        return {
+          error: `Error: The test email was not sent.` + err.message
+        };
+      }
+      else {
+        return {
+          result: `Success!`
+        };
+      }
+    }); 
+    
+    return {
+      result: `The test email has been sent to your email!`
+    };
+  } else {
+    return {
+      error: `Error: The test email was not sent.`
     };
   }
 });

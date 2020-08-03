@@ -6,7 +6,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFireFunctionsModule, FunctionsRegionToken } from '@angular/fire/functions';
+import { AngularFireFunctionsModule, REGION } from '@angular/fire/functions';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -22,6 +22,7 @@ import { LogoutModalModule } from './shared/modals/logout-modal/logout-modal.mod
 import { RegisterModalModule } from './shared/modals/register-modal/register-modal.module';
 import { DropzoneModule } from './shared/directives/dropzone/dropzone.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { QuillModule } from 'ngx-quill';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     AngularFireStorageModule,
     LoginModalModule,
     LogoutModalModule,
+    QuillModule.forRoot(),
     RegisterModalModule,
     DropzoneModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
@@ -48,7 +50,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: FunctionsRegionToken, useValue: 'us-central1' }
+    { provide: REGION, useValue: 'us-central1' }
   ],
   bootstrap: [AppComponent]
 })

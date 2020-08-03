@@ -6,74 +6,74 @@ import { AdminGuard } from './shared/guards/admin.guard';
 
 const routes: Routes = [
   { path: '',
-    loadChildren: './public/tabs.module#TabsPageModule'
+    loadChildren: () => import('./public/tabs.module').then(m => m.TabsPageModule)
   },
   { path: 'social',
-    loadChildren: './membership/social/social.module#SocialPageModule',
+    loadChildren: () => import('./membership/social/social.module').then(m => m.SocialPageModule),
     canActivate: [AuthGuard]
   },
   { path: 'social/islands',
-    loadChildren: './membership/social/islands/islands.module#IslandsPageModule'
+    loadChildren: () => import('./membership/social/islands/islands.module').then(m => m.IslandsPageModule)
   },
   { path: 'social/clubs-groups',
-    loadChildren: './membership/social/clubs-groups/clubs-groups.module#ClubsGroupsPageModule',
+    loadChildren: () => import('./membership/social/clubs-groups/clubs-groups.module').then(m => m.ClubsGroupsPageModule),
     canActivate: [AuthGuard]
   },
   { path: 'member',
-    loadChildren: './membership/member/member.module#MemberPageModule',
+    loadChildren: () => import('./membership/member/member.module').then(m => m.MemberPageModule),
     canActivate: [AuthGuard]
   },
   { path: 'member/documents',
-    loadChildren: './membership/member/documents/documents.module#DocumentsPageModule',
+    loadChildren: () => import('./membership/member/documents/documents.module').then(m => m.DocumentsPageModule),
     canActivate: [AuthGuard]
   },
   { path: 'member/payment',
-    loadChildren: './membership/member/payment/payment.module#PaymentPageModule',
+    loadChildren: () => import('./membership/member/payment/payment.module').then(m => m.PaymentPageModule),
     canActivate: [AuthGuard]
   },
   { path: 'sfca-business',
-    loadChildren: './membership/sfca-business/sfca-business.module#SfcaBusinessPageModule',
+    loadChildren: () => import('./membership/sfca-business/sfca-business.module').then(m => m.SfcaBusinessPageModule),
     canActivate: [AuthGuard]
   },
   { path: 'filming',
-    loadChildren: './membership/filming/filming.module#FilmingPageModule',
+    loadChildren: () => import('./membership/filming/filming.module').then(m => m.FilmingPageModule),
     canActivate: [AuthGuard]
   },
   { path: 'filming/documents',
-    loadChildren: './membership/filming/documents/documents.module#DocumentsPageModule',
+    loadChildren: () => import('./membership/filming/documents/documents.module').then(m => m.DocumentsPageModule),
     canActivate: [AuthGuard]
   },
   { path: 'security',
-    loadChildren: './membership/security/security.module#SecurityPageModule',
+    loadChildren: () => import('./membership/security/security.module').then(m => m.SecurityPageModule),
     canActivate: [AuthGuard]
   },
   { path: 'tree-watch',
-    loadChildren: './membership/tree-watch/tree-watch.module#TreeWatchPageModule',
+    loadChildren: () => import('./membership/tree-watch/tree-watch.module').then(m => m.TreeWatchPageModule),
     canActivate: [AuthGuard]
   },
   { path: 'directory',
-    loadChildren: './membership/directory/directory.module#DirectoryPageModule',
+    loadChildren: () => import('./membership/directory/directory.module').then(m => m.DirectoryPageModule),
     canActivate: [AuthGuard]
   },
   { path: 'admin',
-    loadChildren: './admin/admin.module#AdminPageModule',
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminPageModule),
     canActivate: [AdminGuard]
   },
   { path: 'admin/add-member',
-    loadChildren: './admin/add-member/add-member.module#AddMemberPageModule',
+    loadChildren: () => import('./admin/add-member/add-member.module').then(m => m.AddMemberPageModule),
     canActivate: [AdminGuard]
   },
   { path: 'admin/add-non-member',
-    loadChildren: './admin/add-non-member/add-non-member.module#AddNonMemberPageModule',
+    loadChildren: () => import('./admin/add-non-member/add-non-member.module').then(m => m.AddNonMemberPageModule),
     canActivate: [AdminGuard]
   },
   { path: 'admin/events',
-    loadChildren: './admin/events/events.module#EventsPageModule',
+    loadChildren: () => import('./admin/events/events.module').then(m => m.EventsPageModule),
     canActivate: [AdminGuard]
   },
   {
     path: 'admin/notifications',
-    loadChildren: './admin/notifications/notifications.module#NotificationsPageModule',
+    loadChildren: () => import('./admin/notifications/notifications.module').then(m => m.NotificationsPageModule),
     canActivate: [AdminGuard]
   }
 ];
