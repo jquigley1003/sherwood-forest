@@ -89,6 +89,52 @@
               Trees Atlanta in the form of this award shows how much can be achieved by one person inspiring others to care. To all of the Tree Watch committee, congratulations!
             </p>
           </ion-item>
+          <ion-slides #myTreeSlider pager="true" scrollbar="true" [options]="slideOpts" (ionSlidesDidLoad)="slidesDidLoad(myTreeSlider)">
+            <ion-slide>
+              <ion-card>
+                <img src="/assets/TreesAtlantaOlivia2020.jpg">
+                <ion-card-subtitle>
+                  Olivia Dennison
+                </ion-card-subtitle>
+                <ion-card-content>
+                  Trees Atlanta Tree Champion 2020: Sherwood Forest
+                </ion-card-content>
+              </ion-card>
+            </ion-slide>
+            <ion-slide>
+              <ion-card>
+                <img src="/assets/TreesAtlantaGroup2020.jpg">
+                <ion-card-subtitle>
+                  Tree Watch Committee
+                </ion-card-subtitle>
+                <ion-card-content>
+                  Olivia Dennison, Tovah Choudhury, Martha Eskew, Sylvia Wilks, and Carl Fowler
+                </ion-card-content>
+              </ion-card>
+            </ion-slide>
+            <ion-slide>
+              <ion-card>
+                <img src="/assets/TreesAtlantaMaska2020.jpg">
+                <ion-card-subtitle>
+                  Tree Watch Committee
+                </ion-card-subtitle>
+                <ion-card-content>
+                  Olivia Dennison, Tovah Choudhury, Martha Eskew, Sylvia Wilks, and Carl Fowler
+                </ion-card-content>
+              </ion-card>
+            </ion-slide>
+            <ion-slide>
+              <ion-card>
+                <img src="/assets/TreesAtlantaHug2020.jpg">
+                <ion-card-subtitle>
+                  Tree Watch Committee
+                </ion-card-subtitle>
+                <ion-card-content>
+                  Olivia Dennison, Tovah Choudhury, Martha Eskew, Sylvia Wilks, and Carl Fowler
+                </ion-card-content>
+              </ion-card>
+            </ion-slide>
+          </ion-slides>
           <ion-item> 
             <p>Our neighborhood has two Champion Trees! <a href="https://www.arcgis.com/home/webmap/viewer.html?webmap=ec627392a74d4885a970f59c984dc5aa&extent=-84.7763,33.5244,-83.7621,33.997" target="_blank">
               View the 2020 map here.</a> What are they, you ask? Trees Atlanta states, "A Champion Tree is determined
@@ -110,11 +156,21 @@
               knowledgeable speakers and an annual luncheon.</p>
           </ion-item>
           <ion-item-divider color="primary">
-            <h3>Residents</h3>
+            <h3>Islands of Sherwood Forest</h3>
           </ion-item-divider>
           <ion-item>
-            <p>As of April 2019, the age range of residents in Sherwood Forest is from 5
-              months to 101.</p>
+            <p>On August 15, 2020, Roundabout Island was renamed Jeness Island, located at Robin Hood 
+              and the south end of Doncaster. This is thanks to the tireless effort of our dedicated resident, 
+               Cynthia (Cindy) Jeness, who has been committed to keeping our islands pristine for the past 5 years.
+            </p>
+          </ion-item>
+          <ion-item>
+            <ion-card class="center-card">
+              <img src="/assets/IslandsOfSherwoodForest2020.jpg">
+              <ion-card-content class="ion-text-center">
+                Entrance, Jeness, Redbud, Banana, Robin Hood, Magnolia, and Memorial Bench
+              </ion-card-content>
+            </ion-card>
           </ion-item>
         </ion-list>
       </ion-col>

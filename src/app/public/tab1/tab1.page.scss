@@ -28,6 +28,11 @@ ion-avatar {
   transform: translateX(-50%);
 }
 
+ion-slides {
+  padding-bottom: 3%;
+  height: 100%;
+}
+
 a {
   cursor: pointer;
   text-decoration: underline;
@@ -70,4 +75,10 @@ a {
 
 .home-format {
   padding: 0 10%;
+}
+
+.center-card {
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
 }
