@@ -1,4 +1,5 @@
 import * as functions from 'firebase-functions';
+import 'firebase-functions/lib/logger/compat';
 import { db } from './config';
 
 // Sendgrid Config
@@ -253,6 +254,7 @@ export const sendAllResidentsEmail = functions.https.onCall(async (data, context
     const emails = userSnapshots.docs.map(snap => snap.data().email);
 
     console.log(emails);
+    
 
     const msg = {
       to: emails,
@@ -269,6 +271,8 @@ export const sendAllResidentsEmail = functions.https.onCall(async (data, context
         sender_email: 'sfca@sherwoodforestatl.org'
       },
     };
+
+    console.log(msg);
 
     await sendgridMail.sendMultiple(msg, (err, res) => {
       if(err) {
