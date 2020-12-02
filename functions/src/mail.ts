@@ -249,7 +249,8 @@ export const sendAllResidentsEmail = functions.https.onCall(async (data, context
     }
 
     // const userSnapshots = await db.collection('users').get();
-    const userSnapshots = await db.collection('users').where('roles.approvedMember', '==', true).get();
+    // const userSnapshots = await db.collection('users').where('roles.approvedMember', '==', true).get();
+    const userSnapshots = await db.collection('users').where('address.city', '==', 'Atlanta').get();
     // const userSnapshots = await db.collection('users').where('displayName.lastName', '==', 'Quigley').get();
     const emails = userSnapshots.docs.map(snap => snap.data().email);
 
