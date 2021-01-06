@@ -311,7 +311,9 @@ export class AdminPage implements OnInit, OnDestroy {
     // for(var sfUser of this.users) {
     //   const data = {
     //     uid: sfUser.uid,
-    //     paidDues: false
+    //     paidDues: false,
+    //     paidBeauty: false,
+    //     paidSecurity: false
     //   };
     //   this.userService.updateUser('users/'+ sfUser.uid, data);
     // }
