@@ -16,6 +16,8 @@ import { FireBaseService } from '../shared/services/firebase.service';
 import { UserModalComponent } from '../shared/modals/user-modal/user-modal.component';
 import { JrResidentModalComponent } from '../shared/modals/jr-resident-modal/jr-resident-modal.component';
 import { PetModalComponent } from '../shared/modals/pet-modal/pet-modal.component';
+import { UserEmailModalComponent } from '../shared/modals/user-email-modal/user-email-modal.component';
+import { UserPasswordModalComponent } from '../shared/modals/user-password-modal/user-password-modal.component';
 
 
 @Component({
@@ -275,6 +277,28 @@ export class AdminPage implements OnInit, OnDestroy {
     return await modal.present();
   }
 
+  async presentUserEmailModal(user) {
+    const modal = await this.modalCtrl.create({
+      component: UserEmailModalComponent,
+      componentProps: {
+        uid: user.uid,
+        currentEmail: user.email
+      }
+    });
+    return await modal.present();
+  }
+
+  async presentUserPasswordModal(user) {
+    const modal = await this.modalCtrl.create({
+      component: UserPasswordModalComponent,
+      componentProps: {
+        uid: user.uid,
+        userName: user.displayName.firstName + ' ' + user.displayName.lastName
+      }
+    });
+    return await modal.present();
+  }
+
   async presentJrResidentModal(user) {
     await this.getUserJrRes(user.uid);
     const modal = await this.modalCtrl.create({
@@ -336,6 +360,8 @@ export class AdminPage implements OnInit, OnDestroy {
     //     this.firebaseService.deleteFields('users/'+ sfUser.uid);
     // }
   }
+
+  
 
   makeAdmin(user) {
     this.userService.makeUserAdmin(user);

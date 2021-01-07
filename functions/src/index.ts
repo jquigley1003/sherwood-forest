@@ -276,6 +276,59 @@ export const removeAdmin = functions.https.onCall((data, context) => {
   }
 });
 
+export const adminUpdateEmail = functions.https.onCall((data, context) => {
+  // check if context.auth is not null
+  // otherwise on build, error will be "Object is possibly 'undefined'
+  // or add the ! if 100% sure context.auth is always defined
+  // example: const isAdmin = context.auth!.token.admin;
+  if (context.auth) {
+    if(context.auth.token.admin !== true) {
+      return {
+        error: `Request not authorized. You must be an admin to update to this email: ${data.newEmail}.`
+      };
+    }
+    const userId = data.uid;
+    const newUserEmail = data.newEmail;
+    return changeEmail(userId, newUserEmail).then(() => {
+      const users = admin.firestore().collection('users');
+      return users.doc(userId).update({
+        email: newUserEmail
+      })
+        .then(() => {
+          return {
+            result: `${newUserEmail} is the new updated email. Firebase collection updated!`
+          }
+        })
+    });
+  } else {
+    return null;
+  }
+});
+
+export const adminUpdatePassword = functions.https.onCall((data, context) => {
+  // check if context.auth is not null
+  // otherwise on build, error will be "Object is possibly 'undefined'
+  // or add the ! if 100% sure context.auth is always defined
+  // example: const isAdmin = context.auth!.token.admin;
+  if (context.auth) {
+    if(context.auth.token.admin !== true) {
+      return {
+        error: `Request not authorized. You must be an admin to change a user's password.`
+      };
+    }
+    const userId = data.uid;
+    const userName = data.userName;
+    const newUserPassword = data.newPassword;
+    return changePassword(userId, newUserPassword).then(() => {
+        return {
+          result: `${userName} has a new password. Please notify that person.`
+        }
+      })
+  } else {
+    return null;
+  }
+});
+
 async function makeApprovedMember(email: string): Promise<void> {
   const user = await admin.auth().getUserByEmail(email);
   if (user.customClaims && (user.customClaims as any).approvedMember === true) {
@@ -330,4 +383,25 @@ function setEmailVerifiedTrue(uid: string) {
   }).then(userRecord => {
     console.log('Successfully updated user: ', userRecord.toJSON());
   })
+}
+
+function changeEmail(uid: string, newEmail: string) {
+  return admin.auth().updateUser(uid, {
+    email: newEmail,
+    emailVerified: true
+  }).then(userRecord => {
+    console.log('Successfully updated user email: ', userRecord.toJSON());
+  }).catch((error) => {
+    console.log('Error updating user: ', error);
+  });
+}
+
+function changePassword(uid: string, newPassword: string) {
+  return admin.auth().updateUser(uid, {
+    password: newPassword
+  }).then(userRecord => {
+    console.log('Successfully updated user password: ', userRecord.toJSON());
+  }).catch((error) => {
+    console.log('Error updating user: ', error);
+  });
 }

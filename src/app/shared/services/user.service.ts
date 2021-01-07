@@ -147,6 +147,108 @@ export class UserService implements OnDestroy{
     return this.dbService.collection$('users', ref => ref.where('boardKeyContact', '==', true));
   }
 
+  async changeUserEmail(uid, newEmail) {
+    const data = {
+      uid: uid,
+      newEmail: newEmail
+    }
+    await this.toastService.presentToast(
+      'Please wait while we change the user\'s Email.',
+      'top',
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }], 3000);
+    this.afFunctions.httpsCallable('adminUpdateEmail')(data)
+      .toPromise()
+      .then(resp => {
+        if(resp.error) {
+          this.msg = resp.error;
+        } else {
+          this.msg = resp.result;
+        }
+        this.toastService.presentToast(
+          this.msg,
+          'top',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000);
+        // console.log({resp});
+      })
+      .catch(err => {
+        this.toastService.presentToast(
+          err.error,
+          'top',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000);
+        // console.log({err});
+      });
+  }
+
+  async changeUserPassword(uid, userName, newPassword) {
+    const data = {
+      uid: uid,
+      userName: userName,
+      newPassword: newPassword
+    }
+    // console.log('userService: ',data);
+    await this.toastService.presentToast(
+      'Please wait while we change the user\'s Password.',
+      'top',
+      [{
+        text: 'OK',
+        role: 'cancel',
+        handler: () => {
+          console.log('dismiss toast message');
+        }
+      }], 3000);
+    this.afFunctions.httpsCallable('adminUpdatePassword')(data)
+      .toPromise()
+      .then(resp => {
+        if(resp.error) {
+          this.msg = resp.error;
+        } else {
+          this.msg = resp.result;
+        }
+        this.toastService.presentToast(
+          this.msg,
+          'top',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000);
+        // console.log({resp});
+      })
+      .catch(err => {
+        this.toastService.presentToast(
+          err.error,
+          'top',
+          [{
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+              console.log('dismiss toast message');
+            }
+          }], 3000);
+        // console.log({err});
+      });
+  }
+
   makeUserAdmin(user) {
     this.toastService.presentToast(
       'Please wait while we make this member an admin.',
