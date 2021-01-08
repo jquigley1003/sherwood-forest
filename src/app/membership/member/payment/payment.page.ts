@@ -187,6 +187,7 @@ export class PaymentPage implements OnInit, AfterViewInit {
         this.card.clear();
         this.chargeSuccess = true;
         this.loading = false;
+        this.totalPayment = 0;
         if (this.confirmation.description.includes('Annual Dues - $250')) {
           await this.checkPayOptions(this.confirmation.description);
           this.markDuesPaid(user, this.confirmation.description);

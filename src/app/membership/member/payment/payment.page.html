@@ -42,8 +42,8 @@
             </ion-card-title>
             <ion-card-subtitle>Sign Check to: Sherwood Forest Civic Associaton</ion-card-subtitle>
             <ion-card-content>
-              Steven Rudisail (mailbox is mounted to right of garage)<br>
-              1630 Nottingham Way<br>
+              Sheila Tschinkel<br>
+              1699 Friar Tuck Rd NE<br>
               Atlanta GA 30309
             </ion-card-content>
           </ion-card>
@@ -76,7 +76,7 @@
               Include your address and street name for the account number<br>
               <i>Ex: 1630 Nottingham Way</i><br>
               <hr>
-              If phone number needed, use 404-606-0396
+              If phone number needed, use 678-427-1336
             </ion-card-content>
           </ion-card>
       </ion-col>
@@ -116,9 +116,9 @@
             Pay by Credit Card
           </ion-card-title>
           <ion-card-content>
-            <ion-item color="light">
-              <ion-label>
-                Start Here to Pay Online
+            <ion-item color="tertiary">
+              <ion-label color="light">
+                <b>Click Here to Choose Payments</b>
               </ion-label>
                 <ion-select
                 [interfaceOptions]="customAlertOptions"
@@ -171,7 +171,10 @@
               <p class="charge-success" *ngIf="chargeSuccess">You're card has been charged . A receipt has been sent to {{ confirmation.receipt_email }}.<br>
                 <a [attr.href]="confirmation.receipt_url" target="_blank">View your receipt here.</a></p>
               <div class="ion-text-center">
-                  <ion-button *ngIf="totalPayment > 0 && !chargeSuccess" (click)="handleForm($event)">Send {{ paymentAmount / 100 | currency }} to SFCA Now</ion-button>
+                  <ion-button *ngIf="totalPayment > 0 && !chargeSuccess" 
+                    [disabled]="loading" (click)="handleForm($event)">
+                    Send {{ paymentAmount / 100 | currency }} to SFCA Now
+                  </ion-button>
               </div>
             </form>
             <ion-progress-bar *ngIf="loading"></ion-progress-bar>
