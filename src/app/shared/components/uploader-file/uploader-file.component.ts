@@ -25,7 +25,7 @@ export class UploaderFileComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.getNewPhotoURL = this.uploadFileTaskComponent.downloadURL;
-    console.log(this.uploadFileTaskComponent);
+    // console.log(this.uploadFileTaskComponent);
   }
 
   updatePhotoURL() {
@@ -39,7 +39,7 @@ export class UploaderFileComponent implements AfterViewInit {
 
   async onDrop(files: FileList) {
     for (let i = 0; i < files.length; i++) {
-        console.log(files.item(i).size);
+        // console.log(files.item(i).size);
         if(files.item(i).size > 5100000) {
           await this.toastService.presentToast('Your file size should be no more than 5MB',
             'middle',
@@ -47,7 +47,7 @@ export class UploaderFileComponent implements AfterViewInit {
               text: 'OK',
               role: 'cancel',
               handler: () => {
-                console.log('dismiss toast message');
+                // console.log('dismiss toast message');
               }
             }], 3000 );
         }else {

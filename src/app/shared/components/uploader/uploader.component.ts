@@ -45,7 +45,7 @@ export class UploaderComponent {
   async onDrop(files: FileList) {
     this.showCropper = true;
     for (let i = 0; i < files.length; i++) {
-      console.log(files.item(i));
+      // console.log(files.item(i));
       if(files.item(i).size > 5100000) {
         await this.toastService.presentToast(
           'Your file size should be no more than 5MB',
@@ -54,7 +54,7 @@ export class UploaderComponent {
             text: 'OK',
             role: 'cancel',
             handler: () => {
-              console.log('dismiss toast message');
+              // console.log('dismiss toast message');
             }
           }], 3000 );
       }else {
@@ -74,17 +74,8 @@ export class UploaderComponent {
 
   async getImageData(){
     this.newProfile = await this.imageCropData.image;
-    console.log('new profile: ', this.newProfile);
+    // console.log('new profile: ', this.newProfile);
     this.uploadTaskComponent.startUpload(this.newProfile, this.currentPhotoURL, this.spMemberId);
     this.showCropper = false;
-    // fetch(this.imageCropData.image)
-    //   .then(res => res.blob())
-    //   .then(blob => {
-    //     var fd = new FormData()
-    //     fd.append('image', blob, 'filename')
-
-    //     console.log(blob)
-    //   })
-      
   }
 }
