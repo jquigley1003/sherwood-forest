@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { PetModalComponent } from './pet-modal.component';
 
@@ -7,7 +7,7 @@ describe('PetModalComponent', () => {
   let component: PetModalComponent;
   let fixture: ComponentFixture<PetModalComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ PetModalComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],

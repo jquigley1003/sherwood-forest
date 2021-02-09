@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { EventModalComponent } from './event-modal.component';
 
@@ -7,7 +7,7 @@ describe('EventModalComponent', () => {
   let component: EventModalComponent;
   let fixture: ComponentFixture<EventModalComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ EventModalComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],

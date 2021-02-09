@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { UserPasswordModalComponent } from './user-password-modal.component';
@@ -7,7 +7,7 @@ describe('UserPasswordModalComponent', () => {
   let component: UserPasswordModalComponent;
   let fixture: ComponentFixture<UserPasswordModalComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ UserPasswordModalComponent ],
       imports: [IonicModule.forRoot()]

@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, OnDestroy, LOCALE_ID, ViewChild, Input, OnCh
 import { formatDate } from '@angular/common';
 
 import { AlertController, ModalController } from '@ionic/angular';
-import { CalendarComponent } from 'ionic2-calendar/calendar';
+import { CalendarComponent } from 'ionic2-calendar';
 
 import { Observable, Subscription } from 'rxjs';
 

@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AngularCalendarComponent } from './angular-calendar.component';
 
@@ -7,7 +7,7 @@ describe('AngularCalendarComponent', () => {
   let component: AngularCalendarComponent;
   let fixture: ComponentFixture<AngularCalendarComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ AngularCalendarComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
