@@ -31,9 +31,11 @@ export class Tab1Page implements OnInit, OnDestroy {
   isLoggedIn: boolean;
   allKeyContacts$: Observable<any>;
   keyContacts: [];
+  showPrevNext: boolean = false;
   
   slideOpts = {
     grabCursor: true,
+    loop: true,
     cubeEffect: {
       shadow: true,
       slideShadows: true,
@@ -254,6 +256,22 @@ export class Tab1Page implements OnInit, OnDestroy {
 
   slidesDidLoad(slides: IonSlides) {
     slides.slideTo(0, 400);
+  }
+
+  toPrevSlide() {
+    this.slider.slidePrev();
+  }
+
+  toNextSlide() {
+    this.slider.slideNext();
+  }
+
+  showSlideButtons() {
+    this.showPrevNext = true;
+  }
+
+  hideSlideButtons() {
+    this.showPrevNext = false;
   }
 
   goHome() {

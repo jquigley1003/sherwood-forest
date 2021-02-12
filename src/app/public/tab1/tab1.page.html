@@ -89,54 +89,72 @@
               to continually build a healthy future forest within the neighborhood. Acknowledgement from 
               Trees Atlanta in the form of this award shows how much can be achieved by one person inspiring others to care. 
               To all of the Tree Watch committee, congratulations!
+              <i>(To see all pictures, use arrows or swipe on touch devices)</i>
             </p>
           </ion-item>
-          <ion-slides #myTreeSlider pager="true" scrollbar="true" [options]="slideOpts" (ionSlidesDidLoad)="slidesDidLoad(myTreeSlider)">
-            <ion-slide>
-              <ion-card>
-                <img src="/assets/TreesAtlantaOlivia2020.jpg">
-                <ion-card-subtitle>
-                  Olivia Dennison
-                </ion-card-subtitle>
-                <ion-card-content>
-                  Trees Atlanta Tree Champion 2020: Sherwood Forest
-                </ion-card-content>
-              </ion-card>
-            </ion-slide>
-            <ion-slide>
-              <ion-card>
-                <img src="/assets/TreesAtlantaGroup2020.jpg">
-                <ion-card-subtitle>
-                  Tree Watch Committee
-                </ion-card-subtitle>
-                <ion-card-content>
-                  Olivia Dennison, Tovah Choudhury, Martha Eskew, Sylvia Wilks, and Carl Fowler
-                </ion-card-content>
-              </ion-card>
-            </ion-slide>
-            <ion-slide>
-              <ion-card>
-                <img src="/assets/TreesAtlantaMaska2020.jpg">
-                <ion-card-subtitle>
-                  Tree Watch Committee
-                </ion-card-subtitle>
-                <ion-card-content>
-                  Olivia Dennison, Tovah Choudhury, Martha Eskew, Sylvia Wilks, and Carl Fowler
-                </ion-card-content>
-              </ion-card>
-            </ion-slide>
-            <ion-slide>
-              <ion-card>
-                <img src="/assets/TreesAtlantaHug2020.jpg">
-                <ion-card-subtitle>
-                  Tree Watch Committee
-                </ion-card-subtitle>
-                <ion-card-content>
-                  Olivia Dennison, Tovah Choudhury, Martha Eskew, Sylvia Wilks, and Carl Fowler
-                </ion-card-content>
-              </ion-card>
-            </ion-slide>
-          </ion-slides>
+          <ion-row  (mouseover)="showSlideButtons()" (mouseleave)="hideSlideButtons()"
+          (touchstart)="showSlideButtons()">
+            <ion-col size="2" class="ion-align-self-center ion-text-center">
+              <div *ngIf="showPrevNext" (click)="toPrevSlide()" 
+              (touchstart)="toPrevSlide()" (touchend)="showSlideButtons()">
+                <ion-icon size="large" slot="icon-only" name="arrow-back-circle-outline"></ion-icon>
+              </div>
+            </ion-col>
+            <ion-col size="8">
+              <ion-slides #myTreeSlider pager="true" scrollbar="true" [options]="slideOpts" (ionSlidesDidLoad)="slidesDidLoad(myTreeSlider)">
+                <ion-slide>
+                  <ion-card>
+                    <img src="/assets/TreesAtlantaOlivia2020.jpg">
+                    <ion-card-subtitle>
+                      Olivia Dennison
+                    </ion-card-subtitle>
+                    <ion-card-content>
+                      Trees Atlanta Tree Champion 2020: Sherwood Forest
+                    </ion-card-content>
+                  </ion-card>
+                </ion-slide>
+                <ion-slide>
+                  <ion-card>
+                    <img src="/assets/TreesAtlantaGroup2020.jpg">
+                    <ion-card-subtitle>
+                      Tree Watch Committee
+                    </ion-card-subtitle>
+                    <ion-card-content>
+                      Olivia Dennison, Tovah Choudhury, Martha Eskew, Sylvia Wilks, and Carl Fowler
+                    </ion-card-content>
+                  </ion-card>
+                </ion-slide>
+                <ion-slide>
+                  <ion-card>
+                    <img src="/assets/TreesAtlantaMaska2020.jpg">
+                    <ion-card-subtitle>
+                      Tree Watch Committee
+                    </ion-card-subtitle>
+                    <ion-card-content>
+                      Olivia Dennison, Tovah Choudhury, Martha Eskew, Sylvia Wilks, and Carl Fowler
+                    </ion-card-content>
+                  </ion-card>
+                </ion-slide>
+                <ion-slide>
+                  <ion-card>
+                    <img src="/assets/TreesAtlantaHug2020.jpg">
+                    <ion-card-subtitle>
+                      Tree Watch Committee
+                    </ion-card-subtitle>
+                    <ion-card-content>
+                      Olivia Dennison, Tovah Choudhury, Martha Eskew, Sylvia Wilks, and Carl Fowler
+                    </ion-card-content>
+                  </ion-card>
+                </ion-slide>
+              </ion-slides>
+            </ion-col>
+            <ion-col size="2" class="ion-align-self-center ion-text-center">
+              <div *ngIf="showPrevNext" (click)="toNextSlide()" 
+              (touchstart)="toNextSlide()" (touchend)="showSlideButtons()">
+                <ion-icon size="large" slot="icon-only" name="arrow-forward-circle-outline"></ion-icon>
+              </div>
+            </ion-col>
+          </ion-row>
           <ion-item> 
             <p>Our neighborhood has two Champion Trees! <a href="https://www.arcgis.com/home/webmap/viewer.html?webmap=ec627392a74d4885a970f59c984dc5aa&extent=-84.7763,33.5244,-83.7621,33.997" target="_blank">
               View the 2020 Atlanta Champion Tree map here.</a> What are they, you ask? Trees Atlanta states, "A Champion Tree is determined
