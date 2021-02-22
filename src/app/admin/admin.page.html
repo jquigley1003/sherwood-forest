@@ -60,7 +60,7 @@
                 class="ion-text-center ion-align-self-center">
                   <ion-row class="ion-justify-content-center">
                     <ion-col>
-                      <ion-thumbnail class="thumb-user">
+                      <ion-thumbnail class="thumb-user" (click)="presentUserModal(user)">
                         <ion-img [src]="user.photoURL"></ion-img>
                       </ion-thumbnail>
                     </ion-col>
