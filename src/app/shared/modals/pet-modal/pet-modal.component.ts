@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonContent, ModalController, NavParams } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Pet } from '../../../models/pet.model';
@@ -14,6 +14,8 @@ import { AlertService } from '../../services/alert.service';
   styleUrls: ['./pet-modal.component.scss'],
 })
 export class PetModalComponent implements OnInit {
+  @ViewChild(IonContent) content: IonContent;
+
   currentPetID: string = '';
   currentPetName: string = '';
   pets: any = this.navParams.get('pets');
@@ -40,6 +42,7 @@ export class PetModalComponent implements OnInit {
     if(this.petForm) {
       await this.petForm.reset();
     }
+    this.content.scrollToTop(1500);
     this.showPet = true;
     this.addPet = false;
     this.currentPetID = pet.id;
@@ -58,6 +61,7 @@ export class PetModalComponent implements OnInit {
     if(this.petForm) {
       await this.petForm.reset();
     }
+    this.content.scrollToTop(1500);
     this.currentPetID = '';
     this.addPet = true;
     this.showPet = false;

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonContent, ModalController, NavParams } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { JuniorResident } from '../../../models/junior-resident.model';
@@ -15,6 +15,7 @@ import { AlertService } from '../../services/alert.service';
   styleUrls: ['./jr-resident-modal.component.scss'],
 })
 export class JrResidentModalComponent implements OnInit {
+  @ViewChild(IonContent) content: IonContent;
 
   currentJrResID: string = '';
   currentJrResName: string = '';
@@ -44,6 +45,7 @@ export class JrResidentModalComponent implements OnInit {
     if(this.jrResForm) {
       await this.jrResForm.reset();
     }
+    this.content.scrollToTop(1500);
     this.showJrRes = true;
     this.addJrRes = false;
     this.currentJrResID = jrRes.id;
@@ -62,6 +64,7 @@ export class JrResidentModalComponent implements OnInit {
     if(this.jrResForm) {
       await this.jrResForm.reset();
     }
+    this.content.scrollToTop(1500);
     this.currentJrResID = '';
     this.addJrRes = true;
     this.showJrRes = false;

@@ -1,6 +1,6 @@
-<ion-content>
+<ion-content [scrollEvents]="true">
   <ion-toolbar class="ion-text-center">
-    <h1>Update Jr Resident Info</h1>
+    <h1>Update Child Info</h1>
     <ion-buttons slot="end">
       <ion-button shape="round" size="small" fill="solid"
                   color="warning" (click)="closeModal()">
@@ -37,7 +37,7 @@
           </form>
         </div>
         <div *ngIf="addJrRes">
-          <h2>Add a Junior Resident</h2>
+          <h2>Add a Child</h2>
           <h3>Items marked with asterisk (*) required</h3>
           <form [formGroup]="jrResForm" (ngSubmit)="onUpdateJr()">
             <div formGroupName="displayName">
@@ -62,7 +62,7 @@
           </form>
         </div>
       <div *ngIf="jrResidents != null; else noJrResBlock">
-        <h2>Your Junior Residents</h2>
+        <h2>Your Children</h2>
         <ion-list *ngFor="let jr of jrResidents">
           <ion-header>
             <ion-toolbar>
@@ -92,12 +92,12 @@
         </ion-list>
       </div>
       <ng-template #noJrResBlock>
-        <h2>No Junior Residents Listed</h2>
+        <h2>No Children Listed</h2>
       </ng-template>
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-button expand="block" (click)="onAddJr()">Add Junior Resident</ion-button>
+  <ion-button expand="block" (click)="onAddJr()">Add Child</ion-button>
   <ion-toolbar>
     <ion-buttons slot="end">
       <ion-button shape="round" size="small" fill="solid"
