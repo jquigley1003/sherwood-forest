@@ -48,7 +48,7 @@ export class PaymentPage implements OnInit, AfterViewInit {
       id: '1',
       name: 'option_list',
       value: 35000,
-      text: 'Annual Dues - $250',
+      text: 'Annual Dues - $350',
       disabled: false,
       color: 'primary'
     }
@@ -203,20 +203,20 @@ export class PaymentPage implements OnInit, AfterViewInit {
   }
 
   checkPayOptions(payOpts) {
-    if(payOpts.includes('Annual Dues - $250, Additional Security - $50, SFCA Beautification - $50')) {
+    if(payOpts.includes('Annual Dues - $350, Additional Security - $50, SFCA Beautification - $50')) {
       console.log("Paid Dues, Paid Security, Paid Beauty");
       return this.payOptData = {
         paidDues: true,
         paidSecurity: true,
         paidBeauty: true
       };
-    } else if(payOpts.includes('Annual Dues - $250, Additional Security - $50')) {
+    } else if(payOpts.includes('Annual Dues - $350, Additional Security - $50')) {
       console.log("Paid Dues, Paid Security");
       return this.payOptData = {
         paidDues: true,
         paidSecurity: true
       };
-    } else if(payOpts.includes('Annual Dues - $250, SFCA Beautification - $50')) {
+    } else if(payOpts.includes('Annual Dues - $350, SFCA Beautification - $50')) {
       console.log("Paid Dues, Paid Beauty");
         return this.payOptData = {
           paidDues: true,
