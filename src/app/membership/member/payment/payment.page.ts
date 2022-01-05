@@ -47,27 +47,27 @@ export class PaymentPage implements OnInit, AfterViewInit {
     {
       id: '1',
       name: 'option_list',
-      value: 25000,
+      value: 35000,
       text: 'Annual Dues - $250',
       disabled: false,
       color: 'primary'
-    },
-    {
-      id: '2',
-      name: 'option_list',
-      value: 5000,
-      text: 'Additional Security - $50',
-      disabled: false,
-      color: 'primary'
-    },
-    {
-      id: '3',
-      name: 'option_list',
-      value: 5000,
-      text: 'SFCA Beautification - $50',
-      disabled: false,
-      color: 'primary'
     }
+    // {
+    //   id: '2',
+    //   name: 'option_list',
+    //   value: 5000,
+    //   text: 'Additional Security - $50',
+    //   disabled: false,
+    //   color: 'primary'
+    // },
+    // {
+    //   id: '3',
+    //   name: 'option_list',
+    //   value: 5000,
+    //   text: 'SFCA Beautification - $50',
+    //   disabled: false,
+    //   color: 'primary'
+    // }
     // {
     //   id: '4',
     //   name: 'option_list',
@@ -188,7 +188,7 @@ export class PaymentPage implements OnInit, AfterViewInit {
         this.chargeSuccess = true;
         this.loading = false;
         this.totalPayment = 0;
-        if (this.confirmation.description.includes('Annual Dues - $250')) {
+        if (this.confirmation.description.includes('Annual Dues - $350')) {
           await this.checkPayOptions(this.confirmation.description);
           this.markDuesPaid(user, this.confirmation.description);
         } else {
