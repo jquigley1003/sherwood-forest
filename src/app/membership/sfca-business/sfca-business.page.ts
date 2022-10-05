@@ -33,7 +33,7 @@ export class SfcaBusinessPage implements OnInit {
   }
 
   getBusinessDocs() {
-    window.open('https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/documents%2FSFCA%20bylaws.docx?alt=media&token=26594dfc-cdca-4133-994a-47f5b2147b47');
+    window.open('https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/documents%2FSFCA%20BYLAWS%20%2003252020.pdf?alt=media&token=eacd4082-2336-4a03-8836-6f3e6e787e47');
   }
 
 }
