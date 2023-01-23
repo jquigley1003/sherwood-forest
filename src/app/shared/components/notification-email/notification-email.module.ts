@@ -6,6 +6,9 @@ import { IonicModule } from '@ionic/angular';
 
 import { NotificationEmailComponent } from './notification-email.component';
 import { QuillModule } from 'ngx-quill';
+import Quill from 'quill';
+const alignClass = Quill.import('attributors/style/align');
+Quill.register(alignClass, true);
 
 @NgModule({
   imports: [
@@ -13,7 +16,11 @@ import { QuillModule } from 'ngx-quill';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    QuillModule
+    QuillModule.forRoot({
+      modules: {
+        syntax: true
+      }
+    }),
   ],
   declarations: [
     NotificationEmailComponent

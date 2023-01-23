@@ -152,7 +152,6 @@ export class NotificationEmailComponent implements OnInit {
       subject: subject,
       emailmessage: emailmessage,
     };
-
     await this.userService.sendNotificationEmail(emailType, data);
     await this.toastService.presentToast(
       'Thank you, your ' + emailType + ' is in process!',

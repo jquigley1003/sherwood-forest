@@ -65,8 +65,8 @@
         <ion-button (click)="showBoardMembers()" *ngIf="showBoard">Hide Board Members</ion-button>
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="showBoard" class="board-bkgrnd board-border">
-      <ion-col class="ion-padding ion-text-center" *ngFor="let member of board">
+    <ion-row *ngIf="showBoard" class="board-bkgrnd board-border ion-justify-content-center">
+      <ion-col size-xs="12" size-md="6" size-lg="4" class="ion-padding ion-text-center" *ngFor="let member of board">
         <div class="ion-text-center">
           <ion-thumbnail><ion-img src="{{ member.photoURL }}"></ion-img></ion-thumbnail>
           <h2>{{ member.displayName.firstName}} {{ member.displayName.lastName}}</h2>

@@ -85,6 +85,7 @@
             <input #quillFile type="file" (change)="quillFileSelected($event)">
           </div>
           <quill-editor
+                  format="html"
                   (onEditorCreated)="getEditorInstance($event)"
                   class="ql-editor" [styles]="editorStyle" [modules]="editorConfig"
                   [placeholder]="information"
