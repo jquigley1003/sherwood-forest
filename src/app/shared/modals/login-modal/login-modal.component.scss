@@ -1,3 +1,14 @@
 .small-italic {
   font: 1em;
 }
+
+.forgot {
+  font-size: .5 em;
+  color: var(--ion-color-primary);
+  a {
+    text-decoration: underline;
+    font-size: .5 em;
+    cursor: pointer;
+    color: var(--ion-color-secondary);
+  }
+}

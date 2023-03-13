@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { LoginModalComponent } from './login-modal.component';
 import { RegisterModalModule } from '../register-modal/register-modal.module';
+import { ForgotPasswordModalModule } from '../forgot-password-modal/forgot-password-modal.module';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { RegisterModalModule } from '../register-modal/register-modal.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RegisterModalModule
+    RegisterModalModule,
+    ForgotPasswordModalModule
   ],
   declarations: [
     LoginModalComponent

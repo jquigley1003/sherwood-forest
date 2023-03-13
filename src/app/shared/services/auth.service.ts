@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth,  } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 
@@ -165,6 +165,22 @@ export class AuthService {
     //       this.emailVerifySubscription.unsubscribe();
     //     });
     // });
+  }
+
+  forgotPassword(userEmail) {
+    return this.afAuth.sendPasswordResetEmail(userEmail)
+      .then(() => {
+        this.alertService.presentAlert(
+          'Password Reset Email Sent',
+          'Please Check Your Inbox',
+          'Follow the email instructions to reset your password',
+          [{
+              text: 'OK',
+              role: 'cancel',
+            }
+          ]
+        );
+      }).catch(error => this.handleError(error))
   }
 
   // Reset Forgot password
@@ -377,6 +393,6 @@ export class AuthService {
         handler: () => {
           console.log('dismiss toast message');
         }
-      }], 5000);
+      }], 10000);
   }
 }

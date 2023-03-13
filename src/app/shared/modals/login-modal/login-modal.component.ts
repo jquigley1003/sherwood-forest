@@ -6,6 +6,7 @@ import { ModalController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { RegisterModalComponent } from '../register-modal/register-modal.component';
+import { ForgotPasswordModalComponent } from '../forgot-password-modal/forgot-password-modal.component'
 
 @Component({
   selector: 'app-login-modal',
@@ -56,6 +57,15 @@ export class LoginModalComponent implements OnInit {
     await this.closeModal();
     const modal = await this.modalCtrl.create({
       component: RegisterModalComponent,
+      componentProps: {}
+    });
+    return await modal.present();
+  }
+
+  async presentForgotPasswordModal() {
+    await this.closeModal();
+    const modal = await this.modalCtrl.create({
+      component: ForgotPasswordModalComponent,
       componentProps: {}
     });
     return await modal.present();
