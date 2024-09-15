@@ -24,14 +24,21 @@
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-center">
-      <ion-col>
+      <ion-col size="6">
         <img class="business-img" src="../../assets/img9.jpg">
       </ion-col>
-      <ion-col class="ion-align-self-center">
+      <ion-col size="6">
         <h2>Semi-Annual Minutes</h2>
-        <ion-button (click)="getMinutes()">April 23, 2019</ion-button>
-        <ion-button (click)="getMinutesFall19()">October 22, 2019</ion-button>
-        <ion-button (click)="getMinutesFall22()">November 15, 2022</ion-button>
+        <ion-row>
+          <ion-col class="ion-align-self-center">
+            <ion-button (click)="getMinutes()">April 23, 2019</ion-button>
+            <ion-button (click)="getMinutesFall19()">October 22, 2019</ion-button>
+            <ion-button (click)="getMinutesFall22()">November 15, 2022</ion-button>
+            <ion-button (click)="getMinutesSpring23()">April 11, 2023</ion-button>
+            <ion-button (click)="getMinutesFall23()">October 10, 2023</ion-button>
+            <ion-button (click)="getMinutesSpring24()">April 9, 2024</ion-button>
+          </ion-col>
+        </ion-row>
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-center">

@@ -36,6 +36,18 @@ export class SfcaBusinessPage implements OnInit {
     window.open('https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/minutes%2F11152022%20SFCA%20Fall%20Meeting%20Minutes.doc.pdf?alt=media&token=43c3d0fc-1918-44bb-9c02-b2adbd31e901');
   }
 
+  getMinutesSpring23() {
+    window.open('https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/minutes%2F2023%2FSFCA-SpringMeeting-20230411.pdf?alt=media&token=f09bd899-91aa-4cfc-9c34-adde54023a31');
+  }
+
+  getMinutesFall23() {
+    window.open('https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/minutes%2F2023%2FSFCA-FallMeeting-202310.pdf?alt=media&token=2e9934fd-dd33-41f8-a6c4-955d3e758bf0');
+  }
+
+  getMinutesSpring24() {
+    window.open('https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/minutes%2F2024%2FSFCA-Spring%20Meeting-20240409.pdf?alt=media&token=7112560a-516d-4a71-9de7-81470f41e999');
+  }
+
   getBusinessDocs() {
     window.open('https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/documents%2FSFCA%20BYLAWS%20%2003252020.pdf?alt=media&token=eacd4082-2336-4a03-8836-6f3e6e787e47');
   }
