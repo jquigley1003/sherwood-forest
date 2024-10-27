@@ -48,6 +48,10 @@ export class SfcaBusinessPage implements OnInit {
     window.open('https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/minutes%2F2024%2FSFCA-Spring%20Meeting-20240409.pdf?alt=media&token=7112560a-516d-4a71-9de7-81470f41e999');
   }
 
+  getMinutesFall24() {
+    window.open('https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/minutes%2F2024%2FSFCA-Fall%20Meeting%20Minutes-20241001.pdf?alt=media&token=e62cb320-1245-4cba-a07c-ca9d018ca9c3');
+  }
+
   getBusinessDocs() {
     window.open('https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/documents%2FSFCA%20BYLAWS%20%2003252020.pdf?alt=media&token=eacd4082-2336-4a03-8836-6f3e6e787e47');
   }
