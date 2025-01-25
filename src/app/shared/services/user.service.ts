@@ -140,7 +140,7 @@ export class UserService implements OnDestroy{
   }
 
   fetchBoardMembers() {
-    return this.dbService.collection$('users', ref => ref.where('boardTerm', '==', '2023-2024'));
+    return this.dbService.collection$('users', ref => ref.where('boardTerm', '==', '2025-2026'));
   }
 
   fetchKeyContacts() {
