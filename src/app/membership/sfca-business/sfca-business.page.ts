@@ -56,6 +56,10 @@ export class SfcaBusinessPage implements OnInit {
     window.open('https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/minutes%2F2025%2FSFCA_Spring%20Meeting_Minutes_2025.04.pdf?alt=media&token=0b0b7b21-c76d-4a9d-a45a-2af6092086da');
   }
 
+  getMinutesFall25() {
+    window.open('https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/minutes%2F2025%2FSFCA_Fall_Member_Meeting_Minutes_2025.10.pdf?alt=media&token=9c525c85-0864-4499-8caa-8ee873446c89');
+  }
+
   getBusinessDocs() {
     window.open('https://firebasestorage.googleapis.com/v0/b/sherwood-forest-5b7f0.appspot.com/o/documents%2FSFCA%20BYLAWS%20%2003252020.pdf?alt=media&token=eacd4082-2336-4a03-8836-6f3e6e787e47');
   }
